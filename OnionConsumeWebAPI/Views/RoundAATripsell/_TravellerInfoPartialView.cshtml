@@ -15,7 +15,7 @@
 
         @for (var i = 0; i < Model.passeengerlistRT[0].passengers.Count; i++)
         {
-	    //Change for same Airline Roundtrip-26-09-2024
+            //Change for same Airline Roundtrip-26-09-2024
             string combinedkey = string.Empty;
             if (@Model.passeengerlistRT.Count > 1)
             {
@@ -47,7 +47,7 @@
 
                         </select>
                     }
-                    else if (Model.passeengerlistRT[0].passengers[i].passengerTypeCode == "CHD" || Model.passeengerlistRT[0].passengers[i].passengerTypeCode == "INFT")
+                    else if (Model.passeengerlistRT[0].passengers[i].passengerTypeCode == "CHD" || Model.passeengerlistRT[0].passengers[i].passengerTypeCode == "INFT" || Model.passeengerlistRT[0].passengers[i].passengerTypeCode == "INF")
                     {
                         <select name="passengerdetails[@i].Title" class="form-control text-center" style="border: 1px solid var(--color-border);">
                             <option value="MSTR">Master</option>
@@ -529,7 +529,7 @@
         }
         return yearSelects[index].value;
     }
- 
+
 
 
 </script>

@@ -17,6 +17,7 @@ namespace DomainLayer.Model
         public string citycode { get; set; }
         public string cityname { get; set; }
         public string airportname { get; set; } // New property
+       
 
         private static string CacheKey = "CityDataList";
         public static List<Citynamelist> GetCityData()
@@ -11043,11 +11044,12 @@ namespace DomainLayer.Model
 
             if (!_cache.TryGetValue(CacheKey, out List<Citynamelist> cityDataList))
             {
-
-
-				string rootPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.Parent.FullName;
-				string filePath = Path.Combine(rootPath, "DomainLayer", "Files", "Cityname.txt");
-				cityDataList = LoadDataFromTextFile(filePath);
+                //string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                //string filePath = Path.Combine(baseDirectory, @"D:\JetwaysProject\DomainLayer\Files\Cityname.txt");
+                // filePath = Path.GetFullPath(filePath);
+                string rootPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.Parent.FullName;
+                string filePath = Path.Combine(rootPath, "DomainLayer", "Files", "Cityname.txt");
+                cityDataList = LoadDataFromTextFile(filePath);
 
 				_cache.Set(CacheKey, cityDataList, TimeSpan.FromHours(1));
             }

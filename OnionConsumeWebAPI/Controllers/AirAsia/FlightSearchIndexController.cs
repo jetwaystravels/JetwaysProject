@@ -135,16 +135,16 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
             MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
             List<SimpleAvailibilityaAddResponce> addResponces = new List<SimpleAvailibilityaAddResponce>();
 
-            getguid = _mongoDBHelper.GetFlightSearchByKeyRef(objMongoHelper.GetRequestCacheKey(_GetfligthModel)).Result;
+            //getguid = _mongoDBHelper.GetFlightSearchByKeyRef(objMongoHelper.GetRequestCacheKey(_GetfligthModel)).Result;
 
-            _mongoDBHelper.SaveSearchLog(_GetfligthModel, SearchGuid);
+            //_mongoDBHelper.SaveSearchLog(_GetfligthModel, SearchGuid);
 
-            if (string.IsNullOrEmpty(getguid))
-            {
-                _mongoDBHelper.SaveKeyRequest(SearchGuid, objMongoHelper.GetRequestCacheKey(_GetfligthModel));
-                _mongoDBHelper.SaveRequest(_GetfligthModel, SearchGuid);
-                ResponseGuid = SearchGuid;
-            }
+            //if (string.IsNullOrEmpty(getguid))
+            //{
+            //    _mongoDBHelper.SaveKeyRequest(SearchGuid, objMongoHelper.GetRequestCacheKey(_GetfligthModel));
+            //    _mongoDBHelper.SaveRequest(_GetfligthModel, SearchGuid);
+            //    ResponseGuid = SearchGuid;
+            //}
 
             //END
             List<SimpleAvailibilityaAddResponce> SimpleAvailibilityaAddResponcelist = new List<SimpleAvailibilityaAddResponce>();
