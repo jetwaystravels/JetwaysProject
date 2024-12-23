@@ -8,7 +8,7 @@
         public string KeyRef;
         // public List<ResultList> ResList;
         public string Response;
-        public string SupplierCode;
+        //public string SupplierCode;
     }
 
     public class MongoRequest

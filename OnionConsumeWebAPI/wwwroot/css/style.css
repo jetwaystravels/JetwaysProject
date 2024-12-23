@@ -2113,7 +2113,7 @@ select:focus {
     border: none;
     border-radius: .1rem;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    text-transform: normal;
+    /*text-transform: normal;*/
 }
 
 
@@ -2336,10 +2336,10 @@ select:focus {
 }
 
 
-@media (max-width: 767px) {
+/*@media (max-width: 767px) {
 }
 
-}
+}*/
 
 
 /* ******************************
@@ -3140,17 +3140,17 @@ FOOTER AREA CSS
     background: #000;
 }
 
-.search-result .sidebar.bg-white {
-    background-color: #fff !;
-    box-shadow: 0 0 12px 0 rgb(0 0 0 / 8%);
-    border-radius: 8px;
+/*.search-result .sidebar.bg-white {*/
+/* background-color: #fff !;*/
+/*box-shadow: 0 0 12px 0 rgb(0 0 0 / 8%);
+    border-radius: 8px;*/
+/*}*/
+
+
+/* Start chenges 28 jan 2024 */
+.search-result .sidebar.bg-white .text-15 {
+    font-size: 14px !important;
 }
-
-
-    /* Start chenges 28 jan 2024 */
-    .search-result .sidebar.bg-white .text-15 {
-        font-size: 14px !important;
-    }
 
 .flt-bx {
     display: flex;
@@ -3219,13 +3219,13 @@ FOOTER AREA CSS
     }
 
 .search-result .sidebar.bg-white {
-    background-color: #fff !;
-    box-shadow: 0 0 12px 0 rgb(0 0 0 / 8%);
-    border-radius: 8px;
+    /*background-color: #fff !;*/
+    /*box-shadow: 0 0 12px 0 rgb(0 0 0 / 8%);
+    border-radius: 8px;*/
 }
 
     .search-result .sidebar.bg-white:hover {
-        box-shadow: 0 0 12px 0 rgb(0 0 0 / 8%);
+        /*  box-shadow: 0 0 12px 0 rgb(0 0 0 / 8%);*/
     }
 
 .search-result .bg-white {
@@ -3237,7 +3237,7 @@ FOOTER AREA CSS
 }
 
     .search-result .bg-white:hover {
-        box-shadow: 0 0 12px 0 rgb(0 0 0 / 20%);
+        /* box-shadow: 0 0 12px 0 rgb(0 0 0 / 20%);*/
     }
 
     .search-result .bg-white .fliCode {
@@ -3259,15 +3259,15 @@ FOOTER AREA CSS
     background-color: #D1DEE6;
 }
 
-{
+/*{
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     width: 9px;
     height: 9px;
-    border: 1px solid #;
-    border-radius: 100%;
-}
+    border: 1px solid #;*/
+/* border-radius: 100%;*/
+/*}*/
 
 .flightLine > *:nth-child(1) {
     left: 0;
@@ -3770,7 +3770,7 @@ FOOTER AREA CSS
 /*Start more fare option */
 
 .modal-mfareBlock {
-    box-shadow: 0 0 10px 0 rgb(0 0 0 / 9%);
+    /* box-shadow: 0 0 10px 0 rgb(0 0 0 / 9%);*/
     /*border: 1px solid #E4E3E1;*/
     background: #fff;
     border-radius: 4px;
@@ -4291,7 +4291,7 @@ a.login-otp {
             height: 44px;
         }
 
-}
+
 /* End My booking section */
 
 

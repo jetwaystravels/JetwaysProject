@@ -50,15 +50,17 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
             return View();
         }
         // Mongo DB
-        private readonly MongoDbService _mongoDbService;
+       // private readonly MongoDbService _mongoDbService;
 
         public readonly IDistributedCache _distributedCache;
         private readonly CredentialService _credentialService;
-        public FlightSearchIndexController(IDistributedCache distributedcache, MongoDbService mongoDbService, CredentialService credentialService)
+        private readonly IConfiguration _configuration;
+        public FlightSearchIndexController(IDistributedCache distributedcache, CredentialService credentialService, IConfiguration configuration)
         {
             _distributedCache = distributedcache;
-            _mongoDbService = mongoDbService;
-            _credentialService = credentialService;
+            //_mongoDbService = mongoDbService;
+            _credentialService = credentialService;            _configuration = configuration;
+
         }
         private string KeyName = string.Empty;
         public static int counterRedis = 0;
@@ -122,7 +124,29 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                 KeyName = _GetfligthModel.origin + "_" + _GetfligthModel.destination + "_" + _GetfligthModel.beginDate + "_" + _GetfligthModel.adultcount;
             }
             // Mongo DB
-            //  IMongoCollection<SearchLog> coll = _mongoDbService.GetCollection<SearchLog>("SearchLogdata");
+            
+
+            //START:21-12-2024 SAVE SEARCH LOG DATA
+            string SearchGuid = Guid.NewGuid().ToString().ToUpper();
+            string ResponseGuid = string.Empty;
+            string getguid = string.Empty;
+
+            MongoHelper objMongoHelper = new MongoHelper();
+            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+            List<SimpleAvailibilityaAddResponce> addResponces = new List<SimpleAvailibilityaAddResponce>();
+
+            getguid = _mongoDBHelper.GetFlightSearchByKeyRef(objMongoHelper.GetRequestCacheKey(_GetfligthModel)).Result;
+
+            _mongoDBHelper.SaveSearchLog(_GetfligthModel, SearchGuid);
+
+            if (string.IsNullOrEmpty(getguid))
+            {
+                _mongoDBHelper.SaveKeyRequest(SearchGuid, objMongoHelper.GetRequestCacheKey(_GetfligthModel));
+                _mongoDBHelper.SaveRequest(_GetfligthModel, SearchGuid);
+                ResponseGuid = SearchGuid;
+            }
+
+            //END
             List<SimpleAvailibilityaAddResponce> SimpleAvailibilityaAddResponcelist = new List<SimpleAvailibilityaAddResponce>();
             if (_GetfligthModel == null)
             {
@@ -222,12 +246,10 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                         //token = ((Newtonsoft.Json.Linq.JValue)value).Value.ToString();
                     }
 
+                   
 
-                    string SearchGuid = Guid.NewGuid().ToString().ToUpper();
-                    string getguid = string.Empty;
-
-                    MongoHelper objMongoHelper = new MongoHelper();
-                    MongoDBHelper _mongoDBHelper = new MongoDBHelper(_mongoDbService);
+                    //MongoHelper objMongoHelper = new MongoHelper();
+                    //MongoDBHelper _mongoDBHelper = new MongoDBHelper(_mongoDbService);
 
                     //getguid = _mongoDBHelper.GetFlightSearchByKeyRef(objMongoHelper.GetRequestCacheKey(_GetfligthModel)).Result;
 
@@ -3454,7 +3476,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                         //logs.WriteLogs("\n Response: " + searlizetext, "simpleavailabiliotydata", "GDSOneWay");
 
                         // encodedlist = Encoding.UTF8.GetBytes(searlizetext);
-                        var option = new DistributedCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromSeconds(60)).SetAbsoluteExpiration(TimeSpan.FromSeconds(60));
+                        var option = new DistributedCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromSeconds(60)).SetAbsoluteExpiration(TimeSpan.FromSeconds(300));
                         //await _distributedCache.SetAsync(KeyName, encodedlist, option);
                         //await _distributedCache.SetStringAsync(KeyName, encodedlist, option);
                         await _distributedCache.SetStringAsync(KeyName, searlizetext, option);

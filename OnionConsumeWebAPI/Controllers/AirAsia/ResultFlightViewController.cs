@@ -38,7 +38,7 @@ namespace OnionConsumeWebAPI.Controllers
         string infant = string.Empty;
         Logs logs = new Logs();
         // Mongo DB
-        private readonly MongoDbService _mongoDbService;
+       // private readonly MongoDbService _mongoDbService;
 
        // public readonly IDistributedCache _distributedCache;
         //public ResultFlightViewController(IDistributedCache distributedcache, MongoDbService mongoDbService)
@@ -47,10 +47,10 @@ namespace OnionConsumeWebAPI.Controllers
         //    _mongoDbService = mongoDbService;
         //}
 
-        public ResultFlightViewController(MongoDbService mongoDbService)
-        {
-            _mongoDbService = mongoDbService;
-        }
+        //public ResultFlightViewController(MongoDbService mongoDbService)
+        //{
+        //    _mongoDbService = mongoDbService;
+        //}
 
 
         public IActionResult FlightView()
@@ -60,8 +60,8 @@ namespace OnionConsumeWebAPI.Controllers
 
             string guid = HttpContext.Request.Query["Guid"].ToString();
 
-            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_mongoDbService);
-            Task<SearchLog> searchLog = _mongoDBHelper.GetFlightSearchLog(guid);
+            //MongoDBHelper _mongoDBHelper = new MongoDBHelper(_mongoDbService);
+            //Task<SearchLog> searchLog = _mongoDBHelper.GetFlightSearchLog(guid);
            // searchLog = _mongoDBHelper.GetFlightSearchLog(Guid);
 
 

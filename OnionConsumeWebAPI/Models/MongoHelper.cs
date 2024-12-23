@@ -4,6 +4,7 @@ using MongoDB.Driver;
 using OnionConsumeWebAPI.ApiService;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 
 namespace OnionConsumeWebAPI.Models
@@ -11,13 +12,13 @@ namespace OnionConsumeWebAPI.Models
     public class MongoHelper
     {
 
-         public string GetRequestCacheKey(SimpleAvailabilityRequestModel FlightSCriteria)
+        public string GetRequestCacheKey(SimpleAvailabilityRequestModel FlightSCriteria)
         {
             StringBuilder key = new StringBuilder();
             //string key = string.Empty;
 
             //Adult
-            if(FlightSCriteria.passengercount!=null)
+            if (FlightSCriteria.passengercount != null)
             {
                 key.Append(FlightSCriteria.passengercount.adultcount);
                 key.Append(FlightSCriteria.passengercount.childcount);
@@ -30,8 +31,8 @@ namespace OnionConsumeWebAPI.Models
                 key.Append(FlightSCriteria.infantcount);
             }
 
- 
-          
+
+
             //if (FlightSCriteria.ChildrenAges != null)
             //{
             //    if (FlightSCriteria.Children > 0)
@@ -40,19 +41,19 @@ namespace OnionConsumeWebAPI.Models
             //}
 
             key.Append(FlightSCriteria.trip.ToString());
-          
-                 key.Append(Convert.ToDateTime(FlightSCriteria.beginDate).ToString("ddMMyyyy"));  //
+
+            key.Append(Convert.ToDateTime(FlightSCriteria.beginDate).ToString("ddMMyyyy"));  //
             key.Append(Convert.ToDateTime(FlightSCriteria.endDate).ToString("ddMMyyyy"));  //
             key.Append(FlightSCriteria.origin.ToString().Split("-")[1].Trim());
-                key.Append(FlightSCriteria.destination.ToString().Split("-")[1].Trim());
-               // key.Append(FlightSCriteria.DirectFlights.ToString());
+            key.Append(FlightSCriteria.destination.ToString().Split("-")[1].Trim());
+            // key.Append(FlightSCriteria.DirectFlights.ToString());
             //    if (!string.IsNullOrEmpty(FlightSCriteria.Carrier))
             //        key.Append(FlightSCriteria.Carrier.ToString());
-            
+
             //if (!string.IsNullOrEmpty(FlightSCriteria.CabinClass.ToString()))
             //    key.Append(FlightSCriteria.CabinClass.ToString());
             //key.Append(currcode);
-          
+
 
             //key = key.TrimEnd('~');
             return key.ToString();
@@ -118,7 +119,7 @@ namespace OnionConsumeWebAPI.Models
             }
         }
 
-         public string Get8Digits()
+        public string Get8Digits()
         {
             var bytes = new byte[4];
             var rng = System.Security.Cryptography.RandomNumberGenerator.Create();
@@ -137,4 +138,26 @@ namespace OnionConsumeWebAPI.Models
 
 
     }
+
+
+    //public static class Extentions
+    //{
+    //    public static bool IsMobile(string userAgent)
+    //    {
+    //        if (string.IsNullOrEmpty(userAgent))
+    //            return false;
+    //        //tablet
+    //        if (Regex.IsMatch(userAgent, "(tablet|ipad|playbook|silk)|(android(?!.*mobile))", RegexOptions.IgnoreCase))
+    //            return true;
+    //        //mobile
+    //        const string mobileRegex =
+    //            "blackberry|iphone|mobile|windows ce|opera mini|htc|sony|palm|symbianos|ipad|ipod|blackberry|bada|kindle|symbian|sonyericsson|android|samsung|nokia|wap|motor";
+
+    //        if (Regex.IsMatch(userAgent, mobileRegex, RegexOptions.IgnoreCase)) return true;
+    //        //not mobile 
+    //        return false;
+    //    }
+    // }
+
+    //  var isMobile = Extentions.IsMobile( Request.Headers["user-agent"].ToString());
 }

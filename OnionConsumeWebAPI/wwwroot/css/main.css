@@ -847,7 +847,7 @@ button {
         }
 
     .button.-blue-2:hover {
-        border-color: #04263C);
+        border-color: #04263C;
         background-color: #04263C !important;
         color: white !important;
     }
@@ -1270,13 +1270,13 @@ input.text-white::placeholder {
             display: block;
         }
 
-.form-checkbox:hover input ~ .form-checkbox__mark {
+/*.form-checkbox:hover input ~ .form-checkbox__mark {
     background-color: none;
-}
+}*/
 
-.form-checkbox:hover input:checked ~ .form-checkbox__mark {
+/*.form-checkbox:hover input:checked ~ .form-checkbox__mark {
     background-color: none;
-}
+}*/
 
 .form-radio {
     display: flex;
@@ -12037,8 +12037,8 @@ div[data-slider] > input[type=range]::-ms-tooltip {
     transform: translateY(-50%) translateX(-50%);
     background-color: black;
     border-radius: 100%;
-    width: rem(52px);
-    height: rem(52px);
+    /* width: rem(52px);*/
+    /* height: rem(52px);*/
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12049,16 +12049,16 @@ div[data-slider] > input[type=range]::-ms-tooltip {
     .gallery__button .icon {
         color: white;
         stroke-width: 1;
-        width: rem(28px);
-        height: rem(28px);
+        /* width: rem(28px);
+        height: rem(28px);*/
     }
 
     .gallery__button.-bottom-right {
         top: unset;
         left: unset;
         transform: unset;
-        bottom: rem(30px);
-        right: rem(30px);
+        /* bottom: rem(30px);*/
+        /*right: rem(30px);*/
     }
 
 .form-input {
@@ -12931,7 +12931,7 @@ table.table-5 td {
 
 .noUi-connect {
     background-color: var(--color-blue-1) !important;
-    box-shadow: 0 !important;
+    /* box-shadow: 0 !important;*/
 }
 
 .noUi-handle {
@@ -12941,7 +12941,7 @@ table.table-5 td {
     top: 50% !important;
     transform: translateY(-50%);
     border: 2px solid var(--color-blue-1);
-    box-shadow: 0 !important;
+    /*box-shadow: 0 !important;*/
 }
 
     .noUi-handle::before {
@@ -13128,18 +13128,18 @@ check out section
 
 .checkout .bg-white {
     border-radius: 6px;
-    box-shadow: 0 0 10px 0 rgb(0 0 0 / 9%);
+    /*box-shadow: 0 0 10px 0 rgb(0 0 0 / 9%);*/
     border: 1px solid #E4E3E1;
 }
 
 .checkout .flight-box-content {
-    box-shadow: 0 0 10px 0 rgb(0 0 0 / 9%);
+    /* box-shadow: 0 0 10px 0 rgb(0 0 0 / 9%);*/
     border: 1px solid #E4E3E1;
     background: #fff;
 }
 
 .checkout .border-light {
-    box-shadow: 0 0 10px 0 rgb(0 0 0 / 9%);
+    /* box-shadow: 0 0 10px 0 rgb(0 0 0 / 9%);*/
     border: 1px solid #E4E3E1;
 }
 
@@ -13651,7 +13651,7 @@ Start Seat Map section
 
 
 .checkout .tl-ince .flight-box-content {
-    box-shadow: 0 0 10px 0 rgb(0 0 0 / 9%);
+    /*box-shadow: 0 0 10px 0 rgb(0 0 0 / 9%);*/
     border: 1px solid #E4E3E1;
     background: #fff;
     padding: 10px 20px 20px 20px;
@@ -14195,8 +14195,3 @@ start addons
                     color: #6B879F;
                     font-size: 14px;
                 }
-
-
-/* ******************************
-End addons
-****************************** */
