@@ -956,7 +956,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                         //Logon 
                         #region Logon
                         Spicejet._login objSpicejet_ = new Spicejet._login();
-                        SpicejetSessionManager_.LogonResponse _SpicejetlogonResponseobj = await objSpicejet_.Login(SameAirlineRT, "SpicejetOneWay");
+                        SpicejetSessionManager_.LogonResponse _SpicejetlogonResponseobj = await objSpicejet_.Login(SameAirlineRT, "SpicejetOneWay", AppUrlConstant.BaseURL);
                         #endregion
                         //GetAvailability
                         #region GetAvailability
@@ -1246,7 +1246,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                     //Logon 
                     #region Logon
                     _login obj_ = new _login();
-                    IndigoSessionmanager_.LogonResponse _IndigologonResponseobj = await obj_.Login(SameAirlineRT, "IndigooneWay");
+                    IndigoSessionmanager_.LogonResponse _IndigologonResponseobj = await obj_.Login(SameAirlineRT, "IndigooneWay", AppUrlConstant.BaseURL);
                     #endregion
                     //.GetAvailability
                     #region GetAvailability
@@ -2494,7 +2494,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                             //Logon 
                             #region Logon
                             Spicejet._login objSpicejetR_ = new Spicejet._login();
-                            _SpicejetlogonResponseobjR = await objSpicejetR_.Login(SameAirlineRT, "SpicejetRT");
+                            _SpicejetlogonResponseobjR = await objSpicejetR_.Login(SameAirlineRT, "SpicejetRT", AppUrlConstant.BaseURL);
                             //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_logonRequestobjR) + "\n Response: " + JsonConvert.SerializeObject(_logonResponseobjR), "Logon", "SpiceJetRT");
 
 
@@ -2825,7 +2825,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                         //Logon 
                         #region Logon
                         obj_ = new _login();
-                        IndigoSessionmanager_.LogonResponse _IndigologonResponseobjR = await obj_.Login(SameAirlineRT, "IndigoRT");
+                        IndigoSessionmanager_.LogonResponse _IndigologonResponseobjR = await obj_.Login(SameAirlineRT, "IndigoRT", AppUrlConstant.BaseURL);
                         #endregion
                         //.GetAvailability
                         #region GetAvailability

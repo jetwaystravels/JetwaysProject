@@ -5,19 +5,22 @@ using IndigoSessionmanager_;
 using Newtonsoft.Json;
 using Utility;
 
+
 namespace OnionConsumeWebAPI.Controllers.Indigo
 {
     public class _login
     {
         Logs logs = new Logs();
 
-        public async Task<LogonResponse> Login(string JourneyType, string _Airline = "")
+        public async Task<LogonResponse> Login(string JourneyType, string _Airline = "", string _baseurl= "")
         {
             #region Logon
             LogonRequest _logonRequestobj = new LogonRequest();
+            
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:5225/");
+                client.BaseAddress = new Uri(_baseurl);
+               
                 HttpResponseMessage responsindigo = await client.GetAsync("api/Login/getotacredairasia");
                 if (responsindigo.IsSuccessStatusCode)
                 {
@@ -60,7 +63,8 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
 
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:5225/");
+                //client.BaseAddress = new Uri("http://localhost:5225/");
+                client.BaseAddress = new Uri("http://192.168.1.104/");
                 HttpResponseMessage responsindigo = await client.GetAsync("api/Login/getotacredairasia");
                 if (responsindigo.IsSuccessStatusCode)
                 {

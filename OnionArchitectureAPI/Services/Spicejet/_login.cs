@@ -11,13 +11,13 @@ namespace OnionConsumeWebAPI.Controllers.Spicejet
     {
         Logs logs = new Logs();
 
-        public async Task<LogonResponse> Login(string JourneyType,string _Airline = "")
+        public async Task<LogonResponse> Login(string JourneyType,string _Airline = "",string _baseurl="")
         {
             #region Logon
             LogonRequest _logonRequestobj = new LogonRequest();
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:5225/");
+                client.BaseAddress = new Uri(_baseurl);
                 HttpResponseMessage responsindigo = await client.GetAsync("api/Login/getotacredairasia");
                 if (responsindigo.IsSuccessStatusCode)
                 {
