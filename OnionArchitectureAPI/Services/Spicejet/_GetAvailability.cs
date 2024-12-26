@@ -34,7 +34,7 @@ namespace OnionArchitectureAPI.Services.Spicejet
             _getAvailabilityRQ.TripAvailabilityRequest.AvailabilityRequests = new AvailabilityRequest[1];
             _getAvailabilityRQ.TripAvailabilityRequest.AvailabilityRequests[0] = new AvailabilityRequest();
 
-            if (_AirlineWay.ToLower() == "spicejetoneway")
+            if (_AirlineWay.ToLower() == "spicejetoneway" || _AirlineWay.ToLower() == "spicejetonewaycorporate")
             {
                 //TempData["origin"] = _GetfligthModel.origin;
                 //TempData["destination"] = _GetfligthModel.destination;
@@ -82,12 +82,35 @@ namespace OnionArchitectureAPI.Services.Spicejet
             _getAvailabilityRQ.TripAvailabilityRequest.AvailabilityRequests[0].BookingStatus = BookingStatus.Default;
             // Different Product Class
             //string[] faretypes = { "R", "MX", "IO", "SF" };
-            string[] faretypes = { "R", "MX", "SF" };
+            string[] faretypes = null;
+            string[] productclasses = null;
+            string[][] productclassesCorp = new string[8][];
+            if (_AirlineWay.ToLower() == "spicejetonewaycorporate")
+            {
+                faretypes = new string[] { "R", "MX", "SF", "IO", "F", "IO", "C", "MX" };
+                productclassesCorp = new string[8][];
+                productclassesCorp[0] = new string[] { "RS", "SS", "SR", "SU" };
+                productclassesCorp[1] = new string[] { "SC", "CS" };
+                productclassesCorp[2] = new string[] { "FS", "SF" };
+                productclassesCorp[3] = new string[] { "NF", "FN" }; //For IO Statutory taxes Refundable but changeable
+                productclassesCorp[4] = new string[] { "XB", "BX" }; //Family Fare
+                productclassesCorp[5] = new string[] { "NN" };       //For IO  Refundable and Non Changeable
+                productclassesCorp[6] = new string[] { "CP", "PC" }; //Corporate 
+                productclassesCorp[7] = new string[] { "CM", "MC" }; //Corporate
+                var ProductClasses = productclassesCorp.SelectMany(x => x).ToArray();
+                _getAvailabilityRQ.TripAvailabilityRequest.AvailabilityRequests[0].ProductClasses = ProductClasses;
+            }
+            else
+            {
+                faretypes = new string[] { "R", "MX", "SF" };
+                productclasses = new string[1];
+                _getAvailabilityRQ.TripAvailabilityRequest.AvailabilityRequests[0].ProductClasses = productclasses;
+            }
             _getAvailabilityRQ.TripAvailabilityRequest.AvailabilityRequests[0].FareTypes = faretypes;
 
-            string[] productclasses = new string[1];
+            //string[] productclasses = new string[1];
             //string[] productclasses = {"R"};
-            _getAvailabilityRQ.TripAvailabilityRequest.AvailabilityRequests[0].ProductClasses = productclasses;
+
             _getAvailabilityRQ.TripAvailabilityRequest.AvailabilityRequests[0].MaximumConnectingFlights = 20;
             _getAvailabilityRQ.TripAvailabilityRequest.AvailabilityRequests[0].MaximumConnectingFlightsSpecified = true;
             _getAvailabilityRQ.TripAvailabilityRequest.AvailabilityRequests[0].LoyaltyFilterSpecified = true;
@@ -101,7 +124,7 @@ namespace OnionArchitectureAPI.Services.Spicejet
 
             _getapi objSpicejet = new _getapi();
             GetAvailabilityVer2Response _getAvailabilityVer2Response = await objSpicejet.GetTripAvailability(_getAvailabilityRQ);
-            if (_AirlineWay.ToLower() == "spicejetoneway")
+            if (_AirlineWay.ToLower() == "spicejetoneway" || _AirlineWay.ToLower() == "spicejetonewaycorporate")
             {
                 SetSessionValue("SpicejetAvailibilityRequest", JsonConvert.SerializeObject(_getAvailabilityRQ));
                 SetSessionValue("SpicejetSignature", JsonConvert.SerializeObject(_getAvailabilityRQ.Signature));

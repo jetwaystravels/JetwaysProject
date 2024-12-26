@@ -1,9 +1,11 @@
 using Microsoft.CodeAnalysis.Options;
+using OnionConsumeWebAPI.Comman;
 using OnionConsumeWebAPI.ErrorHandling;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddScoped<CredentialService>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.BuildServiceProvider();
