@@ -1805,14 +1805,16 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                 _SimpleAvailibilityaAddResponceobj.segments = Segmentobjlist;
                                 DateTime currentDate = DateTime.Now;
                                 var bookingdate1 = currentDate; //"2023-12-10T00:00:00";
-                                if (_IndigoAvailabilityResponseobj == null)
-                                {
-                                    _SimpleAvailibilityaAddResponceobj.bookingdate = bookingdate1.ToString(); ;
-                                }
-                                else
-                                {
-                                    _SimpleAvailibilityaAddResponceobj.bookingdate = Convert.ToDateTime(_IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[0][0].DepartureDate).ToString("dddd, dd MMM yyyy");
-                                }
+                                _SimpleAvailibilityaAddResponceobj.bookingdate = bookingdate1.ToString();
+                                //if (_IndigoAvailabilityResponseobj == null)
+                                //{
+                                //    _SimpleAvailibilityaAddResponceobj.bookingdate = bookingdate1.ToString(); ;
+                                //}
+                                //else
+                                //{
+                                //    _SimpleAvailibilityaAddResponceobj.bookingdate = Convert.ToDateTime(_IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[0][0].DepartureDate).ToString("dddd, dd MMM yyyy");
+                                //}
+
                                 _SimpleAvailibilityaAddResponceobj.fareTotalsum = Math.Round(fareTotalsum, 0);
                                 _SimpleAvailibilityaAddResponceobj.journeyKey = journeyKey;
                                 _SimpleAvailibilityaAddResponceobj.faresIndividual = fareIndividualsconnectedList;// fareIndividualsList;

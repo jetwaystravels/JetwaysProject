@@ -2,7 +2,7 @@
     @{
         string queryorigin = string.Empty;
         string querydestination = string.Empty;
-        string SameAirlinesRT = string.Empty; 
+        string SameAirlinesRT = string.Empty;
         if (ViewData["SameAirlineRT"] != null)
         {
             SameAirlinesRT = ViewData["SameAirlineRT"].ToString();
@@ -50,17 +50,17 @@
             @{
                 if (Model.SimpleAvailibilityaAddResponcelist.Count > 0)
                 {
-                        <div class="fontSize16 d-flex justify-content-between"><div class="fw-600">@originL → @destinationL</div>  <div>@Model.SimpleAvailibilityaAddResponcelist[0].bookingdate</div></div>
+                    <div class="fontSize16 d-flex justify-content-between"><div class="fw-600">@originL → @destinationL</div>  <div>@Model.SimpleAvailibilityaAddResponcelist[0].bookingdate</div></div>
 
-                        <input type="hidden" id="leftdate" value="@Model.SimpleAvailibilityaAddResponcelist[0].bookingdate" />
+                    <input type="hidden" id="leftdate" value="@Model.SimpleAvailibilityaAddResponcelist[0].bookingdate" />
                 }
             }
-           @*  <ul class="shorting-tab">
-                <li><a href="#">Airlines </a></li>
-                <li><a href="#">Depart</a></li>
-                <li><a href="#">Duration</a></li>
-                <li><a href="#">Arrive</a></li>
-                <li><a href="#" class="active">Price</a></li>
+            @*  <ul class="shorting-tab">
+            <li><a href="#">Airlines </a></li>
+            <li><a href="#">Depart</a></li>
+            <li><a href="#">Duration</a></li>
+            <li><a href="#">Arrive</a></li>
+            <li><a href="#" class="active">Price</a></li>
             </ul> *@
 
             <div class="d-flex justify-between shorting-tab">
@@ -127,7 +127,7 @@
                                 <img class="size-40" src="~/img/flight-logo-icon/AIX_X_Logo_Orange.png" alt="image">
                             }
 
-                           <input type="hidden" class="sameairLine" name="sameairLine" value="@SameAirlinesRT" />
+                            <input type="hidden" class="sameairLine" name="sameairLine" value="@SameAirlinesRT" />
                             <input type="hidden" value="@Model.SimpleAvailibilityaAddResponcelist[j].uniqueId" />
                             <input type="hidden" class="carrierCode" name="carrierCode" value="@Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode" />
                             <input type="hidden" class="identifier" name="identifier" value="@Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.identifier" />
@@ -226,7 +226,7 @@
 
 
 
-                                            @if (Model.SimpleAvailibilityaAddResponcelist[j].segments.Count > 1 && Model.SimpleAvailibilityaAddResponcelist[j].segments[1].legs.Count == 2)
+                                            @if (Model.SimpleAvailibilityaAddResponcelist[j].segments.Count > 2 && Model.SimpleAvailibilityaAddResponcelist[j].segments[1].legs.Count >= 1)
                                             {
                                                 <div class="r-stop"> @Model.SimpleAvailibilityaAddResponcelist[j].segments[1].legs[0].designator.destination</div>
                                             }
@@ -236,6 +236,33 @@
 
                                             }
                                         }
+                                    }
+                                    if (stops == 3)
+                                    {
+                                        <div class="d-flex justify-center align-items-center">
+                                            <div>@stops Stop via &nbsp;</div>
+
+                                            @if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].legs.Count == 2)
+                                            {
+                                                <div class="mt-1">@Model.SimpleAvailibilityaAddResponcelist[j].segments[0].legs[0].designator.destination  ,@Model.SimpleAvailibilityaAddResponcelist[j].segments[0].legs[1].designator.destination</div>
+                                            }
+                                            else
+                                            {
+                                                // <div class="mt-1">2 Stop via  @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].legs[0].designator.destination  <b>,</b></div>
+
+                                            }
+
+
+                                            @if (Model.SimpleAvailibilityaAddResponcelist[j].segments.Count > 2 && Model.SimpleAvailibilityaAddResponcelist[j].segments[1].legs.Count >= 1)
+                                            {
+                                                <div class="mt-1">,@Model.SimpleAvailibilityaAddResponcelist[j].segments[1].legs[0].designator.destination</div>
+                                            }
+                                            else
+                                            {
+                                                // <div class="mt-1">2 Stop via  @Model.SimpleAvailibilityaAddResponcelist[j].segments[1].legs[0].designator.destination  <b>,</b></div>
+
+                                            }
+                                        </div>
                                     }
                                 }
 
@@ -265,10 +292,10 @@
                         </div>
 
                         <div class="fare-round mt-3">
-                          
-                          
+
+
                             <input type="radio" id="uniqueId" name="dynamicRadio" value="@Model.SimpleAvailibilityaAddResponcelist[j].uniqueId" onclick="RenderData(@j)">
-                             
+
                         </div>
                     </div>
 
@@ -766,9 +793,9 @@
             @{
                 if (Model.SimpleAvailibilityaAddResponcelistR.Count > 0)
                 {
-                        <div class="fontSize1 d-flex justify-content-between"><div class="fw-600">@destinationR → @originR</div>  <div>@Model.SimpleAvailibilityaAddResponcelistR[0].bookingdate</div></div>
+                    <div class="fontSize1 d-flex justify-content-between"><div class="fw-600">@destinationR → @originR</div>  <div>@Model.SimpleAvailibilityaAddResponcelistR[0].bookingdate</div></div>
 
-                        <input type="hidden" id="rightdate" value="@Model.SimpleAvailibilityaAddResponcelistR[0].bookingdate" />
+                    <input type="hidden" id="rightdate" value="@Model.SimpleAvailibilityaAddResponcelistR[0].bookingdate" />
                 }
             }
             <div class="d-flex justify-between shorting-tab">
@@ -930,7 +957,7 @@
 
 
 
-                                            @if (Model.SimpleAvailibilityaAddResponcelistR[j].segments.Count > 1 && Model.SimpleAvailibilityaAddResponcelistR[j].segments[1].legs.Count == 2)
+                                            @if (Model.SimpleAvailibilityaAddResponcelistR[j].segments.Count >= 2 && Model.SimpleAvailibilityaAddResponcelistR[j].segments[1].legs.Count >= 1)
                                             {
                                                 <div class="r-stop"> @Model.SimpleAvailibilityaAddResponcelistR[j].segments[1].legs[0].designator.destination</div>
                                             }
@@ -940,6 +967,33 @@
 
                                             }
                                         }
+                                    }
+                                    if (stops == 3)
+                                    {
+                                        <div class="d-flex justify-center align-items-center">
+                                            <div>@stops Stop via &nbsp;</div>
+
+                                            @if (Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].legs.Count == 2)
+                                            {
+                                                <div class="mt-1">@Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].legs[0].designator.destination  ,@Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].legs[1].designator.destination</div>
+                                            }
+                                            else
+                                            {
+                                                // <div class="mt-1">2 Stop via  @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].legs[0].designator.destination  <b>,</b></div>
+
+                                            }
+
+
+                                            @if (Model.SimpleAvailibilityaAddResponcelistR[j].segments.Count > 2 && Model.SimpleAvailibilityaAddResponcelistR[j].segments[1].legs.Count >= 1)
+                                            {
+                                                <div class="mt-1">,@Model.SimpleAvailibilityaAddResponcelistR[j].segments[1].legs[0].designator.destination</div>
+                                            }
+                                            else
+                                            {
+                                                // <div class="mt-1">2 Stop via  @Model.SimpleAvailibilityaAddResponcelist[j].segments[1].legs[0].designator.destination  <b>,</b></div>
+
+                                            }
+                                        </div>
                                     }
                                 }
                                 <input type="hidden" class="diffreturn" value="@formattedTime" />

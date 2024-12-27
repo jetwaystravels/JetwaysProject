@@ -555,21 +555,24 @@
                                                     @{
 
                                                         List<SelectListItem> mealOptions = new List<SelectListItem>();
-                                                        for (int s = 0; s < Model.AkMealslist.legSsrs[0].legssrs.Count; s++)
+                                                        if (Model.Meals.legSsrs.Count > 0)
                                                         {
-                                                            string ssrprice = Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[0].price;
-                                                            string Mealcode = Model.AkMealslist.legSsrs[0].legssrs[s].ssrCode;
-                                                            string Mealname = Model.AkMealslist.legSsrs[0].legssrs[s].name + " ₹" + @Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[0].price + "_" + Model.AkMealslist.legSsrs[0].legssrs[s].ssrCode;
-                                                            ssrkey = Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[pa].ssrKey + "_" + @Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[0].price;
-                                                            string passengerKey = Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[pa].passengerKey;
-
-                                                            ssrAvailable = Model.AkMealslist.legSsrs[0].legssrs[s].available.ToString();
-                                                            ssrType = Model.AkMealslist.legSsrs[0].legssrs[s].ssrType;
-                                                            if (ssrkey != null)
+                                                            for (int s = 0; s < Model.AkMealslist.legSsrs[0].legssrs.Count; s++)
                                                             {
-                                                                mealOptions.Add(new SelectListItem { Text = Mealname, Value = ssrkey });
-                                                            }
+                                                                string ssrprice = Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[0].price;
+                                                                string Mealcode = Model.AkMealslist.legSsrs[0].legssrs[s].ssrCode;
+                                                                string Mealname = Model.AkMealslist.legSsrs[0].legssrs[s].name + " ₹" + @Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[0].price + "_" + Model.AkMealslist.legSsrs[0].legssrs[s].ssrCode;
+                                                                ssrkey = Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[pa].ssrKey + "_" + @Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[0].price;
+                                                                string passengerKey = Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[pa].passengerKey;
 
+                                                                ssrAvailable = Model.AkMealslist.legSsrs[0].legssrs[s].available.ToString();
+                                                                ssrType = Model.AkMealslist.legSsrs[0].legssrs[s].ssrType;
+                                                                if (ssrkey != null)
+                                                                {
+                                                                    mealOptions.Add(new SelectListItem { Text = Mealname, Value = ssrkey });
+                                                                }
+
+                                                            }
                                                         }
                                                         <div class="d-flex">
 
@@ -618,14 +621,14 @@
 
                                                 // List<SelectListItem> BaggageOptions = new List<SelectListItem>();
                                                     var baggageOptions = new List<SelectListItem>();
-
+                                                   
 
                                                     for (int s = 0; s < Model.AkBaggageDetails.journeySsrsBaggage[0].baggageSsr.Count; s++)
                                                     {
                                                         string priceBaggage = Model.AkBaggageDetails.journeySsrsBaggage[0].baggageSsr[s].passengersAvailabilityBaggage[0].price;
                                                         string Sssrcode = Model.AkBaggageDetails.journeySsrsBaggage[0].baggageSsr[s].ssrCode;
                                                         string bagcode = Sssrcode.StartsWith("X", StringComparison.OrdinalIgnoreCase).ToString();
-                                                        var bagname = Model.AkBaggageDetails.journeySsrsBaggage[0].baggageSsr[s].name + "@" + Model.AkBaggageDetails.journeySsrsBaggage[0].baggageSsr[s].passengersAvailabilityBaggage[0].price;// + " " + Model.AkBaggageDetails.journeySsrsBaggage[0].baggageSsr[s].ssrCode;
+                                                        var bagname = Model.AkBaggageDetails.journeySsrsBaggage[0].baggageSsr[s].name + "@" + Model.AkBaggageDetails.journeySsrsBaggage[0].baggageSsr[s].passengersAvailabilityBaggage[0].price + " " + Model.AkBaggageDetails.journeySsrsBaggage[0].baggageSsr[s].ssrCode;
                                                         bagkey = Model.AkBaggageDetails.journeySsrsBaggage[0].baggageSsr[s].passengersAvailabilityBaggage[pa].ssrKey + "_" + Model.AkBaggageDetails.journeySsrsBaggage[0].baggageSsr[s].passengersAvailabilityBaggage[0].price;
                                                         if (bagcode != "False")
                                                         {
