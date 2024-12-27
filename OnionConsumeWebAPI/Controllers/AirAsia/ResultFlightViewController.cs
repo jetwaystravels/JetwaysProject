@@ -172,10 +172,10 @@ namespace OnionConsumeWebAPI.Controllers
                     OnewaydeserializedObjects = OnewaydeserializedObjects.OrderBy(d => d.designator.departure).ToList();
                     break;
                 case "arrive_desc":
-                    OnewaydeserializedObjects = OnewaydeserializedObjects.OrderByDescending(d => d.designator.arrival).ToList();
+                    OnewaydeserializedObjects = OnewaydeserializedObjects.OrderByDescending(d => d.designator.arrival.TimeOfDay).ToList();
                     break;
                 case "arrive_asc":
-                    OnewaydeserializedObjects = OnewaydeserializedObjects.OrderBy(d => d.designator.arrival).ToList();
+                    OnewaydeserializedObjects = OnewaydeserializedObjects.OrderBy(d => d.designator.arrival.TimeOfDay).ToList();
                     break;
                 case "duration_desc":
                     OnewaydeserializedObjects = OnewaydeserializedObjects.OrderByDescending(d => d.designator.formatTime).ToList();
