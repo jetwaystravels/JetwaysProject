@@ -24,7 +24,7 @@
         </div>
         <div class="col-md-3">
             <div class="form-input">
-                <input type="text" name="emailAddress" maxlength="50" oninput="validateEmail(event)" class="emailNClass" id="emailAddress" placeholder="Email ID">
+                <input type="text" name="emailAddress" maxlength="30" oninput="validateEmail(event)" class="emailNClass" id="emailAddress" placeholder="Email ID">
             </div>
             <p id="emailErrorMessage" style="color: red; font-size:13px;"></p>
             <p id="error-message7" class="error-message" style="display:none">Enter Email Address.</p>
@@ -85,7 +85,7 @@
         </div>
         <div class="col-md-3">
             <div class="form-input">
-                <input type="text" name="emailAddressgst" maxlength="266" oninput="validateEmailGST(event)" class="gstemail hid-block hidden" id="emailAddressGST" placeholder="Email ID">
+                <input type="text" name="emailAddressgst" maxlength="30" oninput="validateEmailGST(event)" class="gstemail hid-block hidden" id="emailAddressGST" placeholder="Email ID">
             </div>
             <p id="emailErrorMessageGST" style="color: red; font-size:13px;"></p>
         </div>
@@ -565,30 +565,16 @@
         }
 
     }
-</script>
-@* <script type="text/javascript">
-    document.getElementById('number').addEventListener('keypress', function (event) {
-        const input = event.target;
-        const value = input.value;
-        let phonefocus = document.getElementById("number").value;
-        if (phonefocus == "") {
 
-            let phoneToDisplay = document.getElementById("error-message8");
-            phoneToDisplay.style.display = "block";
-            document.getElementById('phoneNumberErrorMessage').innerText = "";
-            document.getElementById("number").focus();
-            return false;
-        }
 
-        // Allow input only if it matches the criteria (1-9 followed by 0-9 up to 9 digits)
-        //const regex = /^(?!0)\d{0,9}$/;
-        const regex = /^[1-9]\d{0,9}$/;
-
-        // Get the current value after appending the pressed key
-        const nextValue = value.slice(0, input.selectionStart) + event.key + value.slice(input.selectionEnd);
-
-        if (!regex.test(nextValue)) {
-            event.preventDefault(); // Prevent the keypress event
-        }
+    window.addEventListener('load', function () {
+        // Clear input fields
+        document.querySelectorAll('#contactFormRT input').forEach(input => {
+            if (input.type === 'text' || input.type === 'select-one') {
+                input.value = '';
+            }
+        });
     });
-</script> *@
+
+
+</script>

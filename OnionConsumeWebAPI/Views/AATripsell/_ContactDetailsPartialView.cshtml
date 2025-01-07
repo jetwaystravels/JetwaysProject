@@ -24,7 +24,7 @@
 
         <div class="col-md-3">
             <div class="form-input">
-                <input type="text" name="emailAddress" maxlength="40" oninput="validateEmail(event)" class="emailNClass" id="emailAddress" placeholder="Email ID">
+                <input type="text" name="emailAddress" maxlength="30" oninput="validateEmail(event)" class="emailNClass" id="emailAddress" placeholder="Email ID">
             </div>
             <p id="emailErrorMessage" style="color: red; font-size:13px;"></p>
             <p id="error-message7" class="error-message" style="display:none">Enter a valid email address.</p>
@@ -575,6 +575,14 @@
         }
 
     }
+
+    window.addEventListener('load', function () {
+        document.querySelectorAll('#contactForm input').forEach(input => {
+            if (input.type === 'text') {
+                input.value = ''; // Clear only text inputs
+            }
+        });
+    });
 </script>
 
 

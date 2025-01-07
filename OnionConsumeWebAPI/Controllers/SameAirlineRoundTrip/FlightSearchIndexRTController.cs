@@ -972,7 +972,7 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                     SpiceJetApiController objSpiceJet = new SpiceJetApiController();
                     Sessionmanager.LogonResponse _logonResponseobj = await objSpiceJet.Signature(_logonRequestobj);
 
-                    logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_logonRequestobj) + "\n Response: " + JsonConvert.SerializeObject(_logonResponseobj), "Logon", "SameSpicejetRT");
+                    logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_logonRequestobj) + "\n Response: " + JsonConvert.SerializeObject(_logonResponseobj), "Logon", "SpiceJetRight");
 
 
                     GetAvailabilityVer2Response _getAvailabilityVer2Response = null;
@@ -1050,7 +1050,7 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
 
                         _getAvailabilityVer2Response = await objSpiceJet.GetAvailabilityVer2Async(_getAvailabilityRQ);
 
-                        logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_getAvailabilityRQ) + "\n\n Response: " + JsonConvert.SerializeObject(_getAvailabilityVer2Response), "GetAvailability", "SameSpicejetRT");
+                        logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_getAvailabilityRQ) + "\n\n Response: " + JsonConvert.SerializeObject(_getAvailabilityVer2Response), "GetAvailability", "SpiceJetRight");
                     }
                     int count1 = 0;
                     if (_getAvailabilityVer2Response != null)
@@ -1315,7 +1315,7 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                         {
 
                             string str1 = JsonConvert.SerializeObject(_getAvailabilityVer2Response.GetTripAvailabilityVer2Response);
-                            logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_getAvailabilityRQ) + "\n\n Response: " + JsonConvert.SerializeObject(_getAvailabilityVer2Response), "GetAvailability", "SameSpicejetRT");
+                            logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_getAvailabilityRQ) + "\n\n Response: " + JsonConvert.SerializeObject(_getAvailabilityVer2Response), "GetAvailability", "SpiceJetRight");
                             //HttpContext.Session.SetString("SpiceJetPassengerModelSameR", str1); //Same AirLine SpiceJet
                         }
 

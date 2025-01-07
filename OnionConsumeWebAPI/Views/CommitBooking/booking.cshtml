@@ -674,7 +674,13 @@
                                                 <td>Rs.@Model.AirlinePNR[0].TotalAmountMeal</td>
                                             </tr>
                                         }
-
+                                        else
+                                        {
+                                            <tr>
+                                                <td>Addon Meal Amount:</td>
+                                                <td>Free</td>
+                                            </tr>
+                                        }
                                         if (@Model.AirlinePNR[0].TotaAmountBaggage > 0)
                                         {
 
@@ -684,6 +690,13 @@
                                             </tr>
 
                                         }
+                                        else
+                                        {
+                                            <tr>
+                                                <td>Addon Bagg Amount:</td>
+                                                <td>Free</td>
+                                            </tr>
+                                        }
                                         if (@Model.AirlinePNR[0].breakdown.passengerTotals.seats.totalSeatAmount > 0)
                                         {
                                             <tr>
@@ -691,7 +704,13 @@
                                                 <td>Rs. @Model.AirlinePNR[0].breakdown.passengerTotals.seats.totalSeatAmount</td>
                                             </tr>
                                         }
-
+                                        else
+                                        {
+                                            <tr>
+                                                <td>Seat Amount:</td>
+                                                <td>Free</td>
+                                            </tr>
+                                        }
                                     }
 
                                     <tr style="background:#FCE1E1;">

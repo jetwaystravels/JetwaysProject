@@ -1826,20 +1826,24 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     sellreqd.SellSSR = new SellSSR();
                                     sellreqd.SellSSR.SSRRequest = new SSRRequest();
                                     journeyscount = _getPriceItineraryRS.Booking.Journeys.Length;
+                                    int _idx = 0;
+                                    int segmentscount0 = _getPriceItineraryRS.Booking.Journeys[0].Segments.Length;
+                                    int segmentscount1 = _getPriceItineraryRS.Booking.Journeys[1].Segments.Length;
+                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests = new SegmentSSRRequest[segmentscount0+ segmentscount1];
                                     for (int i = 0; i < journeyscount; i++)
                                     {
                                         int segmentscount = _getPriceItineraryRS.Booking.Journeys[i].Segments.Length;
-                                        sellreqd.SellSSR.SSRRequest.SegmentSSRRequests = new SegmentSSRRequest[segmentscount];
+                                        //sellreqd.SellSSR.SSRRequest.SegmentSSRRequests = new SegmentSSRRequest[segmentscount];
                                         for (int j = 0; j < segmentscount; j++)
                                         {
-                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j] = new SegmentSSRRequest();
-                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].DepartureStation = _getPriceItineraryRS.Booking.Journeys[i].Segments[j].DepartureStation;
-                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].ArrivalStation = _getPriceItineraryRS.Booking.Journeys[i].Segments[j].ArrivalStation;
-                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].STD = _getPriceItineraryRS.Booking.Journeys[i].Segments[j].STD;
-                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].STDSpecified = true;
-                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].FlightDesignator = new FlightDesignator();
-                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].FlightDesignator.CarrierCode = _getPriceItineraryRS.Booking.Journeys[i].Segments[j].FlightDesignator.CarrierCode; ;
-                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].FlightDesignator.FlightNumber = _getPriceItineraryRS.Booking.Journeys[i].Segments[j].FlightDesignator.FlightNumber;
+                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_idx] = new SegmentSSRRequest();
+                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_idx].DepartureStation = _getPriceItineraryRS.Booking.Journeys[i].Segments[j].DepartureStation;
+                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_idx].ArrivalStation = _getPriceItineraryRS.Booking.Journeys[i].Segments[j].ArrivalStation;
+                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_idx].STD = _getPriceItineraryRS.Booking.Journeys[i].Segments[j].STD;
+                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_idx].STDSpecified = true;
+                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_idx].FlightDesignator = new FlightDesignator();
+                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_idx].FlightDesignator.CarrierCode = _getPriceItineraryRS.Booking.Journeys[i].Segments[j].FlightDesignator.CarrierCode; ;
+                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_idx].FlightDesignator.FlightNumber = _getPriceItineraryRS.Booking.Journeys[i].Segments[j].FlightDesignator.FlightNumber;
                                             //GetPassenger(passengerdetails);
                                             int numinfant = 0;
                                             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("infantCount")))
@@ -1848,7 +1852,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                             }
                                             //Paxes PaxNum = (Paxes)JsonConvert.DeserializeObject(numinfant, typeof(Paxes));
                                             bool infant = false;
-                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs = new PaxSSR[numinfant];
+                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_idx].PaxSSRs = new PaxSSR[numinfant];
 
                                             for (int j1 = 0; j1 < numinfant; j1++)
                                             {
@@ -1860,30 +1864,31 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                         infantcount = numinfant;
                                                         if (infantcount > 0 && i1 + 1 <= infantcount)
                                                         {
-                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i1] = new PaxSSR();
-                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i1].ActionStatusCode = "NN";
-                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i1].SSRCode = "INFT";
-                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i1].PassengerNumberSpecified = true;
-                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i1].PassengerNumber = Convert.ToInt16(i1);
-                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i1].SSRNumber = Convert.ToInt16(0);
-                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i1].DepartureStation = _getPriceItineraryRS.Booking.Journeys[i].Segments[j].DepartureStation;
-                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i1].ArrivalStation = _getPriceItineraryRS.Booking.Journeys[i].Segments[j].ArrivalStation;
+                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_idx].PaxSSRs[i1] = new PaxSSR();
+                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_idx].PaxSSRs[i1].ActionStatusCode = "NN";
+                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_idx].PaxSSRs[i1].SSRCode = "INFT";
+                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_idx].PaxSSRs[i1].PassengerNumberSpecified = true;
+                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_idx].PaxSSRs[i1].PassengerNumber = Convert.ToInt16(i1);
+                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_idx].PaxSSRs[i1].SSRNumber = Convert.ToInt16(0);
+                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_idx].PaxSSRs[i1].DepartureStation = _getPriceItineraryRS.Booking.Journeys[i].Segments[j].DepartureStation;
+                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_idx].PaxSSRs[i1].ArrivalStation = _getPriceItineraryRS.Booking.Journeys[i].Segments[j].ArrivalStation;
                                                             j1 = numinfant - 1;
                                                         }
                                                     }
                                                 }
                                             }
 
-
+                                       _idx++;
                                         }
-                                        sellSsrRequest.SellRequestData = sellreqd;
-                                        objSpiceJet = new SpiceJetApiController();
-                                        sellSsrResponse = await objSpiceJet.sellssR(sellSsrRequest);
+                                        
                                     }
+                                    sellSsrRequest.SellRequestData = sellreqd;
+                                    objSpiceJet = new SpiceJetApiController();
+                                    sellSsrResponse = await objSpiceJet.sellssR(sellSsrRequest);
 
 
                                     str3 += JsonConvert.SerializeObject(sellSsrResponse);
-                                    logs.WriteLogs("Request: " + JsonConvert.SerializeObject(sellSsrRequest) + "\n\n Response: " + JsonConvert.SerializeObject(sellSsrResponse), "SellSSRInfant", "SpicejetRT");
+                                    logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(sellSsrRequest) + "\n\n Response: " + JsonConvert.SerializeObject(sellSsrResponse), "SellSSRInfant", "SpicejetRT");
 
 
                                     if (sellSsrResponse != null)
