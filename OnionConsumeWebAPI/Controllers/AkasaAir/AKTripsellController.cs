@@ -495,9 +495,9 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                                     SellSSRModel _sellSSRModel = new SellSSRModel();
                                     _sellSSRModel.count = 1;
                                     _sellSSRModel.note = "PYOG";
-                                    _sellSSRModel.forceWaveOnSell = false;
+                                   // _sellSSRModel.forceWaveOnSell = false;
                                     _sellSSRModel.currencyCode = "INR";
-                                    _sellSSRModel.ssrSellMode = 2;
+                                   // _sellSSRModel.ssrSellMode = 2;
 
                                     var jsonSellSSR = JsonConvert.SerializeObject(_sellSSRModel, Formatting.Indented);
                                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
@@ -584,9 +584,9 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                                     SellSSRModel _sellSSRModel = new SellSSRModel();
                                     _sellSSRModel.count = 1;
                                     _sellSSRModel.note = "PYOG";
-                                    _sellSSRModel.forceWaveOnSell = false;
+                                    //_sellSSRModel.forceWaveOnSell = false;
                                     _sellSSRModel.currencyCode = "INR";
-                                    _sellSSRModel.ssrSellMode = 2;
+                                    //_sellSSRModel.ssrSellMode = 2;
 
                                     var jsonSellSSR = JsonConvert.SerializeObject(_sellSSRModel, Formatting.Indented);
                                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));

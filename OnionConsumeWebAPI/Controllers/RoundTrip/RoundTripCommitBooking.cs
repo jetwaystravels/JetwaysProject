@@ -812,6 +812,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             Hashtable htmealdata = new Hashtable();
                             Hashtable htBagdata = new Hashtable();
                             var _responcePNRBooking = responcepnrBooking.Content.ReadAsStringAsync().Result;
+                            logs.WriteLogsR("Url: " + AppUrlConstant.AkasaPNRBooking + "\n Response: " + _responcePNRBooking, "GetBookingPNRDeatils", "AkasaRT");
                             var JsonObjPNRBooking = JsonConvert.DeserializeObject<dynamic>(_responcePNRBooking);
                             ReturnTicketBooking returnTicketBooking = new ReturnTicketBooking();
                             string PassengerData = HttpContext.Session.GetString("PassengerNameDetails");

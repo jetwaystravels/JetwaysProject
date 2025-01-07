@@ -3772,7 +3772,7 @@
 { "citycode": "KCS", "cityname": "Kings Creek Station", "airportname": "Kings Creek Station Airport "},
 { "citycode": "KCT", "cityname": "Koggala", "airportname": "Koggala Airport "},
 { "citycode": "KCU", "cityname": "Masindi", "airportname": "Masindi Airport "},
-{ "citycode": "KCZ", "cityname": "Kochi", "airportname": "Kochi Airport "},
+{ "citycode": "KCZ", "cityname": "Kochi1", "airportname": "Kochi Airport "},
 { "citycode": "KDA", "cityname": "Kolda", "airportname": "Kolda Airport "},
 { "citycode": "KDB", "cityname": "Kambalda", "airportname": "Kambalda Airport "},
 { "citycode": "KDC", "cityname": "Kandi", "airportname": "Kandi Airport "},

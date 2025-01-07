@@ -1176,6 +1176,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         int _a = 0;
                         foreach (Match item in Regex.Matches(passenger, @"<Start>(?<test>[\s\S]*?)<End>"))
                         {
+                            
                             passenger = item.Groups["test"].Value.ToString().Replace("/\"", "\"").Replace("\\\"", "\"").Replace("\\\\", "");
                             if (passenger != null)
                             {
@@ -2007,8 +2008,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                 }
                                 else if (passeengerKeyList.journeys[0].Airlinename.ToLower() == "airasia")
                                 {
+                                    bagid = 0;
                                     mealid = 0;
-
                                     string tokenview = string.Empty;
                                     if (string.IsNullOrEmpty(tokenview))
                                     {
@@ -2210,6 +2211,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
                                 else if (passeengerKeyList.journeys[0].Airlinename.ToLower() == "akasaair")
                                 {
+                                    bagid = 0;
                                     mealid = 0;
                                     string tokenview = string.Empty;
                                     if (string.IsNullOrEmpty(tokenview))
@@ -2412,11 +2414,6 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     }
 
                                 }
-
-
-
-
-
                                 else if (passeengerKeyList.journeys[0].Airlinename.ToLower() == "indigo")
                                 {
                                     bool Boolfastforward = false;

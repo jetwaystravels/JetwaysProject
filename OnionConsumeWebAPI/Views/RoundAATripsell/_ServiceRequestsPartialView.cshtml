@@ -631,6 +631,7 @@
                                     for (int pas = 0; pas < passengerdata2; pas++)
                                     {
                                         string AirLine = string.Empty;
+                                        string mealnamedisplay = string.Empty;
                                         string ssrkeyAA = string.Empty;
                                         string bagkeyAA = string.Empty;
                                         string bagkey = string.Empty;
@@ -647,6 +648,10 @@
                                             </div>
                                             <div class="servc-content select-option">
                                                 @{
+                                                    if (Model.MealslistRT[0] != null)
+                                                    {
+                                                        AirLine = Model.MealslistRT[0].legSsrs[0].legssrs[0].legpassengers[0].Airline.ToString();
+                                                    }
                                                     List<SelectListItem> mealOptions = new List<SelectListItem>();
                                                     if (AirLine.ToLower() == "airasia")
                                                     {
@@ -655,11 +660,22 @@
                                                             for (int s = 0; s < Model.MealslistRT[0].legSsrs[l].legssrs.Count; s++)
                                                             {
                                                                 string ssrprice = Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].price;
+                                                                mealnamedisplay = Model.MealslistRT[0].legSsrs[l].legssrs[s].name;
                                                                 string Mealcode = Model.MealslistRT[0].legSsrs[l].legssrs[s].ssrCode + "_" + Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].price + "_" + "OneWay0" + "_" + Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].Airline;
                                                                 //  string MealcodeData = Mealcode.StartsWith("V", StringComparison.OrdinalIgnoreCase).ToString();
                                                                 AirLine = Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].Airline.ToString();
                                                                 string Mealname = Model.MealslistRT[0].legSsrs[l].legssrs[s].name + " ₹" + @Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].price;
                                                                 ssrkeyAA = Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[pas].ssrKey + "_" + @Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].price + "_" + "OneWay0" + "_" + Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].Airline;
+                                                                // if (AirLine.ToLower() == "airasia" || AirLine.ToLower() == "akasaair")
+                                                                // {
+                                                                //     ssrkeyAA = Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[pas].ssrKey + "_" + @Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].price + "_" + "OneWay0" + "_" + Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].Airline;
+                                                                // }
+                                                                // else
+                                                                // {
+                                                                //     ssrkeyAA = Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].ssrKey + "_" + @Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].price + "_" + "OneWay0" + "_" + Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].Airline;
+                                                                // }
+                                                                
+                                                                
                                                                 string Mcode = (Mealcode.StartsWith("E", StringComparison.OrdinalIgnoreCase) ||
                                                                 Mealcode.StartsWith("INFT", StringComparison.OrdinalIgnoreCase) ||
                                                                 Mealcode.StartsWith("X", StringComparison.OrdinalIgnoreCase)).ToString();
@@ -667,11 +683,15 @@
                                                                 {
                                                                     continue;
                                                                 }
+                                                                if (mealnamedisplay == null)
+                                                                {
+                                                                    continue;
+                                                                }
                                                                 else
                                                                     ssrkey = Mealcode;
                                                                 if (Mealcode != null)
                                                                 {
-                                                                    if (AirLine.ToLower() == "airasia")
+                                                                    if (AirLine.ToLower() == "airasia" || AirLine.ToLower() == "akasaair")
                                                                     {
                                                                         //  if (MealcodeData != "False")
                                                                         // {
@@ -700,6 +720,7 @@
                                                                 for (int s = 0; s < Model.MealslistRT[0].legSsrs[l].legssrs.Count; s++)
                                                                 {
                                                                     string ssrprice = Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].price;
+                                                                    mealnamedisplay = Model.MealslistRT[0].legSsrs[l].legssrs[s].name;
                                                                     string Mealcode = Model.MealslistRT[0].legSsrs[l].legssrs[s].ssrCode + "_" + Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].price + "_" + "OneWay0" + "_" + Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].Airline;
                                                                     //string MealcodeData = Mealcode.StartsWith("V", StringComparison.OrdinalIgnoreCase).ToString();
                                                                     AirLine = Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].Airline.ToString();
@@ -717,6 +738,10 @@
                                                                         continue;
                                                                     }
                                                                     if (Mcode.ToLower() == "true")
+                                                                    {
+                                                                        continue;
+                                                                    }
+                                                                    if (mealnamedisplay == null)
                                                                     {
                                                                         continue;
                                                                     }
@@ -819,7 +844,13 @@
                                                                 if (bagname.Contains("Xtra-Carry-On") || bagname.Contains(" Xcess Baggage"))
                                                                 {
                                                                     string[] parts = bagname.Split(new string[] { "Xtra-Carry-On", "Xcess Baggage" }, StringSplitOptions.RemoveEmptyEntries);
-                                                                    string formattedName = string.Join(" ", parts).Trim();
+                                                                    string _desc = string.Empty;
+                                                                    if (Sssrcode.Equals("PBCA", StringComparison.OrdinalIgnoreCase) || Sssrcode.Equals("PBCB", StringComparison.OrdinalIgnoreCase))
+                                                                        _desc = "Cabin Baggage";
+                                                                    else
+                                                                        _desc = "Check-In Baggage";
+
+                                                                    string formattedName = string.Join(_desc, parts).Trim();
                                                                     BaggageOptions.Add(new SelectListItem { Text = formattedName, Value = bagkey });
                                                                 }
                                                                 else
@@ -848,7 +879,12 @@
                                                                 if (bagname.Contains("Xtra-Carry-On") || bagname.Contains(" Xcess Baggage"))
                                                                 {
                                                                     string[] parts = bagname.Split(new string[] { "Xtra-Carry-On", "Xcess Baggage" }, StringSplitOptions.RemoveEmptyEntries);
-                                                                    string formattedName = string.Join(" ", parts).Trim();
+                                                                    string _desc = string.Empty;
+                                                                    if (Sssrcode.Equals("PBCA", StringComparison.OrdinalIgnoreCase) || Sssrcode.Equals("PBCB", StringComparison.OrdinalIgnoreCase))
+                                                                        _desc = "Cabin Baggage";
+                                                                    else
+                                                                        _desc = "Check-In Baggage";
+                                                                    string formattedName = string.Join(_desc, parts).Trim();
                                                                     BaggageOptions.Add(new SelectListItem { Text = formattedName, Value = bagkey });
                                                                 }
                                                                 else
@@ -1000,6 +1036,7 @@
                                     for (int pas = 0; pas < passengerdata2; pas++)
                                     {
                                         string AirLine = string.Empty;
+                                        string mealnamedisplay = string.Empty;
                                         string ssrkeyAA = string.Empty;
                                         string bagkeyAA = string.Empty;
                                         string ssrkey = string.Empty;
@@ -1018,6 +1055,11 @@
 
 
                                                 @{
+                                                     if (Model.MealslistRT[0] != null && Model.MealslistRT[0].legSsrs.Count>1)
+                                                     {
+                                                         AirLine = Model.MealslistRT[0].legSsrs[1].legssrs[0].legpassengers[0].Airline.ToString();
+                                                     }
+
                                                     List<SelectListItem> mealOptions = new List<SelectListItem>();
                                                     if (AirLine.ToLower() == "airasia")
                                                     {
@@ -1026,6 +1068,7 @@
                                                             for (int s = 0; s < Model.MealslistRT[0].legSsrs[1].legssrs.Count; s++)
                                                             {
                                                                 string ssrprice = Model.MealslistRT[0].legSsrs[1].legssrs[s].legpassengers[0].price;
+                                                                mealnamedisplay = Model.MealslistRT[0].legSsrs[1].legssrs[s].name;
                                                                 string Mealcode = Model.MealslistRT[0].legSsrs[1].legssrs[s].ssrCode + "_" + Model.MealslistRT[0].legSsrs[1].legssrs[s].legpassengers[0].price + "_" + "OneWay1" + "_" + Model.MealslistRT[0].legSsrs[1].legssrs[s].legpassengers[0].Airline;
                                                                 // string MealData = Mealcode.StartsWith("V", StringComparison.OrdinalIgnoreCase).ToString();
                                                                 string Mealname = Model.MealslistRT[0].legSsrs[1].legssrs[s].name + " ₹" + @Model.MealslistRT[0].legSsrs[1].legssrs[s].legpassengers[0].price;
@@ -1038,13 +1081,17 @@
                                                                 {
                                                                     continue;
                                                                 }
+                                                                if (mealnamedisplay == null)
+                                                                {
+                                                                    continue;
+                                                                }
                                                                 else
                                                                     ssrkey = Mealcode;
 
 
                                                                 if (Mealcode != null)
                                                                 {
-                                                                    if (AirLine.ToLower() == "airasia")
+                                                                    if (AirLine.ToLower() == "airasia" || AirLine.ToLower() == "akasaair")
                                                                     {
                                                                         // if (MealData != "False")
                                                                         // {
@@ -1076,6 +1123,7 @@
                                                                 for (int s = 0; s < Model.MealslistRT[0].legSsrs[1].legssrs.Count; s++)
                                                                 {
                                                                     string ssrprice = Model.MealslistRT[0].legSsrs[1].legssrs[s].legpassengers[0].price;
+                                                                    mealnamedisplay = Model.MealslistRT[0].legSsrs[1].legssrs[s].name;
                                                                     string Mealcode = Model.MealslistRT[0].legSsrs[1].legssrs[s].ssrCode + "_" + Model.MealslistRT[0].legSsrs[1].legssrs[s].legpassengers[0].price + "_" + "OneWay1" + "_" + Model.MealslistRT[0].legSsrs[1].legssrs[s].legpassengers[0].Airline;
                                                                     //string MealData = Mealcode.StartsWith("V", StringComparison.OrdinalIgnoreCase).ToString();
                                                                     string Mealname = Model.MealslistRT[0].legSsrs[1].legssrs[s].name + " ₹" + @Model.MealslistRT[0].legSsrs[1].legssrs[s].legpassengers[0].price;
@@ -1093,6 +1141,10 @@
                                                                         continue;
                                                                     }
                                                                     if (Mcode.ToLower() == "true")
+                                                                    {
+                                                                        continue;
+                                                                    }
+                                                                    if (mealnamedisplay == null)
                                                                     {
                                                                         continue;
                                                                     }
@@ -1252,6 +1304,7 @@
                                         for (int pas = 0; pas < passengerdata2; pas++)
                                         {
                                             string AirLine = string.Empty;
+                                            string mealnamedisplay = string.Empty;
                                             string ssrkeyAA = string.Empty;
                                             string bagkeyAA = string.Empty;
                                             string ssrkey = string.Empty;
@@ -1265,10 +1318,11 @@
                                                     }
                                                 </div>
                                                 <div class="servc-content select-optionRT">
-
-
-
                                                     @{
+                                                        if (Model.MealslistRT[1] != null)
+                                                        {
+                                                            AirLine = Model.MealslistRT[1].legSsrs[0].legssrs[0].legpassengers[0].Airline.ToString();
+                                                        }
                                                         List<SelectListItem> mealOptions = new List<SelectListItem>();
                                                         if (AirLine.ToLower() == "airasia")
                                                         {
@@ -1277,6 +1331,7 @@
                                                                 try
                                                                 {
                                                                     string ssrprice = Model.MealslistRT[1].legSsrs[0].legssrs[s].legpassengers[0].price;
+                                                                    mealnamedisplay = Model.MealslistRT[1].legSsrs[0].legssrs[s].name;
                                                                     string Mealcode = Model.MealslistRT[1].legSsrs[0].legssrs[s].ssrCode + "_" + Model.MealslistRT[1].legSsrs[0].legssrs[s].legpassengers[0].price + "_" + "RT0" + "_" + Model.MealslistRT[1].legSsrs[0].legssrs[s].legpassengers[0].Airline;
                                                                     //  string MealcodeCondata = Mealcode.StartsWith("V", StringComparison.OrdinalIgnoreCase).ToString();
                                                                     string Mealname = Model.MealslistRT[1].legSsrs[0].legssrs[s].name + " ₹" + @Model.MealslistRT[1].legSsrs[0].legssrs[s].legpassengers[0].price;
@@ -1289,6 +1344,10 @@
 
                                                                     // string Mcode = Mealcode.StartsWith("X", StringComparison.OrdinalIgnoreCase).ToString();
                                                                     if (Mcode.ToLower() == "true")
+                                                                    {
+                                                                        continue;
+                                                                    }
+                                                                    if (mealnamedisplay == null)
                                                                     {
                                                                         continue;
                                                                     }
@@ -1312,7 +1371,7 @@
                                                                     // }
                                                                     if (Mealcode != null)
                                                                     {
-                                                                        if (AirLine.ToLower() == "airasia")
+                                                                        if (AirLine.ToLower() == "airasia" || AirLine.ToLower() == "akasaair")
                                                                         {
                                                                             // if (MealcodeCondata != "False")
                                                                             //{
@@ -1347,6 +1406,7 @@
                                                                         try
                                                                         {
                                                                             string ssrprice = Model.MealslistRT[1].legSsrs[0].legssrs[s].legpassengers[0].price;
+                                                                            mealnamedisplay = Model.MealslistRT[1].legSsrs[0].legssrs[s].name;
                                                                             string Mealcode = Model.MealslistRT[1].legSsrs[0].legssrs[s].ssrCode + "_" + Model.MealslistRT[1].legSsrs[0].legssrs[s].legpassengers[0].price + "_" + "RT0" + "_" + Model.MealslistRT[1].legSsrs[0].legssrs[s].legpassengers[0].Airline;
                                                                             //string MealcodeCondata = Mealcode.StartsWith("V", StringComparison.OrdinalIgnoreCase).ToString();
                                                                             string Mealname = Model.MealslistRT[1].legSsrs[0].legssrs[s].name + " ₹" + @Model.MealslistRT[1].legSsrs[0].legssrs[s].legpassengers[0].price;
@@ -1366,6 +1426,10 @@
                                                                                 continue;
                                                                             }
                                                                             if (Mcode.ToLower() == "true")
+                                                                            {
+                                                                                continue;
+                                                                            }
+                                                                            if (mealnamedisplay == null)
                                                                             {
                                                                                 continue;
                                                                             }
@@ -1489,7 +1553,12 @@
                                                                     if (bagname.Contains("Xtra-Carry-On") || bagname.Contains(" Xcess Baggage"))
                                                                     {
                                                                         string[] parts = bagname.Split(new string[] { "Xtra-Carry-On", "Xcess Baggage" }, StringSplitOptions.RemoveEmptyEntries);
-                                                                        string formattedNameCon = string.Join(" ", parts).Trim();
+                                                                        string _desc = string.Empty;
+                                                                        if (Sssrcode.Equals("PBCA", StringComparison.OrdinalIgnoreCase) || Sssrcode.Equals("PBCB", StringComparison.OrdinalIgnoreCase))
+                                                                            _desc = "Cabin Baggage";
+                                                                        else
+                                                                            _desc = "Check-In Baggage";
+                                                                        string formattedNameCon = string.Join(_desc, parts).Trim();
                                                                         BaggageOptions.Add(new SelectListItem { Text = formattedNameCon, Value = bagkeyAA });
                                                                     }
                                                                     else
@@ -1523,7 +1592,12 @@
                                                                         if (bagname.Contains("Xtra-Carry-On") || bagname.Contains(" Xcess Baggage"))
                                                                         {
                                                                             string[] parts = bagname.Split(new string[] { "Xtra-Carry-On", "Xcess Baggage" }, StringSplitOptions.RemoveEmptyEntries);
-                                                                            string formattedNameCon = string.Join(" ", parts).Trim();
+                                                                            string _desc = string.Empty;
+                                                                            if (Sssrcode.Equals("PBCA", StringComparison.OrdinalIgnoreCase) || Sssrcode.Equals("PBCB", StringComparison.OrdinalIgnoreCase))
+                                                                                _desc = "Cabin Baggage";
+                                                                            else
+                                                                                _desc = "Check-In Baggage";
+                                                                            string formattedNameCon = string.Join(_desc, parts).Trim();
                                                                             BaggageOptions.Add(new SelectListItem { Text = formattedNameCon, Value = bagkeyAA });
                                                                         }
                                                                         else
@@ -1689,6 +1763,7 @@
                                         for (int pas = 0; pas < passengerdata2; pas++)
                                         {
                                             string AirLine = string.Empty;
+                                            string mealnamedisplay = string.Empty;
                                             string ssrkeyAA = string.Empty;
                                             string ssrkey = string.Empty;
                                             <div class="d-flex justify-content-between py-3">
@@ -1704,6 +1779,10 @@
                                                 <div class="servc-content select-option2RT">
 
                                                     @{
+                                                        if (Model.MealslistRT[1] != null && Model.MealslistRT[1].legSsrs.Count>1)
+                                                        {
+                                                            AirLine = Model.MealslistRT[1].legSsrs[1].legssrs[0].legpassengers[0].Airline.ToString();
+                                                        }
                                                         List<SelectListItem> mealOptions = new List<SelectListItem>();
                                                         if (AirLine.ToLower() == "airasia")
                                                         {
@@ -1712,6 +1791,7 @@
                                                                 for (int s = 0; s < Model.MealslistRT[1].legSsrs[1].legssrs.Count; s++)
                                                                 {
                                                                     string ssrprice = Model.MealslistRT[1].legSsrs[1].legssrs[s].legpassengers[0].price;
+                                                                    mealnamedisplay = Model.MealslistRT[1].legSsrs[1].legssrs[s].name;
                                                                     string Mealcode = Model.MealslistRT[1].legSsrs[1].legssrs[s].ssrCode + "_" + Model.MealslistRT[1].legSsrs[1].legssrs[s].legpassengers[0].price + "_" + "RT1" + "_" + Model.MealslistRT[1].legSsrs[1].legssrs[s].legpassengers[0].Airline;
                                                                     string MealcodeRT = Mealcode.StartsWith("V", StringComparison.OrdinalIgnoreCase).ToString();
                                                                     string Mealname = Model.MealslistRT[1].legSsrs[1].legssrs[s].name + " ₹" + @Model.MealslistRT[1].legSsrs[1].legssrs[s].legpassengers[0].price;
@@ -1724,13 +1804,17 @@
                                                                     {
                                                                         continue;
                                                                     }
+                                                                    if (mealnamedisplay == null)
+                                                                    {
+                                                                        continue;
+                                                                    }
                                                                     else
                                                                         ssrkey = Mealcode;
 
 
                                                                     if (Mealcode != null)
                                                                     {
-                                                                        if (AirLine.ToLower() == "airasia")
+                                                                        if (AirLine.ToLower() == "airasia" || AirLine.ToLower() == "akasaair")
                                                                         {
                                                                             if (MealcodeRT != "False")
                                                                             {
@@ -1762,6 +1846,7 @@
                                                                         for (int s = 0; s < Model.MealslistRT[1].legSsrs[1].legssrs.Count; s++)
                                                                         {
                                                                             string ssrprice = Model.MealslistRT[1].legSsrs[1].legssrs[s].legpassengers[0].price;
+                                                                            mealnamedisplay = Model.MealslistRT[1].legSsrs[1].legssrs[s].name;
                                                                             string Mealcode = Model.MealslistRT[1].legSsrs[1].legssrs[s].ssrCode + "_" + Model.MealslistRT[1].legSsrs[1].legssrs[s].legpassengers[0].price + "_" + "RT1" + "_" + Model.MealslistRT[1].legSsrs[1].legssrs[s].legpassengers[0].Airline;
                                                                             //string MealcodeRT = Mealcode.StartsWith("V", StringComparison.OrdinalIgnoreCase).ToString();
                                                                             string Mealname = Model.MealslistRT[1].legSsrs[1].legssrs[s].name + " ₹" + @Model.MealslistRT[1].legSsrs[1].legssrs[s].legpassengers[0].price;
@@ -1779,6 +1864,10 @@
                                                                                 continue;
                                                                             }
                                                                             if (Mcode.ToLower() == "true")
+                                                                            {
+                                                                                continue;
+                                                                            }
+                                                                            if (mealnamedisplay == null)
                                                                             {
                                                                                 continue;
                                                                             }

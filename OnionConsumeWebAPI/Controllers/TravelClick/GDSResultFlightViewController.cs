@@ -644,6 +644,8 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
 
                     #region SeatMap
 
+                    //string SeatMapres = _objAvail.GetSeatMap(_testURL, fareRepriceReq, availibiltyRQGDS, newGuid.ToString(), _targetBranch, _userName, _password, AirfaredataL, farebasisdataL, 0, "GDSOneWay");
+
                     //List<IndigoBookingManager_.GetSeatAvailabilityResponse> SeatGroup = null;// await objssr.GetseatAvailability(Signature, AirAsiaTripResponceobj, "OneWay");
                     //if (SeatGroup != null)
                     //{

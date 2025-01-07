@@ -640,6 +640,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                             AAJourneyList.Add(AAJourneyobject);
                                         }
 
+                                        int ServiceInfttax = 0;
                                         var Passanger = JsonObjPassengers.data.passengers;
                                         passengercount = ((Newtonsoft.Json.Linq.JContainer)Passanger).Count;
                                         List<AAPassengers> passkeyList = new List<AAPassengers>();
@@ -662,7 +663,15 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                     //Vinay Infant Base 
                                                     Inftcount += Feecount;
                                                     Inftbasefare = JsonObjPassengers.data.passengers[passkeytypeobject.passengerKey].infant.fees[0].serviceCharges[0].amount;
+                                                    var ServiceInft = JsonObjPassengers.data.passengers[passkeytypeobject.passengerKey].infant.fees[0].serviceCharges;
+                                                    int ServiceInftcount = ((Newtonsoft.Json.Linq.JContainer)ServiceInft).Count;
 
+                                                    for (int inf = 1; inf < ServiceInftcount; inf++)
+                                                    {
+                                                        ServiceInfttax = JsonObjPassengers.data.passengers[passkeytypeobject.passengerKey].infant.fees[0].serviceCharges[inf].amount;
+                                                        ServiceInfttax += ServiceInfttax;
+                                                    }
+                                                    Inftbasefare = Inftbasefare - ServiceInfttax;
                                                     List<DomainLayer.Model.Fee> feeList = new List<DomainLayer.Model.Fee>();
                                                     for (int i = 0; i < Feecount; i++)
                                                     {
@@ -695,6 +704,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                             }
                                             AirAsiaTripResponceobject.inftcount = Inftcount;
                                             AirAsiaTripResponceobject.inftbasefare = Inftbasefare;
+                                            AirAsiaTripResponceobject.infttax = ServiceInfttax;
                                             AirAsiaTripResponceobject.journeys = AAJourneyList;
                                             AirAsiaTripResponceobject.passengers = passkeyList;
                                             AirAsiaTripResponceobject.passengerscount = passengercount;
@@ -1248,7 +1258,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                             AAJourneyobject.segments = AASegmentlist;
                                             AAJourneyList.Add(AAJourneyobject);
                                         }
-
+                                        int ServiceInfttax = 0;
                                         var Passanger = JsonObjPassengers.data.passengers;
                                         passengercount = ((Newtonsoft.Json.Linq.JContainer)Passanger).Count;
                                         List<AAPassengers> passkeyList = new List<AAPassengers>();
@@ -1272,6 +1282,15 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                     Inftcount += Feecount;
                                                     Inftbasefare = JsonObjPassengers.data.passengers[passkeytypeobject.passengerKey].infant.fees[0].serviceCharges[0].amount;
 
+                                                    var ServiceInft = JsonObjPassengers.data.passengers[passkeytypeobject.passengerKey].infant.fees[0].serviceCharges;
+                                                    int ServiceInftcount = ((Newtonsoft.Json.Linq.JContainer)ServiceInft).Count;
+
+                                                    for (int inf = 1; inf < ServiceInftcount; inf++)
+                                                    {
+                                                        ServiceInfttax = JsonObjPassengers.data.passengers[passkeytypeobject.passengerKey].infant.fees[0].serviceCharges[inf].amount;
+                                                        ServiceInfttax += ServiceInfttax;
+                                                    }
+                                                    Inftbasefare = Inftbasefare - ServiceInfttax;
                                                     List<DomainLayer.Model.Fee> feeList = new List<DomainLayer.Model.Fee>();
                                                     for (int i = 0; i < Feecount; i++)
                                                     {
@@ -1304,6 +1323,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                             }
                                             AirAsiaTripResponceobject.inftcount = Inftcount;
                                             AirAsiaTripResponceobject.inftbasefare = Inftbasefare;
+                                            AirAsiaTripResponceobject.infttax = ServiceInfttax;
                                             AirAsiaTripResponceobject.journeys = AAJourneyList;
                                             AirAsiaTripResponceobject.passengers = passkeyList;
                                             AirAsiaTripResponceobject.passengerscount = passengercount;
@@ -1325,7 +1345,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     string Signature = string.Empty;
                     int TotalCount = 0;
                     string str3 = string.Empty;
-                    if (_JourneykeyRTData.ToLower() == "spicejet")
+                    if (_JourneykeyRTData.ToLower() == "spicejet") 
                     {
                         #region SpiceJetSellRequest
                         string stravailibitilityrequest = HttpContext.Session.GetString("SpicejetAvailibilityRequest");
