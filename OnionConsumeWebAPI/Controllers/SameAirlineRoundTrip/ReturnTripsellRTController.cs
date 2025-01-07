@@ -569,6 +569,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                 Passengers1 passengers1 = new Passengers1();
                                 passengers1.residentCountry = "IN";
                                 List<Type2> typelist = new List<Type2>();
+                                int _inftCount = 0;
                                 for (int i = 0; i < _SimpleAvailabilityobj.passengers.types.Count; i++)
                                 {
                                     Type2 _Types = new Type2();
@@ -587,6 +588,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     }
                                     else if (_SimpleAvailabilityobj.passengers.types[i].type == "INFT")
                                     {
+                                        _inftCount = _SimpleAvailabilityobj.passengers.types[i].count;
                                         infanttype = _SimpleAvailabilityobj.passengers.types[i].type;
                                         continue;
                                     }
@@ -729,7 +731,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
                                                         if (JsonObjPassengers.data.passengers[passkeytypeobject.passengerKey].infant != null)
                                                         {
-                                                            Inftcount = JsonObjPassengers.data.passengers[passkeytypeobject.passengerKey].infant.fees.Count;
+                                                            Inftcount = _inftCount;//JsonObjPassengers.data.passengers[passkeytypeobject.passengerKey].infant.fees.Count;
                                                             //Vinay Infant Base 
                                                             // Inftcount += Feecount;
                                                             //int Inftaxcount = JsonObjPassengers.data.passengers[passkeytypeobject.passengerKey].infant.fees[0].serviceCharges.Count;
@@ -1829,7 +1831,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     int _idx = 0;
                                     int segmentscount0 = _getPriceItineraryRS.Booking.Journeys[0].Segments.Length;
                                     int segmentscount1 = _getPriceItineraryRS.Booking.Journeys[1].Segments.Length;
-                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests = new SegmentSSRRequest[segmentscount0+ segmentscount1];
+                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests = new SegmentSSRRequest[segmentscount0 + segmentscount1];
                                     for (int i = 0; i < journeyscount; i++)
                                     {
                                         int segmentscount = _getPriceItineraryRS.Booking.Journeys[i].Segments.Length;
@@ -1878,9 +1880,9 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                 }
                                             }
 
-                                       _idx++;
+                                            _idx++;
                                         }
-                                        
+
                                     }
                                     sellSsrRequest.SellRequestData = sellreqd;
                                     objSpiceJet = new SpiceJetApiController();
