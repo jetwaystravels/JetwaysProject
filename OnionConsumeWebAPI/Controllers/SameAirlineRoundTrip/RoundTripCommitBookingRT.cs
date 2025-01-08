@@ -751,6 +751,53 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         token = tokenview.Replace(@"""", string.Empty);
                         #region Get Booking
 
+                        client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                        HttpResponseMessage responceGetBookingSate = await client.GetAsync(AppUrlConstant.URLAkasaAir + "/api/nsk/v1/booking");
+                        if (responceGetBookingSate.IsSuccessStatusCode)
+                        {
+                            string _responceGetBooking = responceGetBookingSate.Content.ReadAsStringAsync().Result;
+                            var DataBooking = JsonConvert.DeserializeObject<dynamic>(_responceGetBooking);
+                            decimal Totalpayment = 0M;
+                            if (_responceGetBooking != null)
+                            {
+                                Totalpayment = DataBooking.data.breakdown.totalAmount;
+                            }
+
+                            //Logs logs = new Logs();
+                            //logs.WriteLogs("Request: " + JsonConvert.SerializeObject("GetBookingStateRequest") + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v1/booking" + "\n Response: " + JsonConvert.SerializeObject(_responceGetBooking), "GetBookingState", "AirAsiaOneWay");
+
+                            //ADD Payment
+
+                            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                            // Payment request payload
+                            PaymentRequest paymentRequest = new PaymentRequest();
+                            paymentRequest.PaymentMethodCode = "AG";
+                            paymentRequest.Amount = Totalpayment;
+                            paymentRequest.PaymentFields = new PaymentFields();
+                            paymentRequest.PaymentFields.ACCTNO = "QPDEL5019C";
+                            paymentRequest.PaymentFields.AMT = Totalpayment;
+                            paymentRequest.CurrencyCode = "INR";
+                            paymentRequest.Installments = 1;
+
+                            // Serializing the payload to JSON
+                            string jsonPayload = JsonConvert.SerializeObject(paymentRequest);
+                            HttpContent content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+                            // Sending the POST request
+                            string url = AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/payments";
+
+                            HttpResponseMessage response = await client.PostAsync(url, content);
+                            string responseContent = await response.Content.ReadAsStringAsync();
+                            var responseData = JsonConvert.DeserializeObject<dynamic>(responseContent);
+
+                            logs.WriteLogsR("Request: " + jsonPayload + "\nUrl: " + url + "\nResponse: " + responseContent, "13-AddPayment", "SameAkasaRT");
+                            
+                        }
+
+
                         Commit_BookingModel _Commit_BookingModel = new Commit_BookingModel();
                         _Commit_BookingModel.receivedBy = null;
                         _Commit_BookingModel.restrictionOverride = false;
@@ -768,7 +815,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         if (responceCommit_Booking.IsSuccessStatusCode)
                         {
                             var _responceCommit_Booking = responceCommit_Booking.Content.ReadAsStringAsync().Result;
-                            logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_Commit_BookingModel) + "Url: " + AppUrlConstant.AkasaCommitBooking + "\n Response: " + _responceCommit_Booking, "Commit", "SameAkasaRT");
+                            logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_Commit_BookingModel) + "Url: " + AppUrlConstant.AkasaCommitBooking + "\n Response: " + _responceCommit_Booking, "14-CommitBooking", "SameAkasaRT");
 
                             var JsonObjCommit_Booking = JsonConvert.DeserializeObject<dynamic>(_responceCommit_Booking);
 
@@ -789,7 +836,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             Hashtable htmealdata = new Hashtable();
                             Hashtable htBagdata = new Hashtable();
                             var _responcePNRBooking = responcepnrBooking.Content.ReadAsStringAsync().Result;
-                            logs.WriteLogsR("Request: " + JsonConvert.SerializeObject("GetFinalRequest") + "Url: " + AppUrlConstant.AkasaPNRBooking + "\n Response: " + _responcePNRBooking, "GetBokingPNR", "SameAkasaRT");
+                            logs.WriteLogsR("Request: " + JsonConvert.SerializeObject("GetFinalRequest") + "Url: " + AppUrlConstant.AkasaPNRBooking + "\n Response: " + _responcePNRBooking, "15-GetBokingPNR", "SameAkasaRT");
                             var JsonObjPNRBooking = JsonConvert.DeserializeObject<dynamic>(_responcePNRBooking);
                             ReturnTicketBooking returnTicketBooking = new ReturnTicketBooking();
                             string PassengerData = HttpContext.Session.GetString("PassengerNameDetails");

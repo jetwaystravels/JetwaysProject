@@ -109,49 +109,73 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         }
                         token = tokenview.Replace(@"""", string.Empty);
 
-						
+
                         //GetBokking From State and Payment API Call
-						client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-						client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-						HttpResponseMessage responceGetBookingSate = await client.GetAsync(AppUrlConstant.URLAirasia + "/api/nsk/v1/booking");
-						if (responceGetBookingSate.IsSuccessStatusCode)
-						{
-							string _responceGetBooking = responceGetBookingSate.Content.ReadAsStringAsync().Result;
-							var DataBooking = JsonConvert.DeserializeObject<dynamic>(_responceGetBooking);
-							decimal Totalpayment = 0M;
-							if (_responceGetBooking != null)
-							{
-								Totalpayment = DataBooking.data.breakdown.totalAmount;
-							}
+                        client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                        HttpResponseMessage responceGetBookingSate = await client.GetAsync(AppUrlConstant.URLAirasia + "/api/nsk/v1/booking");
+                        if (responceGetBookingSate.IsSuccessStatusCode)
+                        {
+                            string _responceGetBooking = responceGetBookingSate.Content.ReadAsStringAsync().Result;
+                            var DataBooking = JsonConvert.DeserializeObject<dynamic>(_responceGetBooking);
+                            decimal Totalpayment = 0M;
+                            if (_responceGetBooking != null)
+                            {
+                                Totalpayment = DataBooking.data.breakdown.totalAmount;
+                            }
 
-						     logs = new Logs();
-							logs.WriteLogsR("Request: " + JsonConvert.SerializeObject("GetBookingStateRequest") + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v1/booking" + "\n Response: " + JsonConvert.SerializeObject(_responceGetBooking), "GetBookingState", "AirAsiaRT");
+                            //logs = new Logs();
+                            //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject("GetBookingStateRequest") + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v1/booking" + "\n Response: " + JsonConvert.SerializeObject(_responceGetBooking), "GetBookingState", "AirAsiaRT");
+                            if (k1 == 0)
+                            {
+                                //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(AirAsiaTripSellRequestobj) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v4/trip/sell" + "\n Response: " + JsonConvert.SerializeObject(resultsTripsell), "SellRequest_Left", "AirAsiaRT");
+                                logs.WriteLogsR(AppUrlConstant.URLAirasia + "/api/nsk/v1/booking", "14-GetBookingRequest_Left", "AirAsiaRT");
+                                logs.WriteLogsR(_responceGetBooking, "14-GetBookingResponse_Left", "AirAsiaRT");
 
-							//ADD Payment
-							client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-							client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-							PaymentRequest paymentRequest = new PaymentRequest();
-							paymentRequest.PaymentMethodCode = "AG";
-							paymentRequest.Amount = Totalpayment;
-							paymentRequest.PaymentFields = new PaymentFields();
-							paymentRequest.PaymentFields.ACCTNO = "CRPAPI";
-							paymentRequest.PaymentFields.AMT = Totalpayment;
-							paymentRequest.CurrencyCode = "INR";
-							paymentRequest.Installments = 1;
-							string jsonPayload = JsonConvert.SerializeObject(paymentRequest);
-							HttpContent content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
-							string url = AppUrlConstant.URLAirasia + "/api/nsk/v4/booking/payments";
-							HttpResponseMessage response = await client.PostAsync(url, content);
-							string responseContent = await response.Content.ReadAsStringAsync();
-							var responseData = JsonConvert.DeserializeObject<dynamic>(responseContent);
-							logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(paymentRequest) + "\nUrl: " + url + "\nResponse: " + responseContent, "CommitPayment", "AirAsiaRT");
+                            }
+                            else
+                            {
+                                //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(AirAsiaTripSellRequestobj) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v4/trip/sell" + "\n Response: " + JsonConvert.SerializeObject(resultsTripsell), "SellRequest_Right", "AirAsiaRT");
+                                logs.WriteLogsR(AppUrlConstant.URLAirasia + "/api/nsk/v1/booking", "14-GetBookingRequest_Right", "AirAsiaRT");
+                                logs.WriteLogsR(_responceGetBooking, "14-GetBookingResponse_Right", "AirAsiaRT");
+                            }
+                            //ADD Payment
+                            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                            PaymentRequest paymentRequest = new PaymentRequest();
+                            paymentRequest.PaymentMethodCode = "AG";
+                            paymentRequest.Amount = Totalpayment;
+                            paymentRequest.PaymentFields = new PaymentFields();
+                            paymentRequest.PaymentFields.ACCTNO = "CRPAPI";
+                            paymentRequest.PaymentFields.AMT = Totalpayment;
+                            paymentRequest.CurrencyCode = "INR";
+                            paymentRequest.Installments = 1;
+                            string jsonPayload = JsonConvert.SerializeObject(paymentRequest);
+                            HttpContent content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+                            string url = AppUrlConstant.URLAirasia + "/api/nsk/v4/booking/payments";
+                            HttpResponseMessage response = await client.PostAsync(url, content);
+                            string responseContent = await response.Content.ReadAsStringAsync();
+                            var responseData = JsonConvert.DeserializeObject<dynamic>(responseContent);
+                            //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(paymentRequest) + "\nUrl: " + url + "\nResponse: " + responseContent, "CommitPayment", "AirAsiaRT");
+                            if (k1 == 0)
+                            {
+                                //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(AirAsiaTripSellRequestobj) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v4/trip/sell" + "\n Response: " + JsonConvert.SerializeObject(resultsTripsell), "SellRequest_Left", "AirAsiaRT");
+                                logs.WriteLogsR(jsonPayload, "15-AddPaymentRequest_Left", "AirAsiaRT");
+                                logs.WriteLogsR(responseContent, "15-AddPaymentResponse_Left", "AirAsiaRT");
 
-						}
+                            }
+                            else
+                            {
+                                //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(AirAsiaTripSellRequestobj) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v4/trip/sell" + "\n Response: " + JsonConvert.SerializeObject(resultsTripsell), "SellRequest_Right", "AirAsiaRT");
+                                logs.WriteLogsR(jsonPayload, "15-AddPaymentRequest_Right", "AirAsiaRT");
+                                logs.WriteLogsR(responseContent, "15-AddPaymentResponse_Right", "AirAsiaRT");
+                            }
+                        }
 
 
 
-						#region Commit Booking
-						string[] NotifyContacts = new string[1];
+                        #region Commit Booking
+                        string[] NotifyContacts = new string[1];
                         NotifyContacts[0] = "P";
                         Commit_BookingModel _Commit_BookingModel = new Commit_BookingModel();
 
@@ -170,8 +194,20 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         if (responceCommit_Booking.IsSuccessStatusCode)
                         {
                             var _responceCommit_Booking = responceCommit_Booking.Content.ReadAsStringAsync().Result;
-                            logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_Commit_BookingModel) + "Url: " + AppUrlConstant.AirasiaCommitBooking + "\n Response: " + _responceCommit_Booking, "Commit", "AirAsiaRT");
+                            //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_Commit_BookingModel) + "Url: " + AppUrlConstant.AirasiaCommitBooking + "\n Response: " + _responceCommit_Booking, "Commit", "AirAsiaRT");
+                            if (k1 == 0)
+                            {
+                                //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(AirAsiaTripSellRequestobj) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v4/trip/sell" + "\n Response: " + JsonConvert.SerializeObject(resultsTripsell), "SellRequest_Left", "AirAsiaRT");
+                                logs.WriteLogsR(jsonCommitBookingRequest, "16-CommitRequest_Left", "AirAsiaRT");
+                                logs.WriteLogsR(_responceCommit_Booking, "16-CommitResponse_Left", "AirAsiaRT");
 
+                            }
+                            else
+                            {
+                                //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(AirAsiaTripSellRequestobj) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v4/trip/sell" + "\n Response: " + JsonConvert.SerializeObject(resultsTripsell), "SellRequest_Right", "AirAsiaRT");
+                                logs.WriteLogsR(jsonCommitBookingRequest, "16-CommitRequest_Right", "AirAsiaRT");
+                                logs.WriteLogsR(_responceCommit_Booking, "16-CommitResponse_Right", "AirAsiaRT");
+                            }
                             var JsonObjCommit_Booking = JsonConvert.DeserializeObject<dynamic>(_responceCommit_Booking);
                         }
                         #endregion
@@ -197,7 +233,20 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             //double TotalAmountMeal = 0;
                             //double TotaAmountBaggage = 0;
                             var _responcePNRBooking = responceGetBooking.Content.ReadAsStringAsync().Result;
-                            logs.WriteLogsR("Url: " + AppUrlConstant.AirasiaGetBoking + "\n Response: " + _responcePNRBooking, "GetBookingPNRDeatils", "AirAsiaRT");
+                            //logs.WriteLogsR("Url: " + AppUrlConstant.AirasiaGetBoking + "\n Response: " + _responcePNRBooking, "GetBookingPNRDeatils", "AirAsiaRT");
+                            if (k1 == 0)
+                            {
+                                //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(AirAsiaTripSellRequestobj) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v4/trip/sell" + "\n Response: " + JsonConvert.SerializeObject(resultsTripsell), "SellRequest_Left", "AirAsiaRT");
+                                logs.WriteLogsR(AppUrlConstant.AirasiaGetBoking.ToString(), "17-GetBookingPNRDetailsRequest_Left", "AirAsiaRT");
+                                logs.WriteLogsR(_responcePNRBooking, "17-GetBookingPNRDetailsResponse_Left", "AirAsiaRT");
+
+                            }
+                            else
+                            {
+                                //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(AirAsiaTripSellRequestobj) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v4/trip/sell" + "\n Response: " + JsonConvert.SerializeObject(resultsTripsell), "SellRequest_Right", "AirAsiaRT");
+                                logs.WriteLogsR(AppUrlConstant.AirasiaGetBoking.ToString(), "17-GetBookingPNRDetailsRequest_Right", "AirAsiaRT");
+                                logs.WriteLogsR(_responcePNRBooking, "17GetBookingPNRDetailsResponse_Right", "AirAsiaRT");
+                            }
                             var JsonObjPNRBooking = JsonConvert.DeserializeObject<dynamic>(_responcePNRBooking);
                             ReturnTicketBooking returnTicketBooking = new ReturnTicketBooking();
                             string PassengerData = HttpContext.Session.GetString("PassengerNameDetails");
@@ -477,7 +526,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                         {
                                             SsrReturn ssrReturn = new SsrReturn();
                                             ssrReturn.ssrCode = item.Value.ssrs[t].ssrCode;
-                                           
+
                                             bool isSpecialCode = ssrReturn.ssrCode.Equals("PBCA", StringComparison.OrdinalIgnoreCase) ||
                                                     ssrReturn.ssrCode.Equals("PBCB", StringComparison.OrdinalIgnoreCase) ||
                                                     ssrReturn.ssrCode.Equals("PBA3", StringComparison.OrdinalIgnoreCase) ||
@@ -753,6 +802,81 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         }
                         token = tokenview.Replace(@"""", string.Empty);
                         #region Get Booking
+
+                        //GetBOoking FRom State
+                        // STRAT Get INFO
+
+                        client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                        HttpResponseMessage responceGetBookingSate = await client.GetAsync(AppUrlConstant.URLAkasaAir + "/api/nsk/v1/booking");
+                        if (responceGetBookingSate.IsSuccessStatusCode)
+                        {
+                            string _responceGetBooking = responceGetBookingSate.Content.ReadAsStringAsync().Result;
+                            if (k1 == 0)
+                            {
+                                //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(AirAsiaTripSellRequestobj) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v4/trip/sell" + "\n Response: " + JsonConvert.SerializeObject(resultsTripsell), "SellRequest_Left", "AirAsiaRT");
+                                logs.WriteLogsR(AppUrlConstant.URLAkasaAir + "/api/nsk/v1/booking", "14-GetBookingRequest_Left", "AkasaRT");
+                                logs.WriteLogsR(_responceGetBooking, "14-GetBookingResponse_Left", "AkasaRT");
+
+                            }
+                            else
+                            {
+                                //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(AirAsiaTripSellRequestobj) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v4/trip/sell" + "\n Response: " + JsonConvert.SerializeObject(resultsTripsell), "SellRequest_Right", "AirAsiaRT");
+                                logs.WriteLogsR(AppUrlConstant.URLAkasaAir + "/api/nsk/v1/booking", "14-GetBookingRequest_Right", "AkasaRT");
+                                logs.WriteLogsR(_responceGetBooking, "14-GetBookingResponse_Right", "AkasaRT");
+                            }
+
+                            var DataBooking = JsonConvert.DeserializeObject<dynamic>(_responceGetBooking);
+                            decimal Totalpayment = 0M;
+                            if (_responceGetBooking != null)
+                            {
+                                Totalpayment = DataBooking.data.breakdown.totalAmount;
+                            }
+
+                            //Logs logs = new Logs();
+                            //logs.WriteLogs("Request: " + JsonConvert.SerializeObject("GetBookingStateRequest") + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v1/booking" + "\n Response: " + JsonConvert.SerializeObject(_responceGetBooking), "GetBookingState", "AirAsiaOneWay");
+
+                            //ADD Payment
+
+                            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                            // Payment request payload
+                            PaymentRequest paymentRequest = new PaymentRequest();
+                            paymentRequest.PaymentMethodCode = "AG";
+                            paymentRequest.Amount = Totalpayment;
+                            paymentRequest.PaymentFields = new PaymentFields();
+                            paymentRequest.PaymentFields.ACCTNO = "QPDEL5019C";
+                            paymentRequest.PaymentFields.AMT = Totalpayment;
+                            paymentRequest.CurrencyCode = "INR";
+                            paymentRequest.Installments = 1;
+
+                            // Serializing the payload to JSON
+                            string jsonPayload = JsonConvert.SerializeObject(paymentRequest);
+                            HttpContent content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+                            // Sending the POST request
+                            string url = AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/payments";
+
+                            HttpResponseMessage response = await client.PostAsync(url, content);
+                            string responseContent = await response.Content.ReadAsStringAsync();
+                            var responseData = JsonConvert.DeserializeObject<dynamic>(responseContent);
+                            //logs.WriteLogsR("Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/payments \n Request: + Response: " + responseContent, "AddPayments", "AkasaRT");
+                            if (k1 == 0)
+                            {
+                                //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(AirAsiaTripSellRequestobj) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v4/trip/sell" + "\n Response: " + JsonConvert.SerializeObject(resultsTripsell), "SellRequest_Left", "AirAsiaRT");
+                                logs.WriteLogsR(jsonPayload, "15-AddPaymentRequest_Left", "AkasaRT");
+                                logs.WriteLogsR(responseContent, "15-AddPaymentResponse_Left", "AkasaRT");
+
+                            }
+                            else
+                            {
+                                //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(AirAsiaTripSellRequestobj) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v4/trip/sell" + "\n Response: " + JsonConvert.SerializeObject(resultsTripsell), "SellRequest_Right", "AirAsiaRT");
+                                logs.WriteLogsR(jsonPayload, "15-AddPaymentRequest_Right", "AkasaRT");
+                                logs.WriteLogsR(responseContent, "15-AddPaymentResponse_Right", "AkasaRT");
+                            }
+
+                        }
                         Commit_BookingModel _Commit_BookingModel = new Commit_BookingModel();
                         _Commit_BookingModel.receivedBy = null;
                         _Commit_BookingModel.restrictionOverride = false;
@@ -771,7 +895,19 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         {
                             var _responceCommit_Booking = responceCommit_Booking.Content.ReadAsStringAsync().Result;
                             //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_Commit_BookingModel) + "Url: " + AppUrlConstant.AkasaCommitBooking + "\n Response: " + _responceCommit_Booking, "Commit", "AkasaAirRT");
+                            if (k1 == 0)
+                            {
+                                //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(AirAsiaTripSellRequestobj) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v4/trip/sell" + "\n Response: " + JsonConvert.SerializeObject(resultsTripsell), "SellRequest_Left", "AirAsiaRT");
+                                logs.WriteLogsR(jsonCommitBookingRequest, "16-CommitRequest_Left", "AkasaRT");
+                                logs.WriteLogsR(_responceCommit_Booking, "16-CommitResponse_Left", "AkasaRT");
 
+                            }
+                            else
+                            {
+                                //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(AirAsiaTripSellRequestobj) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v4/trip/sell" + "\n Response: " + JsonConvert.SerializeObject(resultsTripsell), "SellRequest_Right", "AirAsiaRT");
+                                logs.WriteLogsR(jsonCommitBookingRequest, "16-CommitRequest_Right", "AkasaRT");
+                                logs.WriteLogsR(_responceCommit_Booking, "16-CommitResponse_Right", "AkasaRT");
+                            }
                             var JsonObjCommit_Booking = JsonConvert.DeserializeObject<dynamic>(_responceCommit_Booking);
 
                         }
@@ -812,7 +948,20 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             Hashtable htmealdata = new Hashtable();
                             Hashtable htBagdata = new Hashtable();
                             var _responcePNRBooking = responcepnrBooking.Content.ReadAsStringAsync().Result;
-                            logs.WriteLogsR("Url: " + AppUrlConstant.AkasaPNRBooking + "\n Response: " + _responcePNRBooking, "GetBookingPNRDeatils", "AkasaRT");
+                            //logs.WriteLogsR("Url: " + AppUrlConstant.AkasaPNRBooking + "\n Response: " + _responcePNRBooking, "GetBookingPNRDeatils", "AkasaRT");
+                            if (k1 == 0)
+                            {
+                                //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(AirAsiaTripSellRequestobj) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v4/trip/sell" + "\n Response: " + JsonConvert.SerializeObject(resultsTripsell), "SellRequest_Left", "AirAsiaRT");
+                                logs.WriteLogsR(AppUrlConstant.AkasaPNRBooking + BookingKeyAkasa.ToString(), "17-GetBookingPNRDeatilsRequest_Left", "AkasaRT");
+                                logs.WriteLogsR(_responcePNRBooking, "17-GetBookingPNRDeatilsResponse_Left", "AkasaRT");
+
+                            }
+                            else
+                            {
+                                //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(AirAsiaTripSellRequestobj) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v4/trip/sell" + "\n Response: " + JsonConvert.SerializeObject(resultsTripsell), "SellRequest_Right", "AirAsiaRT");
+                                logs.WriteLogsR(AppUrlConstant.AkasaPNRBooking + BookingKeyAkasa.ToString(), "17-GetBookingPNRDeatilsRequest_Right", "AkasaRT");
+                                logs.WriteLogsR(_responcePNRBooking, "17-GetBookingPNRDeatilsResponse_Right", "AkasaRT");
+                            }
                             var JsonObjPNRBooking = JsonConvert.DeserializeObject<dynamic>(_responcePNRBooking);
                             ReturnTicketBooking returnTicketBooking = new ReturnTicketBooking();
                             string PassengerData = HttpContext.Session.GetString("PassengerNameDetails");
@@ -1329,9 +1478,9 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         {
                             tokenview = HttpContext.Session.GetString("SpicejetSignatureR");
                         }
-						if (tokenview == null) { tokenview = ""; }
-						token = tokenview.Replace(@"""", string.Empty);
-						if (!string.IsNullOrEmpty(tokenview))
+                        if (tokenview == null) { tokenview = ""; }
+                        token = tokenview.Replace(@"""", string.Empty);
+                        if (!string.IsNullOrEmpty(tokenview))
                         {
 
                             _commit objcommit = new _commit();
@@ -1352,40 +1501,40 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             {
                                 Totalpayment = _GetBookingFromStateRS1.BookingData.BookingSum.TotalCost;
                             }
-							//ADD Payment
-							AddPaymentToBookingRequest _bookingpaymentRequest = new AddPaymentToBookingRequest();
-							AddPaymentToBookingResponse _BookingPaymentResponse = new AddPaymentToBookingResponse();
-							_bookingpaymentRequest.Signature = token;
-							_bookingpaymentRequest.ContractVersion = 420;
-							_bookingpaymentRequest.addPaymentToBookingReqData = new AddPaymentToBookingRequestData();
-							_bookingpaymentRequest.addPaymentToBookingReqData.MessageStateSpecified = true;
-							_bookingpaymentRequest.addPaymentToBookingReqData.MessageState = MessageState.New;
-							_bookingpaymentRequest.addPaymentToBookingReqData.WaiveFeeSpecified = true;
-							_bookingpaymentRequest.addPaymentToBookingReqData.WaiveFee = false;
-							_bookingpaymentRequest.addPaymentToBookingReqData.PaymentMethodTypeSpecified = true;
-							_bookingpaymentRequest.addPaymentToBookingReqData.PaymentMethodType = RequestPaymentMethodType.AgencyAccount;
-							_bookingpaymentRequest.addPaymentToBookingReqData.PaymentMethodCode = "AG";
-							_bookingpaymentRequest.addPaymentToBookingReqData.QuotedCurrencyCode = "INR";
-							_bookingpaymentRequest.addPaymentToBookingReqData.QuotedAmountSpecified = true;
-							_bookingpaymentRequest.addPaymentToBookingReqData.QuotedAmount = Totalpayment;
-							//_bookingpaymentRequest.addPaymentToBookingReqData.AccountNumber = "OTI122";
-							_bookingpaymentRequest.addPaymentToBookingReqData.InstallmentsSpecified = true;
-							_bookingpaymentRequest.addPaymentToBookingReqData.Installments = 1;
-							_bookingpaymentRequest.addPaymentToBookingReqData.ExpirationSpecified = true;
-							_bookingpaymentRequest.addPaymentToBookingReqData.Expiration = Convert.ToDateTime("0001-01-01T00:00:00");
-							_BookingPaymentResponse = await objSpiceJet.Addpayment(_bookingpaymentRequest);
-							string payment = JsonConvert.SerializeObject(_BookingPaymentResponse);
-							logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_bookingpaymentRequest) + "\n\n Response: " + JsonConvert.SerializeObject(_BookingPaymentResponse), "BookingPayment", "SpiceJetOneway");
-							
-
-							#endregion
+                            //ADD Payment
+                            AddPaymentToBookingRequest _bookingpaymentRequest = new AddPaymentToBookingRequest();
+                            AddPaymentToBookingResponse _BookingPaymentResponse = new AddPaymentToBookingResponse();
+                            _bookingpaymentRequest.Signature = token;
+                            _bookingpaymentRequest.ContractVersion = 420;
+                            _bookingpaymentRequest.addPaymentToBookingReqData = new AddPaymentToBookingRequestData();
+                            _bookingpaymentRequest.addPaymentToBookingReqData.MessageStateSpecified = true;
+                            _bookingpaymentRequest.addPaymentToBookingReqData.MessageState = MessageState.New;
+                            _bookingpaymentRequest.addPaymentToBookingReqData.WaiveFeeSpecified = true;
+                            _bookingpaymentRequest.addPaymentToBookingReqData.WaiveFee = false;
+                            _bookingpaymentRequest.addPaymentToBookingReqData.PaymentMethodTypeSpecified = true;
+                            _bookingpaymentRequest.addPaymentToBookingReqData.PaymentMethodType = RequestPaymentMethodType.AgencyAccount;
+                            _bookingpaymentRequest.addPaymentToBookingReqData.PaymentMethodCode = "AG";
+                            _bookingpaymentRequest.addPaymentToBookingReqData.QuotedCurrencyCode = "INR";
+                            _bookingpaymentRequest.addPaymentToBookingReqData.QuotedAmountSpecified = true;
+                            _bookingpaymentRequest.addPaymentToBookingReqData.QuotedAmount = Totalpayment;
+                            //_bookingpaymentRequest.addPaymentToBookingReqData.AccountNumber = "OTI122";
+                            _bookingpaymentRequest.addPaymentToBookingReqData.InstallmentsSpecified = true;
+                            _bookingpaymentRequest.addPaymentToBookingReqData.Installments = 1;
+                            _bookingpaymentRequest.addPaymentToBookingReqData.ExpirationSpecified = true;
+                            _bookingpaymentRequest.addPaymentToBookingReqData.Expiration = Convert.ToDateTime("0001-01-01T00:00:00");
+                            _BookingPaymentResponse = await objSpiceJet.Addpayment(_bookingpaymentRequest);
+                            string payment = JsonConvert.SerializeObject(_BookingPaymentResponse);
+                            logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_bookingpaymentRequest) + "\n\n Response: " + JsonConvert.SerializeObject(_BookingPaymentResponse), "BookingPayment", "SpiceJetOneway");
 
 
-							#region Addpayment For Api payment deduction
-							//IndigoBookingManager_.AddPaymentToBookingResponse _BookingPaymentResponse = await objcommit.AddpaymenttoBook(token, Totalpayment);
+                            #endregion
 
-							#endregion
-							
+
+                            #region Addpayment For Api payment deduction
+                            //IndigoBookingManager_.AddPaymentToBookingResponse _BookingPaymentResponse = await objcommit.AddpaymenttoBook(token, Totalpayment);
+
+                            #endregion
+
                             string passengernamedetails = HttpContext.Session.GetString("PassengerNameDetails");
                             List<passkeytype> passeengerlist = (List<passkeytype>)JsonConvert.DeserializeObject(passengernamedetails, typeof(List<passkeytype>));
                             string contactdata = HttpContext.Session.GetString("ContactDetails");
@@ -2026,7 +2175,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                 _commit objcommit = new _commit();
                                 #region GetState
                                 _sell objsell = new _sell();
-                                IndigoBookingManager_.GetBookingFromStateResponse _GetBookingFromStateRS1 = await objsell.GetBookingFromState(token, 0,"");
+                                IndigoBookingManager_.GetBookingFromStateResponse _GetBookingFromStateRS1 = await objsell.GetBookingFromState(token, 0, "");
 
                                 string strdata = JsonConvert.SerializeObject(_GetBookingFromStateRS1);
                                 decimal Totalpayment = 0M;
@@ -2472,7 +2621,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                         passengerTotals.specialServices = new SpecialServices();
                                         passengerTotals.baggage = new SpecialServices(); // Vinay Bag
                                         var totalTax = "";// _getPri
-                                        //changes for Passeneger name:
+                                                          //changes for Passeneger name:
                                         foreach (var item in _getBookingResponse.Booking.Passengers)
                                         {
                                             htname.Add(item.PassengerNumber, item.Names[0].LastName + "/" + item.Names[0].FirstName);
@@ -2914,7 +3063,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                 _getapi objIndigo = new _getapi();
                                 _logoutResponse = await objIndigo.Logout(_logoutRequestobj);
 
-                                logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_logoutRequestobj) + "\n Response: " + JsonConvert.SerializeObject(_logoutResponse), "Logout", "SpicejetOneWay","oneway");
+                                logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_logoutRequestobj) + "\n Response: " + JsonConvert.SerializeObject(_logoutResponse), "Logout", "SpicejetOneWay", "oneway");
 
                             }
                         }
