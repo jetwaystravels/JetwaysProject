@@ -145,7 +145,7 @@ namespace OnionConsumeWebAPI.Controllers
                 {
                     _ContactModel.phoneNumbers = Phonenumberlist;
                 }
-                _ContactModel.contactTypeCode = "P";
+                _ContactModel.contactTypeCode = "p";
                 _Address Address = new _Address();
                 _ContactModel.address = Address;
                 _Name Name = new _Name();

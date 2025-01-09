@@ -136,7 +136,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                 {
                     _AkContactModel.phoneNumbers = AkPhonenumberlist;
                 }
-                _AkContactModel.contactTypeCode = "P";
+                _AkContactModel.contactTypeCode = "p";
                 _Address AkAddress = new _Address();
                 _AkContactModel.address = AkAddress;
                 _Name AkName = new _Name();

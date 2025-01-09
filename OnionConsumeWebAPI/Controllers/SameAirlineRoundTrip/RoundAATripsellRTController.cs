@@ -259,7 +259,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     using (HttpClient client = new HttpClient())
                     {
                         ContactModel _ContactModel = new ContactModel();
-                        _ContactModel.contactTypeCode = "P";
+                        _ContactModel.contactTypeCode = "p";
 
                         //  _ContactModel.emailAddress = passengerdetails.Email;
                        
@@ -353,7 +353,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         {
                             _ContactModel.phoneNumbers = Phonenumberlist;
                         }
-                        _ContactModel.contactTypeCode = "P";
+                        _ContactModel.contactTypeCode = "p";
 
                         _Address Address = new _Address();
                         Address.lineOne = "Ashokenagar,bharathi cross str";
