@@ -284,7 +284,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         logs.WriteLogsR(AirasiaTripSellRequest, "3-TripSell_Req", "SameAirAsiaRT");
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                        HttpResponseMessage responseTripsell = await client.PostAsJsonAsync(AppUrlConstant.URLAirasia + "/api/nsk/v4/trip/sell", AirAsiaTripSellRequestobj);
+                        HttpResponseMessage responseTripsell = await client.PostAsJsonAsync(AppUrlConstant.AirasiaTripsell, AirAsiaTripSellRequestobj);
 
                         if (responseTripsell.IsSuccessStatusCode)
                         {
@@ -602,7 +602,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                 logs.WriteLogsR(jsonPassengers, "4-GetItenaryReq", "SameAirAsiaRT");
                                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                                HttpResponseMessage responsePassengers = await client.PostAsJsonAsync(AppUrlConstant.URLAirasia + "/api/nsk/v2/bookings/quote", itenaryInfant);
+                                HttpResponseMessage responsePassengers = await client.PostAsJsonAsync(AppUrlConstant.Airasiainfantquote, itenaryInfant);
                                 if (responsePassengers.IsSuccessStatusCode)
                                 {
                                     AirAsiaTripResponceModel AirAsiaTripResponceobject = new AirAsiaTripResponceModel();
@@ -942,13 +942,13 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         var AkasaAirTripSellRequest = JsonConvert.SerializeObject(AkasaAirTripSellRequestobj, Formatting.Indented);
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                        HttpResponseMessage responseTripsell = await client.PostAsJsonAsync(AppUrlConstant.URLAkasaAir + "/api/nsk/v4/trip/sell", AkasaAirTripSellRequestobj);
+                        HttpResponseMessage responseTripsell = await client.PostAsJsonAsync(AppUrlConstant.AkasaAirTripsell, AkasaAirTripSellRequestobj);
 
                         if (responseTripsell.IsSuccessStatusCode)
                         {
                             AirAsiaTripResponceobj = new AirAsiaTripResponceModel();
                             var resultsTripsell = responseTripsell.Content.ReadAsStringAsync().Result;
-                            logs.WriteLogsR("Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v4/trip/sell" + "\n\n Request: " + AkasaAirTripSellRequest + "\n\n Response: " + resultsTripsell, "3-Trip_sell", "SameAkasaRT");
+                            logs.WriteLogsR("Url: " + AppUrlConstant.AkasaAirTripsell + "\n\n Request: " + AkasaAirTripSellRequest + "\n\n Response: " + resultsTripsell, "3-Trip_sell", "SameAkasaRT");
                             var JsonObjTripsell = JsonConvert.DeserializeObject<dynamic>(resultsTripsell);
 
                             var basefaretax = JsonObjTripsell.data.breakdown.journeyTotals.totalTax;
@@ -1246,12 +1246,12 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                         var jsonPassengers = JsonConvert.SerializeObject(itenaryInfant, Formatting.Indented);
                                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                                        HttpResponseMessage responsePassengers = await client.PostAsJsonAsync(AppUrlConstant.URLAkasaAir + "/api/nsk/v2/bookings/quote", itenaryInfant);
+                                        HttpResponseMessage responsePassengers = await client.PostAsJsonAsync(AppUrlConstant.Akasainfant, itenaryInfant);
                                         if (responsePassengers.IsSuccessStatusCode)
                                         {
                                             AirAsiaTripResponceModel AirAsiaTripResponceobject = new AirAsiaTripResponceModel();
                                             var _responsePassengers = responsePassengers.Content.ReadAsStringAsync().Result;
-                                            logs.WriteLogsR("Request: " + itenaryInfant + "Url: " + AppUrlConstant.URLAkasaAir + "/api/nsk/v2/bookings/quote" + "\n Response: " + resultsTripsell, "4-Itenary" + kj, "SameAkasaRT");
+                                            logs.WriteLogsR("Request: " + itenaryInfant + "Url: " + AppUrlConstant.Akasainfant + "\n Response: " + resultsTripsell, "4-Itenary" + kj, "SameAkasaRT");
                                             var JsonObjPassengers = JsonConvert.DeserializeObject<dynamic>(_responsePassengers);
                                             int Journeyscount = JsonObjPassengers.data.journeys.Count;
                                             //end
@@ -2779,7 +2779,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             logs.WriteLogsR(jsonSeatmapRequest, "11-GetSeatmapReq_" + (i + 1), "SameAirAsiaRT");
                             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                            HttpResponseMessage responseSeatmap = await client.GetAsync(BaseURL + "/api/nsk/v3/booking/seatmaps/journey/" + Journeykeyairasia + "?IncludePropertyLookup=true");
+                            HttpResponseMessage responseSeatmap = await client.GetAsync(AppUrlConstant.Airasiaseatmap + Journeykeyairasia + "?IncludePropertyLookup=true");
 
                             // data[0].seatMap.decks['1'].compartments.Y.units[0].unitKey
 
@@ -2976,7 +2976,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                             //HttpResponseMessage responseSeatmap = await client.GetAsync(BaseURL + "/api/nsk/v3/booking/seatmaps/journey/" + _JourneykeyDataAA + "?IncludePropertyLookup=true");
-                            HttpResponseMessage responseSeatmap = await client.GetAsync(BaseAkasaURL + "/api/nsk/v3/booking/seatmaps/journey/" + _JourneykeyDataAA + "?IncludePropertyLookup=true");
+                            HttpResponseMessage responseSeatmap = await client.GetAsync(AppUrlConstant.AkasaAirSeatMap + _JourneykeyDataAA + "?IncludePropertyLookup=true");
 
                             // data[0].seatMap.decks['1'].compartments.Y.units[0].unitKey
 
@@ -3668,7 +3668,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         SSRAvailabiltyResponceModel SSRAvailabiltyResponceobj = new SSRAvailabiltyResponceModel();
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                        HttpResponseMessage responseSSRAvailabilty = await client.PostAsJsonAsync(AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/availability", _SSRAvailabilty);
+                        HttpResponseMessage responseSSRAvailabilty = await client.PostAsJsonAsync(AppUrlConstant.Airasiassravailability, _SSRAvailabilty);
                         if (responseSSRAvailabilty.IsSuccessStatusCode)
                         {
                             var _responseSSRAvailabilty = responseSSRAvailabilty.Content.ReadAsStringAsync().Result;
@@ -3881,7 +3881,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         SSRAvailabiltyResponceModel SSRAvailabiltyResponceobj = new SSRAvailabiltyResponceModel();
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                        HttpResponseMessage responseSSRAvailabilty = await client.PostAsJsonAsync(AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/ssrs/availability", _SSRAvailabilty);
+                        HttpResponseMessage responseSSRAvailabilty = await client.PostAsJsonAsync(AppUrlConstant.AkasaAirMealBaggage, _SSRAvailabilty);
                         if (responseSSRAvailabilty.IsSuccessStatusCode)
                         {
                             var _responseSSRAvailabilty = responseSSRAvailabilty.Content.ReadAsStringAsync().Result;
