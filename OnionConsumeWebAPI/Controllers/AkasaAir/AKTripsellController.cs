@@ -547,7 +547,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                                 var jsonSeatAssignmentRequest = JsonConvert.SerializeObject(_SeatAssignmentModel, Formatting.Indented);
                                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                                HttpResponseMessage responceSeatAssignment = await client.PostAsJsonAsync(AppUrlConstant.AkasaAirMealSeatAssign + passengerkey + "/seats/" + pas_unitKey, _SeatAssignmentModel);
+                                HttpResponseMessage responceSeatAssignment = await client.PostAsJsonAsync(AppUrlConstant.AkasaAirSeatAssign + passengerkey + "/seats/" + pas_unitKey, _SeatAssignmentModel);
                                 if (responceSeatAssignment.IsSuccessStatusCode)
                                 {
                                     var _responseSeatAssignment = responceSeatAssignment.Content.ReadAsStringAsync().Result;

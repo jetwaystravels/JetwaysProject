@@ -49,7 +49,7 @@
         //Infant
         public static string AkasaAirInfantDetails = URLAkasaAir + "/api/nsk/v3/booking/passengers/";
         //SeatAssign
-        public static string AkasaAirMealSeatAssign = URLAkasaAir + "/api/nsk/v2/booking/passengers/";
+        public static string AkasaAirSeatAssign = URLAkasaAir + "/api/nsk/v2/booking/passengers/";
         //Sell Ssr
         public static string AkasaAirMealBaggage = URLAkasaAir + "/api/nsk/v2/booking/ssrs/availability";
         // Post//Sell ssr

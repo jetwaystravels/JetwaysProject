@@ -2914,7 +2914,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                 var jsonSeatAssignmentRequest = JsonConvert.SerializeObject(_SeatAssignmentModel, Formatting.Indented);
                                                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                                                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                                                HttpResponseMessage responceSeatAssignment = await client.PostAsJsonAsync(AppUrlConstant.AkasaAirMealSeatAssign + passengerkey + "/seats/" + pas_unitKey, _SeatAssignmentModel);
+                                                HttpResponseMessage responceSeatAssignment = await client.PostAsJsonAsync(AppUrlConstant.AkasaAirSeatAssign + passengerkey + "/seats/" + pas_unitKey, _SeatAssignmentModel);
                                                 if (responceSeatAssignment.IsSuccessStatusCode)
                                                 {
                                                     var _responseSeatAssignment = responceSeatAssignment.Content.ReadAsStringAsync().Result;
@@ -2940,7 +2940,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                 var jsonSeatAssignmentRequest = JsonConvert.SerializeObject(_SeatAssignmentModel, Formatting.Indented);
                                                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                                                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                                                HttpResponseMessage responceSeatAssignment = await client.PostAsJsonAsync(AppUrlConstant.AkasaAirMealSeatAssign + passengerkey + "/seats/" + pas_unitKey, _SeatAssignmentModel);
+                                                HttpResponseMessage responceSeatAssignment = await client.PostAsJsonAsync(AppUrlConstant.AkasaAirSeatAssign + passengerkey + "/seats/" + pas_unitKey, _SeatAssignmentModel);
                                                 if (responceSeatAssignment.IsSuccessStatusCode)
                                                 {
                                                     var _responseSeatAssignment = responceSeatAssignment.Content.ReadAsStringAsync().Result;
@@ -2966,7 +2966,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                 var jsonSeatAssignmentRequest = JsonConvert.SerializeObject(_SeatAssignmentModel, Formatting.Indented);
                                                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                                                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                                                HttpResponseMessage responceSeatAssignment = await client.PostAsJsonAsync(AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/passengers/" + passengerkey + "/seats/" + pas_unitKey, _SeatAssignmentModel);
+                                                HttpResponseMessage responceSeatAssignment = await client.PostAsJsonAsync(AppUrlConstant.AkasaAirSeatAssign + passengerkey + "/seats/" + pas_unitKey, _SeatAssignmentModel);
                                                 if (responceSeatAssignment.IsSuccessStatusCode)
                                                 {
                                                     var _responseSeatAssignment = responceSeatAssignment.Content.ReadAsStringAsync().Result;
@@ -2991,7 +2991,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                 var jsonSeatAssignmentRequest = JsonConvert.SerializeObject(_SeatAssignmentModel, Formatting.Indented);
                                                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                                                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                                                HttpResponseMessage responceSeatAssignment = await client.PostAsJsonAsync(AppUrlConstant.AkasaAirMealSeatAssign + passengerkey + "/seats/" + pas_unitKey, _SeatAssignmentModel);
+                                                HttpResponseMessage responceSeatAssignment = await client.PostAsJsonAsync(AppUrlConstant.AkasaAirSeatAssign + passengerkey + "/seats/" + pas_unitKey, _SeatAssignmentModel);
                                                 if (responceSeatAssignment.IsSuccessStatusCode)
                                                 {
                                                     var _responseSeatAssignment = responceSeatAssignment.Content.ReadAsStringAsync().Result;
