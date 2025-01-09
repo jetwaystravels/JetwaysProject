@@ -76,7 +76,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
 
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                HttpResponseMessage responceGetBookingSate = await client.GetAsync(AppUrlConstant.URLAkasaAir + "/api/nsk/v1/booking");
+                HttpResponseMessage responceGetBookingSate = await client.GetAsync(AppUrlConstant.AkasaAirGetBooking);
                 if (responceGetBookingSate.IsSuccessStatusCode)
                 {
                     string _responceGetBooking = responceGetBookingSate.Content.ReadAsStringAsync().Result;
@@ -110,7 +110,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                     HttpContent content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 
                     // Sending the POST request
-                    string url = AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/payments";
+                    string url = AppUrlConstant.AkasaAirPayment;
 
                     HttpResponseMessage response = await client.PostAsync(url, content);
                     string responseContent = await response.Content.ReadAsStringAsync();

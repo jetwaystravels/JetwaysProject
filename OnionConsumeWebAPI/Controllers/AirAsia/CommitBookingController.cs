@@ -118,7 +118,7 @@ namespace OnionConsumeWebAPI.Controllers
                     HttpContent content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 
                     // Sending the POST request
-                    string url = AppUrlConstant.URLAirasia + "/api/nsk/v4/booking/payments";
+                    string url = AppUrlConstant.AirasiaPayment;
 
                     HttpResponseMessage response = await client.PostAsync(url, content);
                     string responseContent = await response.Content.ReadAsStringAsync();

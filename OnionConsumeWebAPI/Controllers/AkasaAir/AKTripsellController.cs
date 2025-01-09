@@ -213,7 +213,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                     var jsonContactRequest = JsonConvert.SerializeObject(addinformation, Formatting.Indented);
                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                    HttpResponseMessage responseAddContact = await client.PostAsJsonAsync(AppUrlConstant.URLAkasaAir + "/api/nsk/v1/booking/contacts", addinformation);
+                    HttpResponseMessage responseAddContact = await client.PostAsJsonAsync(AppUrlConstant.AkasaAirContactDetails, addinformation);
                     if (responseAddContact.IsSuccessStatusCode)
                     {
                         var _responseAddContact = responseAddContact.Content.ReadAsStringAsync().Result;

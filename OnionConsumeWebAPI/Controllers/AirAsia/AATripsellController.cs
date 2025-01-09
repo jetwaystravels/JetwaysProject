@@ -270,7 +270,7 @@ namespace OnionConsumeWebAPI.Controllers
                             var jsonPassengers = JsonConvert.SerializeObject(_PassengersModel, Formatting.Indented);
                             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                            HttpResponseMessage responsePassengers = await client.PutAsJsonAsync(AppUrlConstant.URLAirasia + "/api/nsk/v3/booking/passengers/" + passengerdetails[i].passengerkey, _PassengersModel);
+                            HttpResponseMessage responsePassengers = await client.PutAsJsonAsync(AppUrlConstant.AirasiaAddPassenger + passengerdetails[i].passengerkey, _PassengersModel);
                             if (responsePassengers.IsSuccessStatusCode)
                             {
                                 var _responsePassengers = responsePassengers.Content.ReadAsStringAsync().Result;
@@ -326,7 +326,7 @@ namespace OnionConsumeWebAPI.Controllers
                                 var jsonPassengers = JsonConvert.SerializeObject(_PassengersModel1, Formatting.Indented);
                                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                                HttpResponseMessage responsePassengers = await client.PostAsJsonAsync(AppUrlConstant.URLAirasia + "/api/nsk/v3/booking/passengers/" + passengerdetails[k].passengerkey + "/infant", _PassengersModel1);
+                                HttpResponseMessage responsePassengers = await client.PostAsJsonAsync(AppUrlConstant.AirasiaAddPassenger + passengerdetails[k].passengerkey + "/infant", _PassengersModel1);
                                 if (responsePassengers.IsSuccessStatusCode)
                                 {
                                     var _responsePassengers = responsePassengers.Content.ReadAsStringAsync().Result;
@@ -341,7 +341,7 @@ namespace OnionConsumeWebAPI.Controllers
                             // var jsonPassengers = JsonConvert.SerializeObject(_PassengersModel1, Formatting.Indented);
                             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                            HttpResponseMessage responceGetBooking = await client.GetAsync(AppUrlConstant.URLAirasia + "/api/nsk/v1/booking");
+                            HttpResponseMessage responceGetBooking = await client.GetAsync(AppUrlConstant.AirasiaGetBoking);
                             if (responceGetBooking.IsSuccessStatusCode)
                             {
                                 var _responceGetBooking = responceGetBooking.Content.ReadAsStringAsync().Result;
@@ -568,7 +568,7 @@ namespace OnionConsumeWebAPI.Controllers
                                     var jsonSellSSR = JsonConvert.SerializeObject(_sellSSRModel, Formatting.Indented);
                                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                                    HttpResponseMessage responseSellSSR = await client.PostAsJsonAsync(AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + pas_SsrKey, _sellSSRModel);
+                                    HttpResponseMessage responseSellSSR = await client.PostAsJsonAsync(AppUrlConstant.AirasiaMealSelect + pas_SsrKey, _sellSSRModel);
                                     if (responseSellSSR.IsSuccessStatusCode)
                                     {
                                         var _responseresponseSellSSR = responseSellSSR.Content.ReadAsStringAsync().Result;
@@ -615,7 +615,7 @@ namespace OnionConsumeWebAPI.Controllers
                                     var jsonSellSSR = JsonConvert.SerializeObject(_sellSSRModel, Formatting.Indented);
                                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                                    HttpResponseMessage responseSellSSR = await client.PostAsJsonAsync(AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + pas_BaggageSsrKey, _sellSSRModel);
+                                    HttpResponseMessage responseSellSSR = await client.PostAsJsonAsync(AppUrlConstant.AirasiaMealSelect + pas_BaggageSsrKey, _sellSSRModel);
                                     if (responseSellSSR.IsSuccessStatusCode)
                                     {
                                         var _responseresponseSellSSR = responseSellSSR.Content.ReadAsStringAsync().Result;
@@ -746,7 +746,7 @@ namespace OnionConsumeWebAPI.Controllers
                                     var jsonSellSSR = JsonConvert.SerializeObject(_sellSSRModel, Formatting.Indented);
                                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                                    HttpResponseMessage responseSellSSR = await client.PostAsJsonAsync(AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + pas_SsrKey, _sellSSRModel);
+                                    HttpResponseMessage responseSellSSR = await client.PostAsJsonAsync(AppUrlConstant.AirasiaMealSelect + pas_SsrKey, _sellSSRModel);
                                     if (responseSellSSR.IsSuccessStatusCode)
                                     {
                                         var _responseresponseSellSSR = responseSellSSR.Content.ReadAsStringAsync().Result;
@@ -794,7 +794,7 @@ namespace OnionConsumeWebAPI.Controllers
                                     var jsonSellSSR = JsonConvert.SerializeObject(_sellSSRModel, Formatting.Indented);
                                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                                    HttpResponseMessage responseSellSSR = await client.PostAsJsonAsync(AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + pas_BaggageSsrKey, _sellSSRModel);
+                                    HttpResponseMessage responseSellSSR = await client.PostAsJsonAsync(AppUrlConstant.AirasiaMealSelect + pas_BaggageSsrKey, _sellSSRModel);
                                     if (responseSellSSR.IsSuccessStatusCode)
                                     {
                                         var _responseresponseSellSSR = responseSellSSR.Content.ReadAsStringAsync().Result;
@@ -840,7 +840,7 @@ namespace OnionConsumeWebAPI.Controllers
                                     var jsonSellSSR = JsonConvert.SerializeObject(_sellSSRModel, Formatting.Indented);
                                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                                    HttpResponseMessage responseSellSSR = await client.PostAsJsonAsync(AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + pas_WheelSsrKey, _sellSSRModel);
+                                    HttpResponseMessage responseSellSSR = await client.PostAsJsonAsync(AppUrlConstant.AirasiaMealSelect + pas_WheelSsrKey, _sellSSRModel);
                                     if (responseSellSSR.IsSuccessStatusCode)
                                     {
                                         var _responseresponseSellSSR = responseSellSSR.Content.ReadAsStringAsync().Result;

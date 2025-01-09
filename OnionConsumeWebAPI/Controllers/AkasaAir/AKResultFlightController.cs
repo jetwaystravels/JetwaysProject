@@ -386,7 +386,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                         client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                         //HttpResponseMessage responsePassengers = await client.PostAsJsonAsync(AppUrlConstant.AkasaAirInfantDetails, itenaryInfant);
-                        HttpResponseMessage responsePassengers = await client.PostAsJsonAsync(AppUrlConstant.URLAkasaAir + "/api/nsk/v2/bookings/quote", itenaryInfant);
+                        HttpResponseMessage responsePassengers = await client.PostAsJsonAsync(AppUrlConstant.Akasainfant, itenaryInfant);
                         if (responsePassengers.IsSuccessStatusCode)
                         {
                             AirAsiaTripResponceModel AirAsiaTripResponceobject = new AirAsiaTripResponceModel();

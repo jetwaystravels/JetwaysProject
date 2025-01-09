@@ -28,6 +28,7 @@
         public static string AirasiaMealSelect = URLAirasia + "/api/nsk/v2/booking/ssrs/";
         public static string AirasiaCommitBooking = URLAirasia + "/api/nsk/v3/booking";
         public static string AirasiaPNRBooking = URLAirasia + "/api/nsk/v1/booking/retrieve/byRecordLocator/";
+        public static string AirasiaPayment = URLAirasia + "/api/nsk/v4/booking/payments";
         #endregion
 
         #region AkasaAir URLs
@@ -40,8 +41,10 @@
         public static string AkasaPNRBooking = URLAkasaAir + "/api/nsk/v1/booking";
         public static string AkasaAirSeatMap = URLAkasaAir + "/api/nsk/v3/booking/seatmaps/journey/";
         //Contact
-        public static string AkasaAirContactDetails = URLAkasaAir + "/api/nsk/v1/booking/contacts";
-        //Passenger
+        public static string AkasaAirContactDetails = URLAkasaAir + "/api/nsk/v1/booking/contacts";//yes
+                                                                                                   //Passenger
+
+        public static string Akasainfant = URLAkasaAir + "/api/nsk/v2/bookings/quote";
         public static string AkasaAirPassengerDetails = URLAkasaAir + "/api/nsk/v3/booking/passengers/";
         //Infant
         public static string AkasaAirInfantDetails = URLAkasaAir + "/api/nsk/v3/booking/passengers/";
@@ -53,6 +56,8 @@
         public static string AkasaAirMealBaggagePost = URLAkasaAir + "/api/nsk/v2/booking/ssrs/";
         public static string AkasaAirCommitBooking = URLAkasaAir + "/api/nsk/v3/booking";
         public static string AkasaAirGetBooking = URLAkasaAir + "/api/nsk/v1/booking";
+        public static string AkasaAirPayment = URLAkasaAir + "/api/nsk/v2/booking/payments";
+
         public static string AkasaAirPNRBooking = URLAkasaAir + "/api/nsk/v1/booking/retrieve/byRecordLocator/";
         #endregion
 

@@ -113,7 +113,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         //GetBokking From State and Payment API Call
                         client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                        HttpResponseMessage responceGetBookingSate = await client.GetAsync(AppUrlConstant.URLAirasia + "/api/nsk/v1/booking");
+                        HttpResponseMessage responceGetBookingSate = await client.GetAsync(AppUrlConstant.AirasiaGetBoking);
                         if (responceGetBookingSate.IsSuccessStatusCode)
                         {
                             string _responceGetBooking = responceGetBookingSate.Content.ReadAsStringAsync().Result;
@@ -152,7 +152,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             paymentRequest.Installments = 1;
                             string jsonPayload = JsonConvert.SerializeObject(paymentRequest);
                             HttpContent content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
-                            string url = AppUrlConstant.URLAirasia + "/api/nsk/v4/booking/payments";
+                            string url = AppUrlConstant.AirasiaPayment;
                             HttpResponseMessage response = await client.PostAsync(url, content);
                             string responseContent = await response.Content.ReadAsStringAsync();
                             var responseData = JsonConvert.DeserializeObject<dynamic>(responseContent);
@@ -808,21 +808,21 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
                         client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                        HttpResponseMessage responceGetBookingSate = await client.GetAsync(AppUrlConstant.URLAkasaAir + "/api/nsk/v1/booking");
+                        HttpResponseMessage responceGetBookingSate = await client.GetAsync(AppUrlConstant.AkasaAirGetBooking);
                         if (responceGetBookingSate.IsSuccessStatusCode)
                         {
                             string _responceGetBooking = responceGetBookingSate.Content.ReadAsStringAsync().Result;
                             if (k1 == 0)
                             {
                                 //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(AirAsiaTripSellRequestobj) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v4/trip/sell" + "\n Response: " + JsonConvert.SerializeObject(resultsTripsell), "SellRequest_Left", "AirAsiaRT");
-                                logs.WriteLogsR(AppUrlConstant.URLAkasaAir + "/api/nsk/v1/booking", "14-GetBookingRequest_Left", "AkasaRT");
+                                logs.WriteLogsR(AppUrlConstant.AkasaAirGetBooking, "14-GetBookingRequest_Left", "AkasaRT");
                                 logs.WriteLogsR(_responceGetBooking, "14-GetBookingResponse_Left", "AkasaRT");
 
                             }
                             else
                             {
                                 //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(AirAsiaTripSellRequestobj) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v4/trip/sell" + "\n Response: " + JsonConvert.SerializeObject(resultsTripsell), "SellRequest_Right", "AirAsiaRT");
-                                logs.WriteLogsR(AppUrlConstant.URLAkasaAir + "/api/nsk/v1/booking", "14-GetBookingRequest_Right", "AkasaRT");
+                                logs.WriteLogsR(AppUrlConstant.AkasaAirGetBooking, "14-GetBookingRequest_Right", "AkasaRT");
                                 logs.WriteLogsR(_responceGetBooking, "14-GetBookingResponse_Right", "AkasaRT");
                             }
 
@@ -856,7 +856,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             HttpContent content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 
                             // Sending the POST request
-                            string url = AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/payments";
+                            string url = AppUrlConstant.AkasaAirPayment;
 
                             HttpResponseMessage response = await client.PostAsync(url, content);
                             string responseContent = await response.Content.ReadAsStringAsync();

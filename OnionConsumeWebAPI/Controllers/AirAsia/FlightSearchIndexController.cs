@@ -647,9 +647,9 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                         airlineLogin loginobject = new airlineLogin();
                         loginobject.credentials = _CredentialsAkasha;
                         //TempData["AirAsiaLogin"] = login.credentials.Image;
-                        AirasiaTokan = new AirasiaTokan();
-                        AirasialoginRequest = JsonConvert.SerializeObject(loginobject, Formatting.Indented);
-                        logs.WriteLogs(AirasialoginRequest, "1-Tokan_Request", "AkasaOneWay", SameAirlineRT);
+                        AirasiaTokan AkasaTokan = new AirasiaTokan();
+                        var AkasaloginRequest  = JsonConvert.SerializeObject(loginobject, Formatting.Indented);
+                        logs.WriteLogs(AkasaloginRequest, "1-Tokan_Request", "AkasaOneWay", SameAirlineRT);
                         client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                         HttpResponseMessage responcedata = await client.PostAsJsonAsync(AppUrlConstant.AkasaTokan, loginobject);
                         if (responcedata.IsSuccessStatusCode)
@@ -657,9 +657,9 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                             var results = responcedata.Content.ReadAsStringAsync().Result;
                             logs.WriteLogs(results, "1-Token_Responce", "AkasaOneWay", SameAirlineRT);
                             var JsonObj = JsonConvert.DeserializeObject<dynamic>(results);
-                            AirasiaTokan.token = JsonObj.data.token;
-                            AirasiaTokan.idleTimeoutInMinutes = JsonObj.data.idleTimeoutInMinutes;
-                            HttpContext.Session.SetString("AkasaTokan", JsonConvert.SerializeObject(AirasiaTokan.token));
+                            AkasaTokan.token = JsonObj.data.token;
+                            AkasaTokan.idleTimeoutInMinutes = JsonObj.data.idleTimeoutInMinutes;
+                            HttpContext.Session.SetString("AkasaTokan", JsonConvert.SerializeObject(AkasaTokan.token));
                             _SimpleAvailabilityobj = new DomainLayer.Model.SimpleAvailabilityRequestModel();
                             _SimpleAvailabilityobj.origin = _GetfligthModel.origin;
                             _SimpleAvailabilityobj.destination = _GetfligthModel.destination;
@@ -738,7 +738,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                             json = JsonConvert.SerializeObject(_SimpleAvailabilityobj, Formatting.Indented);
                             logs.WriteLogs(json, "2-SimpleAvailability_Req", "AkasaOneWay", SameAirlineRT);
                             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", AirasiaTokan.token);
+                            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", AkasaTokan.token);
                             HttpResponseMessage responceAkasaAir = await client.PostAsJsonAsync(AppUrlConstant.AkasaAirSearchSimple, _SimpleAvailabilityobj);
                             //uniqueidx = 0;
                             if (responceAkasaAir.IsSuccessStatusCode)
