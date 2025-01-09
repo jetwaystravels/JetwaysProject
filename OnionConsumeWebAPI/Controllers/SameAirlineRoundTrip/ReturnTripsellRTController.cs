@@ -2208,7 +2208,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                 {
                                     IndigoBookingManager_.SellResponse sellSsrResponse = null;
 
-                                    sellSsrResponse = await objsell.sellssrInft(Signature, _getPriceItineraryRS, infantcount, 0, "");
+                                    sellSsrResponse = await objsell.sellssrInftSameAirline(Signature, _getPriceItineraryRS, infantcount, 0, "");
 
                                     str3 = JsonConvert.SerializeObject(sellSsrResponse);
 

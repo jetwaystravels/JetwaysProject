@@ -139,13 +139,13 @@ namespace OnionArchitectureAPI.Services.Indigo
             //}
             if (_Airlineway.ToLower() == "oneway")
             {
-                logs.WriteLogs(JsonConvert.SerializeObject(getBookingRequest), "14-GetBookingDetailsReq", "IndigoOneWay", "oneway");
-                logs.WriteLogs(JsonConvert.SerializeObject(_getBookingResponse), "14-GetBookingDetailsRes", "IndigoOneWay", "oneway");
+                logs.WriteLogs(JsonConvert.SerializeObject(getBookingRequest), "14-GetBookingPNRDetailsReq", "IndigoOneWay", "oneway");
+                logs.WriteLogs(JsonConvert.SerializeObject(_getBookingResponse), "14-GetBookingPNRDetailsRes", "IndigoOneWay", "oneway");
             }
             else
             {
-                logs.WriteLogsR(JsonConvert.SerializeObject(getBookingRequest), "14-GetBookingDetailsReq", "IndigoRT");
-                logs.WriteLogsR(JsonConvert.SerializeObject(_getBookingResponse), "14-GetBookingDetailsRes", "IndigoRT");
+                logs.WriteLogsR(JsonConvert.SerializeObject(getBookingRequest), "14-GetBookingPNRDetailsReq", "IndigoRT");
+                logs.WriteLogsR(JsonConvert.SerializeObject(_getBookingResponse), "14-GetBookingPNRDetailsRes", "IndigoRT");
 
             }
             return (GetBookingResponse)_getBookingResponse;

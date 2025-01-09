@@ -3232,6 +3232,8 @@
             $('#IdentifierData').text(identifierL);
 
             var AirlineNameL = $('.AirlineName').eq(uniqueId).val();
+            localStorage.setItem('leftairline', AirlineNameL);
+            //alert(AirlineNameL);
             var imageSrc;
 
             if (AirlineNameL == 'Indigo') {
@@ -3315,6 +3317,8 @@
             $('#identifierreturndataR').text(identifierR);
 
             var AirlineNameR = $('.AirlineNameR').eq(uniqueIdR).val();
+            localStorage.setItem('rightairline', AirlineNameR);
+            //alert(AirlineNameR);
             var imageSrc;
 
             if (AirlineNameR == 'Indigo') {
@@ -3379,6 +3383,13 @@
 
         $('#ReturnButtonId').click(function () {
 
+            var leftAir = localStorage.getItem('leftairline');
+            var rightAir = localStorage.getItem('rightairline');
+            if (leftAir != rightAir) {
+                alert("Please select the same airline on both sides!")
+                return false;
+            }
+          
 
             var arrivalTime = $('#arrivalData').text();
             var returnFlightTime = $('#departurereturndata').text();

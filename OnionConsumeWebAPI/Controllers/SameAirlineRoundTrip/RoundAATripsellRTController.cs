@@ -2461,7 +2461,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     _SellSSR obj_ = new _SellSSR(httpContextAccessorInstance);
                                     //List<string> BaggageSSrkey = new List<string>();
                                     //VinayFast
-                                    IndigoBookingManager_.SellResponse sellSsrResponse = await obj_.sellssr(token, passeengerKeyList, ssrKey, BaggageSSrkey, FastfarwardAddon, PPBGAddon, Boolfastforward, _a);
+                                    IndigoBookingManager_.SellResponse sellSsrResponse = await obj_.sellssrSameAirline(token, passeengerKeyList, ssrKey, BaggageSSrkey, FastfarwardAddon, PPBGAddon, Boolfastforward, _a);
                                 }
                                 _a++;
                             }
@@ -3132,7 +3132,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     if (Signature == null) { Signature = ""; }
                                     Signature = Signature.Replace(@"""", string.Empty);
                                     _SellSSR obj_ = new _SellSSR(httpContextAccessorInstance);
-                                    IndigoBookingManager_.AssignSeatsResponse _AssignseatRes = await obj_.AssignSeat(Signature, passeengerKeyList, unitKey, p, keycount0, keycount1);
+                                    IndigoBookingManager_.AssignSeatsResponse _AssignseatRes = await obj_.AssignSeatSameAirline(Signature, passeengerKeyList, unitKey, p, keycount0, keycount1);
 
                                 }
                                 p++;
