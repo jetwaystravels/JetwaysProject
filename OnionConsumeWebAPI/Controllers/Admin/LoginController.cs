@@ -32,7 +32,7 @@ namespace OnionConsumeWebAPI.Controllers.Admin
                 var loginRequest = new { Username = username, Password = password };
                 var json = Newtonsoft.Json.JsonConvert.SerializeObject(loginRequest);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await client.PostAsync("http://localhost:5225/api/Admin/LogIn", content);
+                var response = await client.PostAsync(AppUrlConstant.Corporatelogin, content);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -46,6 +46,7 @@ namespace OnionConsumeWebAPI.Controllers.Admin
 					//HttpContext.Session.SetString("JwtToken", adminUsername);
 					
 					return Redirect("http://localhost:5202/");
+                   // return Redirect("http://192.168.1.104:82/");
                 }
 
                 ViewBag.ErrorMessage = "Invalid login credentials";

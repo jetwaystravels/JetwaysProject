@@ -102,11 +102,60 @@
                             <div class="form-input dobinput d-flex" id="InfDOBCount_@inafantIdx">
                                 <div class="dob-picker">
                                     <select class="brd-none year-select" id="year_@inafantIdx" required>
+                                        <option value="" disabled selected>Year</option>
+                                        <option value="2025">2025</option>
+                                        <option value="2024">2024</option>
+                                        <option value="2023">2023</option>
+                                        <option value="2022">2022</option>
                                     </select>
                                     <select class="brd-none month-select" id="month_@inafantIdx" required>
+                                        <option value="" disabled selected>Month</option>
+                                        <option value="0">January</option>
+                                        <option value="1">February</option>
+                                        <option value="2">March</option>
+                                        <option value="3">April</option>
+                                        <option value="4">May</option>
+                                        <option value="5">June</option>
+                                        <option value="6">July</option>
+                                        <option value="7">August</option>
+                                        <option value="8">September</option>
+                                        <option value="9">October</option>
+                                        <option value="10">November</option>
+                                        <option value="11">December</option>
                                     </select>
                                     <select class="brd-none day-select" id="day_@inafantIdx" required>
                                         <option value="" disabled selected>Day</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                        <option value="13">13</option>
+                                        <option value="14">14</option>
+                                        <option value="15">15</option>
+                                        <option value="16">16</option>
+                                        <option value="17">17</option>
+                                        <option value="18">18</option>
+                                        <option value="19">19</option>
+                                        <option value="20">20</option>
+                                        <option value="21">21</option>
+                                        <option value="22">22</option>
+                                        <option value="23">23</option>
+                                        <option value="24">24</option>
+                                        <option value="25">25</option>
+                                        <option value="26">26</option>
+                                        <option value="27">27</option>
+                                        <option value="28">28</option>
+                                        <option value="29">29</option>
+                                        <option value="30">30</option>
+                                        <option value="31">31</option>
                                     </select>
                                 </div>
                                 <input type="hidden" name="passengerdetails[@i].dateOfBirth" id="dobHidden_@inafantIdx" />
@@ -431,106 +480,6 @@
     // }
 
 
-    document.addEventListener('DOMContentLoaded', function () {
-        const daySelects = document.querySelectorAll('.day-select');
-        const monthSelects = document.querySelectorAll('.month-select');
-        const yearSelects = document.querySelectorAll('.year-select');
-
-        const monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-
-        function isLeapYear(year) {
-            return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
-        }
-
-        function populateDayOptions(daySelect, month, year) {
-            daySelect.innerHTML = '<option value="" disabled selected>Day</option>'; // Clear previous options
-            let daysInMonth = monthDays[month];
-            if (month === 1 && isLeapYear(year)) { // February and leap year
-                daysInMonth = 29;
-            }
-            for (let i = 1; i <= daysInMonth; i++) {
-                const option = document.createElement('option');
-                option.value = i;
-                option.textContent = i;
-                daySelect.appendChild(option);
-            }
-            daySelect.disabled = false;
-        }
-
-        function populateMonthOptions(monthSelect) {
-            monthSelect.innerHTML = '<option value="" disabled selected>Month</option>';
-            for (let i = 0; i < 12; i++) {
-                const option = document.createElement('option');
-                option.value = i;
-                option.textContent = new Date(0, i).toLocaleString('en-US', { month: 'long' });
-                monthSelect.appendChild(option);
-            }
-            monthSelect.disabled = false;
-        }
-
-        function populateYearOptions(yearSelect) {
-            const currentYear = new Date().getFullYear();
-            const maxInfantAge = 2;
-            for (let i = currentYear; i >= currentYear - maxInfantAge; i--) {
-                const option = document.createElement('option');
-                option.value = i;
-                option.textContent = i;
-                yearSelect.appendChild(option);
-            }
-        }
-
-        yearSelects.forEach(populateYearOptions);
-
-        function handleYearChange() {
-            const year = parseInt(this.value);
-            const parent = this.parentElement;
-            const monthSelect = parent.querySelector('.month-select');
-            populateMonthOptions(monthSelect);
-            const daySelect = parent.querySelector('.day-select');
-            daySelect.innerHTML = '<option value="" disabled selected>Day</option>';
-            daySelect.disabled = true;
-        }
-
-        function handleMonthChange() {
-            const parent = this.parentElement;
-            const year = parseInt(parent.querySelector('.year-select').value);
-            const month = parseInt(this.value);
-            const daySelect = parent.querySelector('.day-select');
-            populateDayOptions(daySelect, month, year);
-        }
-
-        yearSelects.forEach(select => select.addEventListener('change', handleYearChange));
-        monthSelects.forEach(select => select.addEventListener('change', handleMonthChange));
-
-        // Initialize the day options for each set of dropdowns
-        document.querySelectorAll('select').forEach(select => select.dispatchEvent(new Event('change')));
-    });
-
-    function getSelectedDayValue(index) {
-        const daySelects = document.querySelectorAll('.day-select');
-        if (index < 0 || index >= daySelects.length) {
-            throw new Error('Index out of bounds');
-        }
-        return daySelects[index].value;
-    }
-
-    function getSelectedMonthValue(index) {
-        const monthSelects = document.querySelectorAll('.month-select');
-        if (index < 0 || index >= monthSelects.length) {
-            throw new Error('Index out of bounds');
-        }
-        return monthSelects[index].value;
-    }
-
-    function getSelectedYearValue(index) {
-        const yearSelects = document.querySelectorAll('.year-select');
-        if (index < 0 || index >= yearSelects.length) {
-            throw new Error('Index out of bounds');
-        }
-        return yearSelects[index].value;
-    }
-
-
 
 </script>
 <script type="text/javascript">
@@ -659,6 +608,17 @@
                 var month = parseInt(document.getElementById("month_" + inafantIdx).value) + 1;
                 var day = document.getElementById("day_" + inafantIdx).value;
                 var dob = year + "-" + month + "-" + day;
+                /****************************/
+                if (month === 2) {
+                    if (!isValidFebruaryDay(year, day)) {
+                        alert("Invalid date! For February, the day must be 1-28 for a non-leap year or 1-29 for a leap year.");
+                        return false;
+                    }
+                }
+                /************************* */
+
+
+
                 document.getElementById(`dobHidden_${inafantIdx}`).value = dob; // Date of birth
 
                 if (year == "") {
@@ -770,8 +730,25 @@
             $('#dataPopup').modal('show');
 
         });
-        $("#ContinueData").click(function () {
 
+        /************************************************************/
+        function isValidFebruaryDay(year, day) {
+            year = parseInt(year);
+            day = parseInt(day);
+
+            // Check for leap year
+            var isLeapYear = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+
+            // Valid days for February
+            if (isLeapYear) {
+                return day >= 1 && day <= 29;
+            } else {
+                return day >= 1 && day <= 28;
+            }
+        }
+        //****************************************************** */
+
+        $("#ContinueData").click(function () {
             $('#passengers_id').hide(); //Contact Details Div Hide
             //*************Validation effect Start**********
             var contentToDisplay = document.getElementById("content");
@@ -782,11 +759,9 @@
             toggleButton4To.style.opacity = "1.0";
             var GSTcontent5To = document.getElementById("content4");
             GSTcontent5To.style.display = "block";
-
             var GSTContinuebtn1 = document.querySelector("#Continuebtn");
             GSTContinuebtn1.disabled = false;
             GSTContinuebtn1.style.opacity = "1.0";
-
             var formData = new FormData($("#passengerFormRT")[0]);
             $.ajax({
                 url: "/RoundAATripsell/PostReturnTravllerData",
