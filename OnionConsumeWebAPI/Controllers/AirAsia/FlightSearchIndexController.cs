@@ -1504,8 +1504,8 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                     _credentials _CredentialsGDS = new _credentials();
                     if (response.IsSuccessStatusCode)
                     {
-                        var results = response.Content.ReadAsStringAsync().Result;
-                        var JsonObject = JsonConvert.DeserializeObject<List<_credentials>>(results);
+                        //var results = response.Content.ReadAsStringAsync().Result;
+                        //var JsonObject = JsonConvert.DeserializeObject<List<_credentials>>(results);
                         await _credentialService.PopulateCredentialsAsync(response, _CredentialsGDS, 5);
 
                     }

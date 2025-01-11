@@ -34,15 +34,21 @@ using OnionConsumeWebAPI.ApiService;
 using OnionArchitectureAPI.Services.Travelport;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
+using OnionConsumeWebAPI.Comman;
 
 namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
 {
     public class FlightSearchIndexRTController : Controller
     {
         public readonly IDistributedCache _distributedCache;
-        public FlightSearchIndexRTController(IDistributedCache distributedcache)
+        private readonly CredentialService _credentialService;
+        private readonly IConfiguration _configuration;
+        public FlightSearchIndexRTController(IDistributedCache distributedcache, CredentialService credentialService, IConfiguration configuration)
         {
             _distributedCache = distributedcache;
+            //_mongoDbService = mongoDbService;
+            _credentialService = credentialService;
+            _configuration = configuration;
         }
         private string KeyName = string.Empty;
         public static int counterRedis = 0;
@@ -144,17 +150,24 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                     HttpResponseMessage response = await client.GetAsync("api/Login/getotacredairasia");
 
                     //Start :Air India express login
+                    //if (response.IsSuccessStatusCode)
+                    //{
+                    //    var results = response.Content.ReadAsStringAsync().Result;
+                    //    var JsonObject = JsonConvert.DeserializeObject<List<_credentials>>(results);
+                    //    if (JsonObject[0].FlightCode == 1)
+                    //    {
+                    //        credentialsobj.username = JsonObject[0].username;
+                    //        credentialsobj.password = JsonObject[0].password;
+                    //        credentialsobj.domain = JsonObject[0].domain;
+                    //        credentialsobj.Image = JsonObject[0].Image;
+                    //    }
+                    //}
+
+                    var _credentialsAirasia = new _credentials();
                     if (response.IsSuccessStatusCode)
                     {
-                        var results = response.Content.ReadAsStringAsync().Result;
-                        var JsonObject = JsonConvert.DeserializeObject<List<_credentials>>(results);
-                        if (JsonObject[0].FlightCode == 1)
-                        {
-                            credentialsobj.username = JsonObject[0].username;
-                            credentialsobj.password = JsonObject[0].password;
-                            credentialsobj.domain = JsonObject[0].domain;
-                            credentialsobj.Image = JsonObject[0].Image;
-                        }
+                        await _credentialService.PopulateCredentialsAsync(response, _credentialsAirasia, 1);
+
                     }
                     //End :Air India express login
 
@@ -577,16 +590,16 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                     _credentials _CredentialsAkasha = new _credentials();
                     if (response.IsSuccessStatusCode)
                     {
-                        var results = response.Content.ReadAsStringAsync().Result;
-                        var JsonObject = JsonConvert.DeserializeObject<List<_credentials>>(results);
-                        if (JsonObject[3].FlightCode == 2)
-                        {
-                            _CredentialsAkasha.username = JsonObject[3].username;
-                            _CredentialsAkasha.password = JsonObject[3].password;
-                            _CredentialsAkasha.domain = JsonObject[3].domain;
-                            // _CredentialsAkasha.satus = JsonObject[1].status;
-                        }
-
+                        //var results = response.Content.ReadAsStringAsync().Result;
+                        //var JsonObject = JsonConvert.DeserializeObject<List<_credentials>>(results);
+                        //if (JsonObject[3].FlightCode == 2)
+                        //{
+                        //    _CredentialsAkasha.username = JsonObject[3].username;
+                        //    _CredentialsAkasha.password = JsonObject[3].password;
+                        //    _CredentialsAkasha.domain = JsonObject[3].domain;
+                        //    // _CredentialsAkasha.satus = JsonObject[1].status;
+                        //}
+                        await _credentialService.PopulateCredentialsAsync(response, _CredentialsAkasha, 2);
 
                     }
 
@@ -1620,14 +1633,7 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                     _credentials _CredentialsGDS = new _credentials();
                     if (response.IsSuccessStatusCode)
                     {
-                        var results = response.Content.ReadAsStringAsync().Result;
-                        var JsonObject = JsonConvert.DeserializeObject<List<_credentials>>(results);
-                        if (JsonObject[4].FlightCode == 5)
-                        {
-                            _CredentialsGDS.username = JsonObject[4].username;
-                            _CredentialsGDS.password = JsonObject[4].password;
-                            _CredentialsGDS.domain = JsonObject[4].domain;
-                        }
+                      await _credentialService.PopulateCredentialsAsync(response, _CredentialsGDS, 5);
 
 
                     }

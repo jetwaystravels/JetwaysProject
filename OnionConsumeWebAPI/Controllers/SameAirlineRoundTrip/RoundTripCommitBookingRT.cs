@@ -854,7 +854,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             returnTicketBooking.bookingKey = JsonObjPNRBooking.data.bookingKey;
                             // var zxvx= JsonObjPNRBooking.data.breakdown.journeyTotals.totalAmount;
                             Breakdown breakdown = new Breakdown();
-                            breakdown.balanceDue = JsonObjPNRBooking.data.breakdown.balanceDue;
+                            //breakdown.balanceDue = JsonObjPNRBooking.data.breakdown.balanceDue;
+                            breakdown.balanceDue = JsonObjPNRBooking.data.breakdown.totalAmount;
                             JourneyTotals journeyTotalsobj = new JourneyTotals();
                             journeyTotalsobj.totalAmount = JsonObjPNRBooking.data.breakdown.journeyTotals.totalAmount;
                             journeyTotalsobj.totalTax = JsonObjPNRBooking.data.breakdown.journeyTotals.totalTax;

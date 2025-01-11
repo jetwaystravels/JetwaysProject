@@ -181,6 +181,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                     // var zxvx= JsonObjPNRBooking.data.breakdown.journeyTotals.totalAmount;
                     Breakdown breakdown = new Breakdown();
                     breakdown.balanceDue = JsonObjPNRBooking.data.breakdown.balanceDue;
+                    breakdown.totalAmount = JsonObjPNRBooking.data.breakdown.totalAmount;
                     JourneyTotals journeyTotalsobj = new JourneyTotals();
                     journeyTotalsobj.totalAmount = JsonObjPNRBooking.data.breakdown.journeyTotals.totalAmount;
                     journeyTotalsobj.totalTax = JsonObjPNRBooking.data.breakdown.journeyTotals.totalTax;
