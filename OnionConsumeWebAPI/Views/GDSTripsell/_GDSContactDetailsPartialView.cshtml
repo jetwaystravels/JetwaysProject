@@ -302,12 +302,24 @@
                 document.getElementById("number").focus();
                 return false;
             }
-            var mobileNumberPattern = /^\d{10}$/; // Assumes a 10-digit number
+
+            var mobileNumberPattern = /^\d{10}$/; //Assumes a 10-digit number
 
             if (!mobileNumberPattern.test(phonefocus)) {
                 alert("Please enter a valid 10-digit mobile number.");
                 return false;
             }
+            const regexgd = /^[1-9][0-9]{9}$/;
+            if (!regexgd.test(phonefocus)) {
+                document.getElementById('phoneNumberErrorMessage').innerText = "Invalid Phone Number";
+                let phoneToDisplay = document.getElementById("error-message8");
+                phoneToDisplay.style.display = "none";
+                return false;
+
+            } else {
+                document.getElementById('phoneNumberErrorMessage').innerText = "";
+            }
+
 
             //Gst
             var buttongst = document.getElementById('GSTButton2');
@@ -464,12 +476,14 @@
     function validatePhoneNumber(event) {
         const phoneNumber = event.target.value;
         //const regex = /^(0|91)?[6-9][0-9]{9}$/;
-        const regex = /^[6-9][0-9]{9}$/;
+        const regex = /^[1-9][0-9]{9}$/;
         if (!regex.test(phoneNumber)) {
 
             document.getElementById('phoneNumberErrorMessage').innerText = "Invalid Phone Number";
             let phoneToDisplay = document.getElementById("error-message8");
             phoneToDisplay.style.display = "none";
+           
+            
         } else {
             document.getElementById('phoneNumberErrorMessage').innerText = "";
         }

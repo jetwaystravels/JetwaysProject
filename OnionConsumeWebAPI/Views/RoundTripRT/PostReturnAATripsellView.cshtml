@@ -127,10 +127,9 @@
 
     function PostdataReturnTripsell() {
         
-        var rightairName = document.getElementById("airlinerightID").value;
+        var rightairName = document.getElementById("airlinerightID").value; 
         var leftairName = document.getElementById("airlineleftID").value;
-        if (leftairName == "Indigo" || rightairName == "Indigo" || leftairName == "Air India Exp..." || rightairName == "Air India Exp...") 
-        {
+        if (leftairName == "Indigo" || rightairName == "Indigo" || leftairName == "Air India Exp..." || rightairName == "Air India Exp..." || leftairName == "Spicejet" || rightairName == "Spicejet") {
             var storedFare = localStorage.getItem('selectedFare');
             var storedFareR = localStorage.getItem('selectedReturnFare');
             //alert(storedFare + "::" + storedFareR);

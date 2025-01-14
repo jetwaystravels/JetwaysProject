@@ -297,6 +297,17 @@
                 alert("Please enter a valid 10-digit mobile number.");
                 return false;
             }
+            const regexRT = /^[1-9][0-9]{9}$/;
+            if (!regexRT.test(phonefocus)) {
+                document.getElementById('phoneNumberErrorMessage').innerText = "Invalid Phone Number";
+                let phoneToDisplay = document.getElementById("error-message8");
+                phoneToDisplay.style.display = "none";
+                return false;
+
+            } else {
+                document.getElementById('phoneNumberErrorMessage').innerText = "";
+            }
+
             ///Gst company
 
             var buttongst = document.getElementById('GSTButton2');

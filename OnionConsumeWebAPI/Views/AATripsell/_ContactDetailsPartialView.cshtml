@@ -298,6 +298,18 @@
                 return false;
             }
 
+            const regexAA = /^[1-9][0-9]{9}$/;
+            if (!regexAA.test(phonefocus)) {
+                document.getElementById('phoneNumberErrorMessage').innerText = "Invalid Phone Number";
+                let phoneToDisplay = document.getElementById("error-message8");
+                phoneToDisplay.style.display = "none";
+                return false;
+
+            } else {
+                document.getElementById('phoneNumberErrorMessage').innerText = "";
+            }
+
+
             //Gst
             var buttongst = document.getElementById('GSTButton2');
             if (buttongst.checked == true) {
@@ -500,10 +512,10 @@
                 return false;
             }
           else {
-                document.getElementById('phoneNumberErrorMessage').innerText = "";//Invalid Phone Number
+            document.getElementById('phoneNumberErrorMessage').innerText = "Invalid Phone Number";//Invalid Phone Number
             let phoneToDisplay = document.getElementById("error-message8");
             phoneToDisplay.style.display = "block";
-            return false;
+            
         }
         } else {
             document.getElementById('phoneNumberErrorMessage').innerText = "";

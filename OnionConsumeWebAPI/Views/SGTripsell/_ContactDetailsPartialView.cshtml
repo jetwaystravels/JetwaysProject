@@ -298,6 +298,17 @@
                 return false;
             }
 
+             const regexsg = /^[1-9][0-9]{9}$/;
+            if (!regexsg.test(phonefocus)) {
+                document.getElementById('phoneNumberErrorMessage').innerText = "Invalid Phone Number";
+                let phoneToDisplay = document.getElementById("error-message8");
+                phoneToDisplay.style.display = "none";
+                return false;
+
+            } else {
+                document.getElementById('phoneNumberErrorMessage').innerText = "";
+            }
+
             //Gst
             var buttongst = document.getElementById('GSTButton');
             if (buttongst.checked == true) {

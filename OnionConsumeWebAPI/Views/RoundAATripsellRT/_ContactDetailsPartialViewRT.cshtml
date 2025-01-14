@@ -288,6 +288,18 @@
                 alert("Please enter a valid 10-digit mobile number.");
                 return false;
             }
+
+            const regexrt = /^[1-9][0-9]{9}$/;
+            if (!regexrt.test(phonefocus)) {
+                document.getElementById('phoneNumberErrorMessage').innerText = "Invalid Phone Number";
+                let phoneToDisplay = document.getElementById("error-message8");
+                phoneToDisplay.style.display = "none";
+                return false;
+
+            } else {
+                document.getElementById('phoneNumberErrorMessage').innerText = "";
+            }
+
             ///Gst company
 
             var buttongst = document.getElementById('GSTButton2');
@@ -477,12 +489,15 @@
 
     function validatePhoneNumber(event) {
         const phoneNumber = event.target.value;
-        const regex = /^(0|91)?[6-9][0-9]{9}$/;
+        //const regex = /^(0|91)?[6-9][0-9]{9}$/;
+        const regex = /^[1-9][0-9]{9}$/;
         if (!regex.test(phoneNumber)) {
 
             document.getElementById('phoneNumberErrorMessage').innerText = "Invalid Phone Number";
             let phoneToDisplay = document.getElementById("error-message8");
             phoneToDisplay.style.display = "none";
+            return;
+            
         } else {
             document.getElementById('phoneNumberErrorMessage').innerText = "";
         }

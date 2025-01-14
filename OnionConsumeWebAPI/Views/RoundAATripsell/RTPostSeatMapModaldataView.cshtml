@@ -451,47 +451,6 @@
 
 
 
-        //Cancel Button Function...
-        // $('#leftNstop1').click(function () {
-
-        //     for (var i = 0; i < checkedValues.length; i++) {
-        //         $('#outputDiv_' + i).text('');
-        //     }
-        //     clearLocalStorage();
-        //     var selectedIds = JSON.parse(localStorage.getItem("selectedIds1"));
-        //     if (selectedIds) {
-        //         selectedIds.forEach(function (id) {
-        //             $('input[name="unitKey"][value="' + id + '"]').prop('checked', false);
-        //         });
-        //     }
-        //     //$('input[name="unitKey"]').prop('checked', false);
-        //     updatetotal();
-        //     localStorage.removeItem("selectedIds1");
-        //     updateCombinedTotalRT();
-        // });
-
-
-        // $('#leftConnect1').click(function () {
-        //     for (var i = 0; i < checkedValues.length; i++) {
-        //         checkedValues[i] = '';
-        //         $('#outputDiv_' + i).text('');
-        //     }
-        //     clearLocalStorage();
-        //     var selectedIds = JSON.parse(localStorage.getItem("selectedIds1"));
-        //     if (selectedIds) {
-        //         selectedIds.forEach(function (id) {
-        //             $('input[name="unitKey"][value="' + id + '"]').prop('checked', false);
-        //         });
-        //     }
-        //     //$('input[name="unitKey"]').prop('checked', false);
-        //     updatetotal();
-        //     localStorage.removeItem("selectedIds1");
-        //     updateCombinedTotalRT();
-        //     //updateInputsAndSpans(checkedValues);
-        //     //updateLocalStorage();
-        // });
-
-
         var checkedValues2 = ['', '', '', '', '', '', '', '', ''];
         function updateInputsAndSpans2(checkedValues2) {
             for (var i = 0; i < checkedValues2.length; i++) {
@@ -502,7 +461,7 @@
                 if (checkedValues2[i].includes("Airasia")) {
                     $('#inputConnect_' + i).val(parts[2]);
                     $('.feeSpanConnect_' + i).text(parts[0]);
-                    $('#outputDiv_' + i).text(parts[2]);
+                    $('#outputDivConnect_' + i).text(parts[2]);
                 }
 
 
@@ -552,28 +511,6 @@
             updateInputsAndSpans2(checkedValues2);
             updateLocalStorage2();
         });
-
-
-        // $('#leftConnect_1').click(function () {
-        //     //alert("T1");
-        //     // Loop through each element and set its text to an empty string
-        //     for (var i = 0; i < checkedValues2.length; i++) {
-        //         $('#outputDivConnect_' + i).text('');
-        //     }
-        //     clearLocalStorage2();
-        //     var selectedIds = JSON.parse(localStorage.getItem("selectedIds2"));
-        //     if (selectedIds) {
-        //         selectedIds.forEach(function (id) {
-        //             $('input[name="unitKey"][value="' + id + '"]').prop('checked', false);
-        //         });
-        //     }
-        //     //$('input[name="unitKey"]').prop('checked', false);
-        //     updatetotal();
-        //     localStorage.removeItem("selectedIds2");
-        //     updateCombinedTotalRT();
-        // });
-
-
 
         //*********************Return Code seat validation***************
         function clearLocalStorageRT() {
@@ -633,82 +570,6 @@
             updateInputsAndSpansRT(checkedValuesRT);
             updateLocalStorageRT();
         });
-
-        // $('#rightNstop1').click(function () {
-        //     for (var i = 0; i < checkedValuesRT.length; i++) {
-        //         $('#outputDivRT_' + i).text('');
-        //     }
-
-        //     clearLocalStorageRT();
-        //     var selectedIds = JSON.parse(localStorage.getItem("selectedIds3"));
-        //     if (selectedIds) {
-        //         selectedIds.forEach(function (id) {
-        //             $('input[name="unitKey"][value="' + id + '"]').prop('checked', false);
-        //         });
-        //     }
-        //     //$('input[name="unitKey"]').prop('checked', false);
-        //     updatetotal();
-        //     localStorage.removeItem("selectedIds3");
-        //     updateCombinedTotalRT();
-        // });
-
-        // $('#Lrightconnect1').click(function () {
-        //     for (var i = 0; i < checkedValuesRT.length; i++) {
-        //         $('#outputDivRT_' + i).text('');
-        //     }
-        //     clearLocalStorageRT();
-        //     var selectedIds = JSON.parse(localStorage.getItem("selectedIds3"));
-        //     if (selectedIds) {
-        //         selectedIds.forEach(function (id) {
-        //             $('input[name="unitKey"][value="' + id + '"]').prop('checked', false);
-        //         });
-        //     }
-        //     //$('input[name="unitKey"]').prop('checked', false);
-        //     updatetotal();
-        //     localStorage.removeItem("selectedIds3");
-        //     updateCombinedTotalRT();
-        // });
-        // $('#rightconnect1').click(function () {
-        //     for (var i = 0; i < checkedValuesRT.length; i++) {
-        //         $('#outputDivRT_' + i).text('');
-        //     }
-        //     clearLocalStorageRT();
-        //     var selectedIds = JSON.parse(localStorage.getItem("selectedIds3"));
-        //     if (selectedIds) {
-        //         selectedIds.forEach(function (id) {
-        //             $('input[name="unitKey"][value="' + id + '"]').prop('checked', false);
-        //         });
-        //     }
-        //     //$('input[name="unitKey"]').prop('checked', false);
-        //     updatetotal();
-        //     localStorage.removeItem("selectedIds3");
-        //     updateCombinedTotalRT();
-        // });
-
-        // $('#RightNonstop1').click(function () {
-        //     for (var i = 0; i < checkedValuesRT.length; i++) {
-        //         $('#outputDivRT_' + i).text('');
-        //     }
-        //     clearLocalStorageRT();
-        //     var selectedIds = JSON.parse(localStorage.getItem("selectedIds3"));
-        //     if (selectedIds) {
-        //         selectedIds.forEach(function (id) {
-        //             $('input[name="unitKey"][value="' + id + '"]').prop('checked', false);
-        //         });
-        //     }
-        //     //$('input[name="unitKey"]').prop('checked', false);
-        //     updatetotal();
-        //     localStorage.removeItem("selectedIds3");
-        //     updateCombinedTotalRT();
-        // });
-
-        // $('#cancelbtn3').click(function () {
-        //     //alert("T3");
-        //     // Loop through each element and set its text to an empty string
-        //     for (var i = 0; i < checkedValuesRT.length; i++) {
-        //         $('#outputDivRT_' + i).text('');
-        //     }
-        // });
 
         var checkedValues2RT = ['', '', '', '', '', '', '', '', ''];
 
@@ -770,50 +631,6 @@
             updateInputsAndSpans2RT(checkedValues2RT);
             updateLocalStorage2RT();
         });
-
-
-
-        // $('#Lrightconnect_1').click(function () {
-        //     //alert("T4");
-        //     // Loop through each element and set its text to an empty string
-        //     for (var i = 0; i < checkedValues2RT.length; i++) {
-        //         $('#outputDivConnectRT_' + i).text('');
-        //     }
-        //     clearLocalStorage2RT();
-        //     var selectedIds = JSON.parse(localStorage.getItem("selectedIds4"));
-        //     if (selectedIds) {
-        //         selectedIds.forEach(function (id) {
-        //             $('input[name="unitKey"][value="' + id + '"]').prop('checked', false);
-        //         });
-        //     }
-        //     //$('input[name="unitKey"]').prop('checked', false);
-        //     updatetotal();
-        //     localStorage.removeItem("selectedIds4");
-        //     updateCombinedTotalRT();
-
-        // });
-        // $('#rightconnect_1').click(function () {
-        //     //alert("T4");
-        //     // Loop through each element and set its text to an empty string
-        //     for (var i = 0; i < checkedValues2RT.length; i++) {
-        //         $('#outputDivConnectRT_' + i).text('');
-        //     }
-        //     clearLocalStorage2RT();
-        //     var selectedIds = JSON.parse(localStorage.getItem("selectedIds4"));
-        //     if (selectedIds) {
-        //         selectedIds.forEach(function (id) {
-        //             $('input[name="unitKey"][value="' + id + '"]').prop('checked', false);
-        //         });
-        //     }
-        //     //$('input[name="unitKey"]').prop('checked', false);
-        //     updatetotal();
-        //     localStorage.removeItem("selectedIds4");
-        //     updateCombinedTotalRT();
-
-        // });
-
-
-
 
         // End connceting second code
         var selectedIds = JSON.parse(localStorage.getItem("selectedIds1"));
