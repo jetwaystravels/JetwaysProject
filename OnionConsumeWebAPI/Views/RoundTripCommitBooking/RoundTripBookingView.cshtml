@@ -225,7 +225,21 @@
                                                         </div>
                                                     </div>
                                                     <div class="col">
-                                                        <div class="airline-N">@Model.AirlinePNR[a].airLines.ToString()<br> @Model.AirlinePNR[a].journeys[i].segments[i1].identifier.carrierCode-@Model.AirlinePNR[a].journeys[i].segments[i1].identifier.identifier</div>
+                                                        <div class="airline-N">
+                                                            @{
+                                                                string AirlineName = "";
+                                                                if(@Model.AirlinePNR[a].airLines.ToString()=="AirAsia")
+                                                                {
+                                                                    AirlineName = "Air India Exp..";
+                                                                }
+                                                                else
+                                                                {
+                                                                    AirlineName = @Model.AirlinePNR[a].airLines.ToString();
+                                                                }
+                                                            }
+
+                                                            @AirlineName<br> @Model.AirlinePNR[a].journeys[i].segments[i1].identifier.carrierCode-@Model.AirlinePNR[a].journeys[i].segments[i1].identifier.identifier
+                                                        </div>
                                                     </div>
                                                     <div class="col-auto">
                                                         @{
@@ -629,36 +643,19 @@
                                                 </thead>
 
                                                 <tbody class="fare">
-                                                    @if (Model.AirlinePNR[a].breakdown.totalAmountSum > 0)
-                                                    {
-                                                        <tr>
-                                                            <td>Total Basic Fare:</td>
-                                                            <td>Rs.@Model.AirlinePNR[a].breakdown.totalAmountSum</td>
-                                                        </tr>
-                                                    }
-                                                    else if (Model.AirlinePNR[a].breakdown.baseTotalAmount > 0)
-                                                    {
+                                                  
                                                         <tr>
                                                             <td>Total Basic Fare:</td>
                                                             <td>Rs.@Model.AirlinePNR[a].breakdown.baseTotalAmount</td>
                                                         </tr>
-
-                                                    }
-                                                    @if (Model.AirlinePNR[a].breakdown.totaltax > 0)
-                                                    {
-                                                        <tr>
-                                                            <td>Airline taxes and fees</td>
-                                                            <td>Rs. @Model.AirlinePNR[a].breakdown.totaltax</td>
-                                                        </tr>
-                                                    }
-                                                    else if (Model.AirlinePNR[a].breakdown.BaseTotalTax > 0)
-                                                    {
+                                                                                        
+                                                    
                                                         <tr>
                                                             <td>Airline taxes and fees</td>
                                                             <td>Rs.@Model.AirlinePNR[a].breakdown.BaseTotalTax</td>
                                                         </tr>
 
-                                                    }
+                                                  
                                                     @{
                                                         if (@Model.AirlinePNR[a].TotalAmountMeal > 0)
                                                         {
@@ -1045,36 +1042,15 @@
                                                 </thead>
 
                                                 <tbody class="fare">
-                                                    @if (Model.AirlinePNR[a].breakdown.totalAmountSum > 0)
-                                                    {
-                                                        <tr>
-                                                            <td>Total Basic Fare:</td>
-                                                            <td>Rs.@Model.AirlinePNR[a].breakdown.totalAmountSum</td>
-                                                        </tr>
-                                                    }
-                                                    else if (Model.AirlinePNR[a].breakdown.baseTotalAmount > 0)
-                                                    {
-                                                        <tr>
-                                                            <td>Total Basic Fare:</td>
-                                                            <td>Rs.@Model.AirlinePNR[a].breakdown.baseTotalAmount</td>
-                                                        </tr>
+                                                    <tr>
+                                                        <td>Total Basic Fare:</td>
+                                                        <td>Rs.@Model.AirlinePNR[a].breakdown.baseTotalAmount</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Airline taxes and fees</td>
+                                                        <td>Rs.@Model.AirlinePNR[a].breakdown.BaseTotalTax</td>
+                                                    </tr>
 
-                                                    }
-                                                    @if (Model.AirlinePNR[a].breakdown.totaltax > 0)
-                                                    {
-                                                        <tr>
-                                                            <td>Airline taxes and fees</td>
-                                                            <td>Rs. @Model.AirlinePNR[a].breakdown.totaltax</td>
-                                                        </tr>
-                                                    }
-                                                    else if (Model.AirlinePNR[a].breakdown.BaseTotalTax > 0)
-                                                    {
-                                                        <tr>
-                                                            <td>Airline taxes and fees</td>
-                                                            <td>Rs.@Model.AirlinePNR[a].breakdown.BaseTotalTax</td>
-                                                        </tr>
-
-                                                    }
                                                     @{
                                                         if (@Model.AirlinePNR[a].TotalAmountMeal > 0)
                                                         {

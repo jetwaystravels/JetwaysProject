@@ -372,9 +372,9 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
                             breakdown.journeyTotals = journeyTotalsobj;
                             breakdown.passengerTotals = passengerTotals;
-                            breakdown.baseTotalAmount = baseTotalAmount;
-                            breakdown.ToatalBasePrice = ToatalBasePrice;
-                            breakdown.BaseTotalTax = BaseTotalTax;
+                            breakdown.baseTotalAmount = baseTotalAmount + infantReturnobj.total;
+                            breakdown.ToatalBasePrice = ToatalBasePrice + infantReturnobj.taxes;
+                            breakdown.BaseTotalTax = BaseTotalTax+ infantReturnobj.taxes;
                             //breakdown.totalAmountSum = totalAmountSum;
                             //breakdown.totaltax = totaltax;
                             //breakdown.totalplusAmountSumtax = totalplusAmountSumtax;
@@ -1086,9 +1086,11 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
                             breakdown.journeyTotals = journeyTotalsobj;
                             breakdown.passengerTotals = passengerTotals;
-                            breakdown.baseTotalAmount = baseTotalAmount;
-                            breakdown.ToatalBasePrice = ToatalBasePrice;
-                            breakdown.BaseTotalTax = BaseTotalTax;
+                            //breakdown.baseTotalAmount = baseTotalAmount;
+                            breakdown.baseTotalAmount = baseTotalAmount + infantReturnobj.total;
+                            breakdown.ToatalBasePrice = BaseTotalTax + infantReturnobj.taxes;
+                            //breakdown.ToatalBasePrice = ToatalBasePrice;
+                            breakdown.BaseTotalTax = BaseTotalTax + infantReturnobj.taxes;
                             //breakdown.totalAmountSum = totalAmountSum;
                             //breakdown.totaltax = totaltax;
                             //breakdown.totalplusAmountSumtax = totalplusAmountSumtax;
