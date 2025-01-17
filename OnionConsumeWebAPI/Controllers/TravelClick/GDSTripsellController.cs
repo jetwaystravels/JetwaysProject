@@ -51,8 +51,8 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
             {
                 AirAsiaTripResponceModel passeengerlistItanary = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passengerInfant, typeof(AirAsiaTripResponceModel));
                 passeengerlist = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
-                SeatMapResponceModel Seatmaplist = null;// (SeatMapResponceModel)JsonConvert.DeserializeObject(Seatmap, typeof(SeatMapResponceModel));
-                SSRAvailabiltyResponceModel Mealslist = null;// (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
+                SeatMapResponceModel Seatmaplist = (SeatMapResponceModel)JsonConvert.DeserializeObject(Seatmap, typeof(SeatMapResponceModel));
+                SSRAvailabiltyResponceModel Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
                 vm.passeengerlist = passeengerlist;
                 vm.passeengerlistItanary = passeengerlistItanary;
                 vm.Seatmaplist = Seatmaplist;
@@ -61,11 +61,11 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
             else
             {
                 passeengerlist = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
-               // SeatMapResponceModel Seatmaplist = (SeatMapResponceModel)JsonConvert.DeserializeObject(Seatmap, typeof(SeatMapResponceModel));
-                //SSRAvailabiltyResponceModel Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
+                SeatMapResponceModel Seatmaplist = (SeatMapResponceModel)JsonConvert.DeserializeObject(Seatmap, typeof(SeatMapResponceModel));
+                SSRAvailabiltyResponceModel Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
                 vm.passeengerlist = passeengerlist;
-                vm.Seatmaplist = null;// Seatmaplist;
-                vm.Meals = null;// Mealslist;
+                vm.Seatmaplist = Seatmaplist;
+                vm.Meals = Mealslist;
             }
             if (!string.IsNullOrEmpty(passengerNamedetails))
             {
@@ -170,12 +170,12 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
             string passenger = HttpContext.Session.GetString("SGkeypassenger"); //From Itenary Response
             string passengerInfant = HttpContext.Session.GetString("SGkeypassenger");
             //string Seatmap = HttpContext.Session.GetString("Seatmap");
-            //string Meals = HttpContext.Session.GetString("Meals");
+            string Meals = HttpContext.Session.GetString("Meals");
             string passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
             ViewModel vm = new ViewModel();
             passeengerlist = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
             SeatMapResponceModel Seatmaplist = new SeatMapResponceModel(); //(SeatMapResponceModel)JsonConvert.DeserializeObject(Seatmap, typeof(SeatMapResponceModel));
-            SSRAvailabiltyResponceModel Mealslist = new SSRAvailabiltyResponceModel();// (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
+            SSRAvailabiltyResponceModel Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
             if (!string.IsNullOrEmpty(passengerNamedetails))
             {
                 List<passkeytype> passengerNamedetailsdata = (List<passkeytype>)JsonConvert.DeserializeObject(passengerNamedetails, typeof(List<passkeytype>));

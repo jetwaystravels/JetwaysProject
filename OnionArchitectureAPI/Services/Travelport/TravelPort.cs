@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Xml;
 using Utility;
 using ZXing.QrCode.Internal;
 using static DomainLayer.Model.GDSResModel;
@@ -895,8 +896,43 @@ namespace OnionArchitectureAPI.Services.Travelport
             return res;
         }
         //Same Airline RoundTrip 26-09-2024
-        
-        public string GetSeatMap(string _testURL, StringBuilder SeatMapReq, SimpleAvailabilityRequestModel _GetfligthModel, string newGuid, string _targetBranch, string _userName, string _password, SimpleAvailibilityaAddResponce AirfaredataL, string farebasisdataL, int p, string _AirlineWay)
+        public string AirSSRGet(string _testURL, StringBuilder SSRReq, string _SSrType, string newGuid, string _targetBranch, string _userName, string _password, int p, string _AirlineWay)
+        {
+
+            SSRReq = new StringBuilder();
+            SSRReq.Append("<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">");
+            SSRReq.Append("<soap:Body>");
+            SSRReq.Append("<ReferenceDataSearchReq AuthorizedBy=\"Travelport\" TargetBranch=\"" + _targetBranch + "\" TraceId=\"" + newGuid + "\" xmlns=\"http://www.travelport.com/schema/util_v48_0\" xmlns:common=\"http://www.travelport.com/schema/common_v48_0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.travelport.com/schema/util_v48_0 file:///C:/Users/mukil.kumar/Documents/Ecommerce/WSDL/Release-V19.1.0.53-V19.1/util_v48_0/Util.xsd\">");
+            SSRReq.Append("<common:BillingPointOfSaleInfo OriginApplication=\"uAPI\"/>");
+            SSRReq.Append("<ReferenceDataSearchItem Type=\"" + _SSrType + "\"/>");
+            SSRReq.Append("</ReferenceDataSearchReq>");
+            SSRReq.Append("</soap:Body></soap:Envelope>");
+            string res = Methodshit.HttpPost(_testURL, SSRReq.ToString(), _userName, _password);
+
+            if (_AirlineWay.ToLower() == "gdsoneway")
+            {
+                //logs.WriteLogs("URL: " + _testURL + "\n\n Request: " + fareRepriceReq + "\n\n Response: " + res, "GetAirPrice", "GDSOneWay","oneway");
+                logs.WriteLogs(SSRReq.ToString(), "3-GetSSRReq", "GDSOneWay", "oneway");
+                logs.WriteLogs(res, "2-GetSSRRes", "GDSOneWay", "oneway");
+            }
+            else
+            {
+                //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(fareRepriceReq) + "\n\n Response: " + JsonConvert.SerializeObject(res), "GetAirprice", "GDSRT");
+                if (p == 0)
+                {
+                    logs.WriteLogsR(SSRReq.ToString(), "3-GetSSRReq_Left", "GDSRT");
+                    logs.WriteLogsR(res, "2-GetSSRRes_Left", "GDSRT");
+                }
+                else
+                {
+                    logs.WriteLogsR(SSRReq.ToString(), "3-GetSSRReq_Right", "GDSRT");
+                    logs.WriteLogsR(res, "2-GetSSRRes_Right", "GDSRT");
+                }
+            }
+            return res;
+        }
+
+        public string GetSeatMap(string _testURL, StringBuilder SeatMapReq, SimpleAvailabilityRequestModel _GetfligthModel, string newGuid, string _targetBranch, string _userName, string _password, SimpleAvailibilityaAddResponce AirfaredataL, string farebasisdataL, string hostTokenKey, string hostTokenValue, int p, string _AirlineWay)
         {
 
             int count = 0;
@@ -906,7 +942,7 @@ namespace OnionArchitectureAPI.Services.Travelport
             int legKeyCounter = 0;
             //<SeatMapReq xmlns="http://www.travelport.com/schema/air_v52_0" TraceId="bd4398ec-5a0f-4918-82a9-7571c4536227" AuthorizedBy="Travelport" TargetBranch="P7087680" ReturnSeatPricing="true" ReturnBrandingInfo="true">
             SeatMapReq = new StringBuilder();
-            SeatMapReq.Append("<SeatMapReq xmlns=\"http://www.travelport.com/schema/air_v52_0\" TraceId=\"" + newGuid + "\" AuthorizedBy=\"Travelport\" TargetBranch=\""+ _targetBranch+ "\" ReturnSeatPricing=\"true\" ReturnBrandingInfo=\"true\">");
+            SeatMapReq.Append("<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"><soap:Body> <SeatMapReq xmlns=\"http://www.travelport.com/schema/air_v52_0\" TraceId=\"" + newGuid + "\" AuthorizedBy=\"Travelport\" TargetBranch=\"" + _targetBranch + "\" ReturnSeatPricing=\"false\" ReturnBrandingInfo=\"true\">");
             SeatMapReq.Append("<BillingPointOfSaleInfo xmlns=\"http://www.travelport.com/schema/common_v52_0\" OriginApplication=\"uAPI\" />");
 
             // to do
@@ -964,16 +1000,18 @@ namespace OnionArchitectureAPI.Services.Travelport
                 {
                     segmentIdAtIndex0 = segmentIdAtIndex2;
                 }
-                SeatMapReq.Append("<AirSegment Key=\"" + segmentIdAtIndex0 + "\" HostTokenRef=\"uLJ5gPSqWDKAi6SjZAAAAA==\" AvailabilitySource\"" + segment.designator._AvailabilitySource + "\" ");
+                SeatMapReq.Append("<AirSegment Key=\"" + segmentIdAtIndex0 + "\" HostTokenRef=\"" + hostTokenKey + "\" AvailabilitySource=\"" + segment.designator._AvailabilitySource + "\" ");
                 SeatMapReq.Append("Equipment=\"" + segment.designator._Equipment + "\" AvailabilityDisplayType=\"Fare Specific Fare Quote Unbooked\" Group=\"" + segment.designator._Group + "\" Carrier=\"" + segment.identifier.carrierCode + "\" ");
                 SeatMapReq.Append("FlightNumber=\"" + segment.identifier.identifier + "\" Origin=\"" + segment.designator.origin + "\" Destination=\"" + segment.designator.destination + "\" ");
-                SeatMapReq.Append("DepartureTime=\"" + segment.designator._DepartureDate + "\" ArrivalTime=\"" + segment.designator._ArrivalDate + "\" FlightTime=\"" + segment.designator._FlightTime + "\" TravelTime=\"130\" Distance=\"708\" ProviderCode=\"" + segment.designator._ProviderCode + "\" ClassOfService=\"" + segment.designator._ClassOfService + "\">");
+                SeatMapReq.Append("DepartureTime=\"" + segment.designator._DepartureDate + "\" ArrivalTime=\"" + segment.designator._ArrivalDate + "\" FlightTime=\"" + segment.designator._FlightTime + "\" TravelTime=\"130\" Distance=\""+segment.designator._Distance+"\" ProviderCode=\"" + segment.designator._ProviderCode + "\" ClassOfService=\"" + segment.designator._ClassOfService + "\">");
                 SeatMapReq.Append("<CodeshareInfo OperatingCarrier=\"" + segment.identifier.carrierCode + "\" />");
                 SeatMapReq.Append("</AirSegment>");
-                SeatMapReq.Append("<HostToken xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"uLJ5gPSqWDKAi6SjZAAAAA==\">GFB10101ADT00  01UU1YXSII                              010001#GFB200010101NADTV3302DOGD0020000199K2#GFMCXOX302NDOGD AI ADTUU1YXSII</HostToken>");
                 count++;
             }
-
+            foreach (var segment in AirfaredataL.segments)
+            {
+                SeatMapReq.Append("<HostToken xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + hostTokenKey + "\">" + hostTokenValue + "</HostToken>");
+            }
             //fareRepriceReq.Append("</AirItinerary>");
             //fareRepriceReq.Append("<AirPricingModifiers ETicketability=\"Required\" FaresIndicator=\"AllFares\" InventoryRequestType=\"DirectAccess\">");
             //fareRepriceReq.Append("<BrandModifiers>");
@@ -986,8 +1024,8 @@ namespace OnionArchitectureAPI.Services.Travelport
                 {
                     for (int i = 0; i < _GetfligthModel.passengercount.adultcount; i++)
                     {
-                        SeatMapReq.Append("<SearchTraveler Code=\"ADT\" Age=\"40\" Key=\""+ paxCount + "\">");
-                        SeatMapReq.Append("<Name xmlns=\"http://www.travelport.com/schema/common_v52_0\" Prefix=\"Mr\" First=\"John\" Last=\"Smith\" /></SearchTraveler>");
+                        SeatMapReq.Append("<SearchTraveler Code=\"ADT\" Age=\"40\" Key=\"" + paxCount + "\">");
+                        SeatMapReq.Append("<Name xmlns=\"http://www.travelport.com/schema/common_v52_0\" Prefix=\"Mr\" First=\"ADT\" Last=\"One\" /></SearchTraveler>");
                         paxCount++;
 
                     }
@@ -996,7 +1034,8 @@ namespace OnionArchitectureAPI.Services.Travelport
                 {
                     for (int i = 0; i < _GetfligthModel.passengercount.infantcount; i++)
                     {
-                        //fareRepriceReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"INF\"  PricePTCOnly=\"true\" BookingTravelerRef=\"" + paxCount + "\" Age=\"1\"/>");
+                        SeatMapReq.Append("<SearchTraveler Code=\"INF\"  PricePTCOnly=\"true\" Key=\"" + paxCount + "\" Age=\"1\">");
+                        SeatMapReq.Append("<Name xmlns=\"http://www.travelport.com/schema/common_v52_0\" Prefix=\"MSTR\" First=\"INFT\" Last=\"One\" /></SearchTraveler>");
                         paxCount++;
                     }
                 }
@@ -1005,7 +1044,8 @@ namespace OnionArchitectureAPI.Services.Travelport
                 {
                     for (int i = 0; i < _GetfligthModel.passengercount.childcount; i++)
                     {
-                        //fareRepriceReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"CNN\" BookingTravelerRef=\"" + paxCount + "\" Age=\"11\"/>");
+                        SeatMapReq.Append("<SearchTraveler Code=\"CNN\" Key=\"" + paxCount + "\" Age=\"11\">");
+                        SeatMapReq.Append("<Name xmlns=\"http://www.travelport.com/schema/common_v52_0\" Prefix=\"MSTR\" First=\"CHD\" Last=\"One\" /></SearchTraveler>");
                         paxCount++;
                     }
                 }
@@ -1018,7 +1058,8 @@ namespace OnionArchitectureAPI.Services.Travelport
                 {
                     for (int i = 0; i < _GetfligthModel.adultcount; i++)
                     {
-                        //fareRepriceReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\"  BookingTravelerRef=\"" + paxCount + "\" Code=\"ADT\" />");
+                        SeatMapReq.Append("<SearchTraveler Code=\"ADT\" Age=\"40\" Key=\"" + paxCount + "\">");
+                        SeatMapReq.Append("<Name xmlns=\"http://www.travelport.com/schema/common_v52_0\" Prefix=\"Mr\" First=\"ADT\" Last=\"One\" /></SearchTraveler>");
                         paxCount++;
                     }
                 }
@@ -1027,7 +1068,8 @@ namespace OnionArchitectureAPI.Services.Travelport
                 {
                     for (int i = 0; i < _GetfligthModel.infantcount; i++)
                     {
-                        //fareRepriceReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" BookingTravelerRef=\"" + paxCount + "\" Code=\"INF\" PricePTCOnly=\"true\" Age=\"1\"/>");
+                        SeatMapReq.Append("<SearchTraveler Code=\"INF\"  PricePTCOnly=\"true\" Key=\"" + paxCount + "\" Age=\"1\">");
+                        SeatMapReq.Append("<Name xmlns=\"http://www.travelport.com/schema/common_v52_0\" Prefix=\"MSTR\" First=\"INFT\" Last=\"One\" /></SearchTraveler>");
                         paxCount++;
                     }
                 }
@@ -1037,13 +1079,14 @@ namespace OnionArchitectureAPI.Services.Travelport
                 {
                     for (int i = 0; i < _GetfligthModel.childcount; i++)
                     {
-                        //fareRepriceReq.Append("<SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" BookingTravelerRef=\"" + paxCount + "\" Code=\"CNN\" Age=\"11\"/>");
+                        SeatMapReq.Append("<SearchTraveler Code=\"CNN\" Key=\"" + paxCount + "\" Age=\"11\">");
+                        SeatMapReq.Append("<Name xmlns=\"http://www.travelport.com/schema/common_v52_0\" Prefix=\"MSTR\" First=\"CHD\" Last=\"One\" /></SearchTraveler>");
                         paxCount++;
                     }
                 }
 
             }
-            SeatMapReq.Append("</SeatMapReq>");
+            SeatMapReq.Append("</SeatMapReq></soap:Body></soap:Envelope>");
             //if (segmentIdsL.Length == 3)
             //{
             //    segmentIdAtIndex0 = segmentIdsL[0];
@@ -1103,6 +1146,14 @@ namespace OnionArchitectureAPI.Services.Travelport
 
 
             string res = Methodshit.HttpPost(_testURL, SeatMapReq.ToString(), _userName, _password);
+            
+            //// Load XML into XmlDocument
+            //XmlDocument xmlDoc = new XmlDocument();
+            //xmlDoc.LoadXml(res);
+
+            // Convert XML to JSON
+            //string json = JsonConvert.SerializeXmlNode(xmlDoc, Newtonsoft.Json.Formatting.Indented);
+
             SetSessionValue("GDSAvailibilityRequest", JsonConvert.SerializeObject(_GetfligthModel));
             SetSessionValue("GDSPassengerModel", JsonConvert.SerializeObject(_GetfligthModel));
 

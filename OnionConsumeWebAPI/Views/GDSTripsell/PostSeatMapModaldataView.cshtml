@@ -163,9 +163,9 @@
                             // {
                             //     countcolumnseg_0++;
                             // }
-                            if (!ht0.Contains(Model.Seatmaplist.datalist[k].seatMap.decksindigo[k1].units[j].designator))
+                            if (!ht0.Contains(Model.Seatmaplist.datalist[k].seatMap.decksindigo[k1].units[j].designator.Replace("-","")))
                             {
-                                ht0.Add(Model.Seatmaplist.datalist[k].seatMap.decksindigo[k1].units[j].designator, Math.Round(Model.Seatmaplist.datalist[k].seatMap.decksindigo[k1].units[j].servicechargefeeAmount, 0) + "_" + Model.Seatmaplist.datalist[k].seatMap.decksindigo[k1].units[j].availability);
+                                ht0.Add(Model.Seatmaplist.datalist[k].seatMap.decksindigo[k1].units[j].designator.Replace("-", ""), Math.Round(Model.Seatmaplist.datalist[k].seatMap.decksindigo[k1].units[j].servicechargefeeAmount, 0) + "_" + Model.Seatmaplist.datalist[k].seatMap.decksindigo[k1].units[j].availability);
                             }
 
                         }
@@ -175,9 +175,9 @@
                             // {
                             //     countcolumnseg_1++;
                             // }
-                            if (!ht1.Contains(Model.Seatmaplist.datalist[k].seatMap.decksindigo[k1].units[j].designator))
+                            if (!ht1.Contains(Model.Seatmaplist.datalist[k].seatMap.decksindigo[k1].units[j].designator.Replace("-", "")))
                             {
-                                ht1.Add(Model.Seatmaplist.datalist[k].seatMap.decksindigo[k1].units[j].designator, Math.Round(Model.Seatmaplist.datalist[k].seatMap.decksindigo[k1].units[j].servicechargefeeAmount, 0) + "_" + Model.Seatmaplist.datalist[k].seatMap.decksindigo[k1].units[j].availability);
+                                ht1.Add(Model.Seatmaplist.datalist[k].seatMap.decksindigo[k1].units[j].designator.Replace("-", ""), Math.Round(Model.Seatmaplist.datalist[k].seatMap.decksindigo[k1].units[j].servicechargefeeAmount, 0) + "_" + Model.Seatmaplist.datalist[k].seatMap.decksindigo[k1].units[j].availability);
                             }
 
                         }
@@ -256,11 +256,32 @@
                                                             //         <span class="tooltiptext">Sorry, seat is occupied.</span>
                                                             //     </li>
                                                             // }
-                                                            if (seatavailability != "5")
+                                                            if (seatavailability == "100")
+                                                            {
+                                                                <li class="seat-li chkbox tooltip">
+                                                                    <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
+                                                                    <span class="tooltiptext">Paid Seat: Available After Reservation.</span>
+                                                                </li>
+                                                            }
+                                                            else if (seatavailability == "10")
+                                                            {
+                                                                <li class="seat-li chkbox tooltip">
+                                                                    <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
+                                                                    <span class="tooltiptext">Sorry, seat is Blocked.</span>
+                                                                </li>
+                                                            }
+                                                            else if (seatavailability == "5")
                                                             {
                                                                 <li class="seat-li chkbox tooltip">
                                                                     <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
                                                                     <span class="tooltiptext">Sorry, seat is occupied.</span>
+                                                                </li>
+                                                            }
+                                                            else if (seatavailability == "11")
+                                                            {
+                                                                <li class="seat-li chkbox tooltip" style="background: #fff;border: none;">
+                                                                    <input type="checkbox" name="unitKey" value="" class="chkbox d-none" disabled />
+                                                                    <span class="tooltiptext">No Seat Available.</span>
                                                                 </li>
                                                             }
                                                             else
@@ -368,27 +389,34 @@
                                                                 seatavailability = arrayofseat[1].Trim();
                                                             }
                                                             //string feeamountF1 = ht1[data].ToString();
-                                                            if (seatavailability != "5" && seatavailability == "1")
+                                                            if (seatavailability == "100")
+                                                            {
+                                                                <li class="seat-li chkbox tooltip">
+                                                                    <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
+                                                                    <span class="tooltiptext">Paid Seat: Available After Reservation.</span>
+                                                                </li>
+                                                            }
+                                                            else if (seatavailability == "10")
+                                                            {
+                                                                <li class="seat-li chkbox tooltip">
+                                                                    <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
+                                                                    <span class="tooltiptext">Sorry, seat is Blocked.</span>
+                                                                </li>
+                                                            }
+                                                            else if (seatavailability == "5")
                                                             {
                                                                 <li class="seat-li chkbox tooltip">
                                                                     <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
                                                                     <span class="tooltiptext">Sorry, seat is occupied.</span>
                                                                 </li>
                                                             }
-                                                            else if (seatavailability != "5")
+                                                            else if (seatavailability == "11")
                                                             {
-                                                                <li class="seat-li chkbox">
-                                                                    <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
-
+                                                                <li class="seat-li chkbox tooltip" style="background: #fff;border: none;">
+                                                                    <input type="checkbox" name="unitKey" value="" class="chkbox d-none" disabled />
+                                                                    <span class="tooltiptext">No Seat Available.</span>
                                                                 </li>
                                                             }
-
-                                                            // if (seatavailability != "5")
-                                                            // {
-                                                            //     <li class="seat-li chkbox">
-                                                            //         <input type="checkbox" name="unitKey" value="" class="chkbox" disabled  />
-                                                            //     </li>
-                                                            // }
                                                             else
                                                             {
                                                                 if (feeamountF1 == "0")
