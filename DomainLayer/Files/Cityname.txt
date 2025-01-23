@@ -2721,7 +2721,6 @@
 { "citycode": "GNV", "cityname": "Gainesville", "airportname": "Gainesville Regional "},
 { "citycode": "GNY", "cityname": "Sanliurfa", "airportname": "Guney Anadolu Airport "},
 { "citycode": "GNZ", "cityname": "Ghanzi", "airportname": "Ghanzi Airport "},
-{ "citycode": "GOA", "cityname": "Genoa", "airportname": "Christoforo Colombo "},
 { "citycode": "GOB", "cityname": "Goba", "airportname": "Robe Airport "},
 { "citycode": "GOC", "cityname": "Gora", "airportname": "Gora Airport "},
 { "citycode": "GOE", "cityname": "Gonalia", "airportname": "Gonalia Airport "},

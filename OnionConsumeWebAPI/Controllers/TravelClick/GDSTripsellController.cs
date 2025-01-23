@@ -190,8 +190,9 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
 
             //return RedirectToAction("IndigoSaverTripsell", "IndigoTripsell", passengerdetails);
         }
-        public async Task<IActionResult> PostUnitkey(List<string> unitKey, List<string> ssrKey, List<string> BaggageSSrkey, List<string> FastfarwardAddon, List<string> PPBGAddon)
+        public async Task<IActionResult> PostUnitkey(List<string> unitKey, List<string> ssrKey, List<string> BaggageSSrkey)
         {
+
             List<string> _unitkey = new List<string>();
             for (int i = 0; i < unitKey.Count; i++)
             {
@@ -201,6 +202,14 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
             }
             unitKey = new List<string>();
             unitKey = _unitkey;
+
+            string serializedUnitKey = JsonConvert.SerializeObject(unitKey);
+            // Store the serialized string in session
+            HttpContext.Session.SetString("UnitKey", serializedUnitKey);
+
+            //string serializedssrKey = JsonConvert.SerializeObject(ssrKey);
+            //// Store the serialized string in session
+            //HttpContext.Session.SetString("SSRKey", serializedssrKey);
             if (BaggageSSrkey.Count > 0 && BaggageSSrkey[0] == null)
             {
                 BaggageSSrkey = new List<string>();
@@ -212,14 +221,6 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
             if (unitKey.Count > 0 && unitKey[0] == null)
             {
                 unitKey = new List<string>();
-            }
-            if (FastfarwardAddon.Count > 0 && FastfarwardAddon[0] == null)
-            {
-                FastfarwardAddon = new List<string>();
-            }
-            if (PPBGAddon.Count > 0 && PPBGAddon[0] == null)
-            {
-                PPBGAddon = new List<string>();
             }
 
             string tokenview = HttpContext.Session.GetString("IndigoSignature");

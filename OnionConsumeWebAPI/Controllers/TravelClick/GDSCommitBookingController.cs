@@ -28,6 +28,7 @@ using static DomainLayer.Model.ReturnAirLineTicketBooking;
 using Indigo;
 using OnionArchitectureAPI.Services.Travelport;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Http;
 
 namespace OnionConsumeWebAPI.Controllers.TravelClick
 {
@@ -118,8 +119,17 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                     string _data = HttpContext.Session.GetString("SGkeypassenger");
                     string _Total = HttpContext.Session.GetString("Total");
 
+                    string serializedUnitKey = HttpContext.Session.GetString("UnitKey");
+                    List<string> _unitkey = new List<string>();
+                    if (!string.IsNullOrEmpty(serializedUnitKey))
+                    {
+                        // Deserialize the JSON string back into a List<string>
+                        _unitkey= JsonConvert.DeserializeObject<List<string>>(serializedUnitKey);
+                    }
+
+                    
                     //retrive PNR
-                    string res = _objAvail.CreatePNR(_testURL, createPNRReq, newGuid.ToString(), _targetBranch, _userName, _password, AdultTraveller, _data, _Total, "GDSOneWay", _pricesolution);
+                    string res = _objAvail.CreatePNR(_testURL, createPNRReq, newGuid.ToString(), _targetBranch, _userName, _password, AdultTraveller, _data, _Total, "GDSOneWay", _unitkey,_pricesolution);
 
                     //string RecordLocator = Regex.Match(res, @"universal:ProviderReservationInfo[\s\S]*?LocatorCode=""(?<LocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["LocatorCode"].Value.Trim();
                     string RecordLocator = Regex.Match(res, @"universal:UniversalRecord\s*LocatorCode=""(?<LocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["LocatorCode"].Value.Trim();

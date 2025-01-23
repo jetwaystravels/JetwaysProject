@@ -1003,7 +1003,7 @@ namespace OnionArchitectureAPI.Services.Travelport
                 SeatMapReq.Append("<AirSegment Key=\"" + segmentIdAtIndex0 + "\" HostTokenRef=\"" + hostTokenKey + "\" AvailabilitySource=\"" + segment.designator._AvailabilitySource + "\" ");
                 SeatMapReq.Append("Equipment=\"" + segment.designator._Equipment + "\" AvailabilityDisplayType=\"Fare Specific Fare Quote Unbooked\" Group=\"" + segment.designator._Group + "\" Carrier=\"" + segment.identifier.carrierCode + "\" ");
                 SeatMapReq.Append("FlightNumber=\"" + segment.identifier.identifier + "\" Origin=\"" + segment.designator.origin + "\" Destination=\"" + segment.designator.destination + "\" ");
-                SeatMapReq.Append("DepartureTime=\"" + segment.designator._DepartureDate + "\" ArrivalTime=\"" + segment.designator._ArrivalDate + "\" FlightTime=\"" + segment.designator._FlightTime + "\" TravelTime=\"130\" Distance=\""+segment.designator._Distance+"\" ProviderCode=\"" + segment.designator._ProviderCode + "\" ClassOfService=\"" + segment.designator._ClassOfService + "\">");
+                SeatMapReq.Append("DepartureTime=\"" + segment.designator._DepartureDate + "\" ArrivalTime=\"" + segment.designator._ArrivalDate + "\" FlightTime=\"" + segment.designator._FlightTime + "\" TravelTime=\"130\" Distance=\"" + segment.designator._Distance + "\" ProviderCode=\"" + segment.designator._ProviderCode + "\" ClassOfService=\"" + segment.designator._ClassOfService + "\">");
                 SeatMapReq.Append("<CodeshareInfo OperatingCarrier=\"" + segment.identifier.carrierCode + "\" />");
                 SeatMapReq.Append("</AirSegment>");
                 count++;
@@ -1146,7 +1146,7 @@ namespace OnionArchitectureAPI.Services.Travelport
 
 
             string res = Methodshit.HttpPost(_testURL, SeatMapReq.ToString(), _userName, _password);
-            
+
             //// Load XML into XmlDocument
             //XmlDocument xmlDoc = new XmlDocument();
             //xmlDoc.LoadXml(res);
@@ -2308,7 +2308,7 @@ namespace OnionArchitectureAPI.Services.Travelport
             return res;
         }
 
-        public string CreatePNR(string _testURL, StringBuilder createPNRReq, string newGuid, string _targetBranch, string _userName, string _password, string AdultTraveller, string _data, string _Total, string _AirlineWay, string? _pricesolution = null)
+        public string CreatePNR(string _testURL, StringBuilder createPNRReq, string newGuid, string _targetBranch, string _userName, string _password, string AdultTraveller, string _data, string _Total, string _AirlineWay, List<string> _unitkey, string? _pricesolution = null)
         {
 
             int count = 0;
@@ -2504,6 +2504,78 @@ namespace OnionArchitectureAPI.Services.Travelport
                 createPNRReq.Append(Getdetails.PriceSolution);
                 createPNRReq.Append("<ActionStatus xmlns=\"http://www.travelport.com/schema/common_v52_0\" Type=\"ACTIVE\" TicketDate=\"T*\" ProviderCode=\"1G\" />");
                 createPNRReq.Append("<Payment xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"2\" Type=\"Itinerary\" FormOfPaymentRef=\"1\" Amount=\"INR" + _Total + "\" />");
+                //if (passengerdetails.Count > 0)
+                //{
+                //    for (int i = 0; i < passengerdetails.Count; i++)
+                //    {
+                //        if (passengerdetails[i].passengertypecode == "INF" || passengerdetails[i].passengertypecode == "INFT")
+                //        {
+                //            continue;
+                //        }
+                //        for (int j = 0; j < Getdetails.segmentid.Length; j++)
+                //        {
+                //            string [] unitsubKey2 = _unitkey[i].Split('_');
+                //            string pas_unitKey = unitsubKey2[1];
+                //            createPNRReq.Append("<SpecificSeatAssignment xmlns=\"http://www.travelport.com/schema/air_v52_0\" BookingTravelerRef=\"" + passengerdetails[i].passengerkey + "\" SegmentRef=\"" + Getdetails.segmentid[j].Trim() + "\" SeatId=\"" + pas_unitKey + "\"/>");
+                //        }
+
+                //    }
+                //}
+                //if (passengerdetails.Count > 0)
+                //{
+                //    int adultIndex = 0;
+                //    int childIndex = 0;
+
+                //    // Loop through the passengers to assign seats, skipping infants
+                //    for (int i = 0; i < passengerdetails.Count; i++)
+                //    {
+                //        if (passengerdetails[i].passengertypecode == "INF" || passengerdetails[i].passengertypecode == "INFT")
+                //        {
+                //            // Skip infants
+                //            continue;
+                //        }
+
+                //        // If we are processing an adult or child, assign seats
+                //        for (int j = 0; j < Getdetails.segmentid.Length; j++)
+                //        {
+                //            // Ensure each adult/child gets a unique seat per segment
+                //            string[] unitsubKey2 = _unitkey[i].Split('_');
+                //            string pas_unitKey = unitsubKey2[1];
+
+                //            // Assign the seat based on segment id and passenger type
+                //            if (passengerdetails[i].passengertypecode == "ADT") // Adult
+                //            {
+                //                createPNRReq.Append("<SpecificSeatAssignment xmlns=\"http://www.travelport.com/schema/air_v52_0\" BookingTravelerRef=\"" + passengerdetails[i].passengerkey + "\" SegmentRef=\"" + Getdetails.segmentid[j].Trim() + "\" SeatId=\"" + pas_unitKey + "\"/>");
+                //                adultIndex++;
+                //            }
+                //            else if (passengerdetails[i].passengertypecode == "CHD") // Child
+                //            {
+                //                createPNRReq.Append("<SpecificSeatAssignment xmlns=\"http://www.travelport.com/schema/air_v52_0\" BookingTravelerRef=\"" + passengerdetails[i].passengerkey + "\" SegmentRef=\"" + Getdetails.segmentid[j].Trim() + "\" SeatId=\"" + pas_unitKey + "\"/>");
+                //                childIndex++;
+                //            }
+                //        }
+                //    }
+                //}
+
+                #region seat
+                int idx = 0;
+                foreach (Match itemsegment in Regex.Matches(Getdetails.PriceSolution, "AirSegment Key=\"(?<Segmentid>[\\s\\S]*?)\""))
+                {
+                    // Ensure each adult/child gets a unique seat per segment
+                    foreach (Match mitem in Regex.Matches(Getdetails.PriceSolution, "PassengerType BookingTravelerRef=\'(?<Travllerref>[\\s\\S]*?)\'\\s*Code=\'(?<PaxType>[\\s\\S]*?)'", RegexOptions.IgnoreCase | RegexOptions.Multiline))
+                    {
+                        if (mitem.Groups["PaxType"].Value == "INFT" || mitem.Groups["PaxType"].Value == "INF")
+                        {  //idx++;
+                            continue;
+                        }
+                        string[] unitsubKey2 = _unitkey[idx].Split('_');
+                        string pas_unitKey = unitsubKey2[1];
+                        createPNRReq.Append("<SpecificSeatAssignment xmlns=\"http://www.travelport.com/schema/air_v52_0\" BookingTravelerRef=\"" + mitem.Groups["Travllerref"].Value + "\" SegmentRef=\"" + itemsegment.Groups["Segmentid"].Value.Trim() + "\" SeatId=\"" + pas_unitKey.Trim() + "\"/>");
+                        idx++;
+                    }
+                }
+                #endregion
+
                 createPNRReq.Append("</AirCreateReservationReq></soap:Body></soap:Envelope>");
             }
             //}

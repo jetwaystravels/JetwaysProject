@@ -1634,7 +1634,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                     SegmentDesignatorobj.departure = Convert.ToDateTime(getAvailRes[i].Bonds[k].Legs[l].DepartureTime);
                                     SegmentDesignatorobj.arrival = Convert.ToDateTime(getAvailRes[i].Bonds[k].Legs[l].ArrivalTime);
 
-                                    SegmentDesignatorobj._DepartureDate = getAvailRes[i].Bonds[k].Legs[l]._DepartureDate;
+                                    SegmentDesignatorobj._DepartureDate = getAvailRes[i].Bonds[k].Legs[l].DepartureTime;
                                     SegmentDesignatorobj._AvailabilitySource = getAvailRes[i].Bonds[k].Legs[l]._AvailabilitySource;
                                     SegmentDesignatorobj._AvailabilityDisplayType = getAvailRes[i].Bonds[k].Legs[l]._AvailabilityDisplayType;
                                     SegmentDesignatorobj._FlightTime = getAvailRes[i].Bonds[k].Legs[l].Duration;
@@ -3229,7 +3229,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                         SegmentDesignatorobj.departure = Convert.ToDateTime(getAvailRes[i1].Bonds[k1].Legs[l].DepartureTime);
                                         SegmentDesignatorobj.arrival = Convert.ToDateTime(getAvailRes[i1].Bonds[k1].Legs[l].ArrivalTime);
 
-                                        SegmentDesignatorobj._DepartureDate = getAvailRes[i1].Bonds[k1].Legs[l]._DepartureDate;
+                                        SegmentDesignatorobj._DepartureDate = getAvailRes[i1].Bonds[k1].Legs[l].DepartureTime;
                                         SegmentDesignatorobj._AvailabilitySource = getAvailRes[i1].Bonds[k1].Legs[l]._AvailabilitySource;
                                         SegmentDesignatorobj._AvailabilityDisplayType = getAvailRes[i1].Bonds[k1].Legs[l]._AvailabilityDisplayType;
                                         SegmentDesignatorobj._FlightTime = getAvailRes[i1].Bonds[k1].Legs[l].Duration;

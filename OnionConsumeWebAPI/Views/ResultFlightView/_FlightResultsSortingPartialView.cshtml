@@ -61,6 +61,50 @@
                         {
                             <img class="size-40" src="~/img/flight-logo-icon/hahnair.png" alt="image">
                         }
+                        else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("TG"))
+                        {
+                            <img class="size-40" src="~/img/flight-logo-icon/ta.png" alt="image">
+                        }
+                        else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("SV"))
+                        {
+                            <img class="size-40" src="~/img/flight-logo-icon/SV.png" alt="image">
+                        }
+                        else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("QR"))
+                        {
+                            <img class="size-40" src="~/img/flight-logo-icon/qa.png" alt="image">
+                        }
+                        else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("EK"))
+                        {
+                            <img class="size-40" src="~/img/flight-logo-icon/eta.png" alt="image">
+                        }
+                        else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("EY"))
+                        {
+                            <img class="size-40" src="~/img/flight-logo-icon/ea.png" alt="image">
+                        }
+                        else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("CX"))
+                        {
+                            <img class="size-40" src="~/img/flight-logo-icon/cp.png" alt="image">
+                        }
+                        else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("SQ"))
+                        {
+                            <img class="size-40" src="~/img/flight-logo-icon/sp.png" alt="image">
+                        }
+                        else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("MH"))
+                        {
+                            <img class="size-40" src="~/img/flight-logo-icon/ml.png" alt="image">
+                        }
+                        else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("WY"))
+                        {
+                            <img class="size-40" src="~/img/flight-logo-icon/wy.png" alt="image">
+                        }
+                        else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("UL"))
+                        {
+                            <img class="size-40" src="~/img/flight-logo-icon/SL.png" alt="image">
+                        }
+                        else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("OD"))
+                        {
+                            <img class="size-40" src="~/img/flight-logo-icon/batik.png" alt="image">
+                        }
                         else
                         {
                             <img class="size-40" src="~/img/flight-logo-icon/AIX_X_Logo_Orange.png" alt="image">
@@ -101,6 +145,38 @@
                                     {
 
                                         CompanyName = "Hahnair";
+                                    }
+                                    else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("UL"))
+                                    {
+                                        CompanyName = "SriLankan Airlines";
+                                    }
+                                    else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("CX"))
+                                    {
+                                        CompanyName = "Cathay Pacific Airways";
+                                    }
+                                    else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("SQ"))
+                                    {
+                                        CompanyName = "Singapore Airlines";
+                                    }
+                                    else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("EY"))
+                                    {
+                                        CompanyName = "Etihad Airways";
+                                    }
+                                    else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("QR"))
+                                    {
+                                        CompanyName = "Qatar Airways";
+                                    }
+                                    else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("EK"))
+                                    {
+                                        CompanyName = "Emirates Airlines";
+                                    }
+                                    else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("TG"))
+                                    {
+                                        CompanyName = "Thai Airways International";
+                                    }
+                                    else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("SV"))
+                                    {
+                                        CompanyName = "Saudia";
                                     }
                                     else
                                     {
@@ -1247,7 +1323,11 @@
                                                 <input type="submit" value="Book Now" class="button small-btn">
                                             </form>
                                         }
-                                        else if (@Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("UK") || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("AI") || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("H1"))
+                                        else if (@Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("UK") || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("AI") || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("H1")
+                                        || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("MH")
+                                        || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("TG") || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("EY") || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("QR") || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("CX")
+                                        || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("EK") || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("SQ") || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("OD") || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("UL")
+                                        || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("WY") || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("SV"))
                                         {
                                             string data = "";
                                             try
@@ -1367,21 +1447,53 @@
 
                                                             CompanyName = "AkasaAir";
                                                         }
-                                                        else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("AI"))
+                                                        else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[a].identifier.carrierCode.Equals("AI"))
                                                         {
                                                             CompanyName = "AirIndia";
                                                         }
-                                                        else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("UK"))
+                                                        else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[a].identifier.carrierCode.Equals("UK"))
                                                         {
                                                             CompanyName = "Vistara";
                                                         }
-                                                        else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("H1"))
+                                                        else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[a].identifier.carrierCode.Equals("H1"))
                                                         {
                                                             CompanyName = "Hahnair";
                                                         }
+                                                        else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[a].identifier.carrierCode.Equals("UL"))
+                                                        {
+                                                            CompanyName = "SriLankan Airlines";
+                                                        }
+                                                        else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("CX"))
+                                                        {
+                                                            CompanyName = "Cathay Pacific Airways";
+                                                        }
+                                                        else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[a].identifier.carrierCode.Equals("SQ"))
+                                                        {
+                                                            CompanyName = "Singapore Airlines";
+                                                        }
+                                                        else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[a].identifier.carrierCode.Equals("EY"))
+                                                        {
+                                                            CompanyName = "Etihad Airways";
+                                                        }
+                                                        else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[a].identifier.carrierCode.Equals("QR"))
+                                                        {
+                                                            CompanyName = "Qatar Airways";
+                                                        }
+                                                        else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[a].identifier.carrierCode.Equals("EK"))
+                                                        {
+                                                            CompanyName = "Emirates Airlines";
+                                                        }
+                                                        else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[a].identifier.carrierCode.Equals("TG"))
+                                                        {
+                                                            CompanyName = "Thai Airways International";
+                                                        }
+                                                        else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[a].identifier.carrierCode.Equals("SV"))
+                                                        {
+                                                            CompanyName = "Saudia";
+                                                        }
                                                         else
                                                         {
-                                                            CompanyName = "Air India Exp..";
+                                                            CompanyName = "Air India Expr...";
                                                         }
                                                         <div class="lh-15 fw-500">@CompanyName</div>
                                                         @{
@@ -1542,6 +1654,62 @@
                                 {
                                     CompanyName = "AirIndia";
                                     <img class="size-40" src="~/img/flight-logo-icon/airindia.png" alt="image">
+                                }
+                                else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("TG"))
+                                {
+                                    CompanyName = "Thai Airways International";
+                                    <img class="size-40" src="~/img/flight-logo-icon/ta.png" alt="image">
+                                }
+                                else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("SV"))
+                                {
+                                    CompanyName = "Saudia";
+                                    <img class="size-40" src="~/img/flight-logo-icon/SV.png" alt="image">
+                                }
+                                else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("QR"))
+                                {
+                                    CompanyName = "Qatar Airways";
+                                    <img class="size-40" src="~/img/flight-logo-icon/qa.png" alt="image">
+                                }
+                                else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("EK"))
+                                {
+                                    CompanyName = "Emirates Airlines";
+                                    <img class="size-40" src="~/img/flight-logo-icon/eta.png" alt="image">
+                                }
+                                else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("EY"))
+                                {
+                                    CompanyName = "Etihad Airways";
+                                    <img class="size-40" src="~/img/flight-logo-icon/ea.png" alt="image">
+                                }
+                                else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("CX"))
+                                {
+                                    CompanyName = "Cathay Pacific Airways";
+                                    <img class="size-40" src="~/img/flight-logo-icon/cp.png" alt="image">
+                                }
+                                else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("SQ"))
+                                {
+                                    CompanyName = "Singapore Airlines";
+                                    <img class="size-40" src="~/img/flight-logo-icon/sp.png" alt="image">
+                                }
+                                else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("MH"))
+                                {
+                                    CompanyName = "";
+                                    <img class="size-40" src="~/img/flight-logo-icon/ml.png" alt="image">
+                                }
+                                else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("WY"))
+                                {
+                                    CompanyName = "";
+                                    <img class="size-40" src="~/img/flight-logo-icon/wy.png" alt="image">
+                                }
+                                else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("UL"))
+                                {
+                                    CompanyName = "SriLankan Airlines";
+                                    <img class="size-40" src="~/img/flight-logo-icon/SL.png" alt="image">
+                                }
+
+                                else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("OD"))
+                                {
+                                    CompanyName = "Batik Airlines";
+                                    <img class="size-40" src="~/img/flight-logo-icon/batik.png" alt="image">
                                 }
                                 else
                                 {

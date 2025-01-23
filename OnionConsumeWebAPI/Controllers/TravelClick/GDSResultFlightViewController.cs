@@ -296,6 +296,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
 
                             //}
                             AASegmentobj.legs = AALeglist;
+                            AASegmentobj.externalIdentifier = getAirPriceRes[0].Bonds[0].Legs[j].AircraftCode;
                             AASegmentlist.Add(AASegmentobj);
                         }
 
@@ -363,7 +364,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
 
                             AAPassengers passkeytypeobj = new AAPassengers();
                             passkeytypeobj.passengerKey = a.ToString();
-                            passkeytypeobj.passengerTypeCode = paxType; ;
+                            passkeytypeobj.passengerTypeCode = paxType;
                             passkeylist.Add(passkeytypeobj);
                             a++;
                         }

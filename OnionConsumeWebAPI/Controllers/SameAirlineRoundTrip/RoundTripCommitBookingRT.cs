@@ -3034,10 +3034,16 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                 string _TicketRecordLocator = string.Empty;
                                 //for (int i = 0; i <= 1; i++)
                                 //{
+                                string serializedUnitKey = HttpContext.Session.GetString("UnitKey");
+                                List<string> _unitkey = new List<string>();
+                                if (!string.IsNullOrEmpty(serializedUnitKey))
+                                {
+                                    // Deserialize the JSON string back into a List<string>
+                                    _unitkey = JsonConvert.DeserializeObject<List<string>>(serializedUnitKey);
+                                }
 
 
-
-                                res = _objAvail.CreatePNR(_testURL, createPNRReq, newGuid.ToString(), _targetBranch, _userName, _password, AdultTraveller, _data, _Total, Logfolder, _pricesolution);
+                                res = _objAvail.CreatePNR(_testURL, createPNRReq, newGuid.ToString(), _targetBranch, _userName, _password, AdultTraveller, _data, _Total, Logfolder, _unitkey, _pricesolution);
 
                                 //string RecordLocator = Regex.Match(res, @"universal:ProviderReservationInfo[\s\S]*?LocatorCode=""(?<LocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["LocatorCode"].Value.Trim();
                                 RecordLocator = Regex.Match(res, @"universal:ProviderReservationInfo[\s\S]*?LocatorCode=""(?<LocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["LocatorCode"].Value.Trim();
