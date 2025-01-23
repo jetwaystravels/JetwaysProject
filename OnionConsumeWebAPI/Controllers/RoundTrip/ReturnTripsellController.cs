@@ -37,7 +37,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
         SpiceJetApiController objSpiceJet = new SpiceJetApiController();
         public async Task<IActionResult> ReturnTripsellView(List<string> fareKey, List<string> journeyKey)
         {
-		    //Code for Same Airline Roundtrip 26-09-2024
+            //Code for Same Airline Roundtrip 26-09-2024
             //string SameAirlineRT= JsonConvert.DeserializeObject<string>(HttpContext.Session.GetString("SameAirlineRT"));
             //string getRadioButton = TempData["RoundTripRadioButton"].ToString();
             //if (getRadioButton.ToLower() != "roundtrip")
@@ -46,7 +46,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             //    TempData["journeyKeyModel"] = JsonConvert.SerializeObject(journeyKey);
             //    return RedirectToAction("ReturnTripsellView", "ReturnTripsellRT");
             //}
-			//end here
+            //end here
 
             Airlinenameforcommit airlinenameforcommit = new Airlinenameforcommit();
             airlinenameforcommit.Airline = new List<string>();
@@ -1345,7 +1345,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     string Signature = string.Empty;
                     int TotalCount = 0;
                     string str3 = string.Empty;
-                    if (_JourneykeyRTData.ToLower() == "spicejet") 
+                    if (_JourneykeyRTData.ToLower() == "spicejet")
                     {
                         #region SpiceJetSellRequest
                         string stravailibitilityrequest = HttpContext.Session.GetString("SpicejetAvailibilityRequest");
@@ -3090,13 +3090,13 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
                         if (p == 0)
                         {
-                            logs.WriteLogsR(_getseatAvailabilityRequest.ToString(), "8-GetSeatAvailabilityReq_Left", "SpiceJetRT");
-                            logs.WriteLogsR(SeatGroup.ToString(), "8-GetSeatAvailabilityRes_Left", "SpiceJetRT");
+                            logs.WriteLogsR(JsonConvert.SerializeObject(_getseatAvailabilityRequest), "8-GetSeatAvailabilityReq_Left", "SpiceJetRT");
+                            logs.WriteLogsR(JsonConvert.SerializeObject(SeatGroup), "8-GetSeatAvailabilityRes_Left", "SpiceJetRT");
                         }
                         else
                         {
-                            logs.WriteLogsR(_getseatAvailabilityRequest.ToString(), "8-GetSeatAvailabilityReq_Right", "SpiceJetRT");
-                            logs.WriteLogsR(SeatGroup.ToString(), "8-GetSeatAvailabilityRes_Right", "SpiceJetRT");
+                            logs.WriteLogsR(JsonConvert.SerializeObject(_getseatAvailabilityRequest), "8-GetSeatAvailabilityReq_Right", "SpiceJetRT");
+                            logs.WriteLogsR(JsonConvert.SerializeObject(SeatGroup), "8-GetSeatAvailabilityRes_Right", "SpiceJetRT");
                         }
                         if (SeatGroup != null)
                         {
@@ -4174,7 +4174,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         string passenger = HttpContext.Session.GetString("SGkeypassengerRT");
                         passeengerlist = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
                         _GetSSR objssr = new _GetSSR();
-                        IndigoBookingManager_.GetSSRAvailabilityForBookingResponse _res = await objssr.GetSSRAvailabilityForBooking(Signature, passeengerlist, TotalCount, _journeySide,"");
+                        IndigoBookingManager_.GetSSRAvailabilityForBookingResponse _res = await objssr.GetSSRAvailabilityForBooking(Signature, passeengerlist, TotalCount, _journeySide, "");
                         if (_res != null)
                         {
                             Hashtable htSSr = new Hashtable();
