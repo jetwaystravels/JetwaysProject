@@ -207,6 +207,20 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
             // Store the serialized string in session
             HttpContext.Session.SetString("UnitKey", serializedUnitKey);
 
+            List<string> _ssrKey = new List<string>();
+            for (int i = 0; i < ssrKey.Count; i++)
+            {
+                if (ssrKey[i] == null)
+                    continue;
+                _ssrKey.Add(ssrKey[i].Trim());
+            }
+            ssrKey = new List<string>();
+            ssrKey = _ssrKey;
+
+            string serializedSSRKey = JsonConvert.SerializeObject(ssrKey);
+            // Store the serialized string in session
+            HttpContext.Session.SetString("ssrKey", serializedSSRKey);
+
             //string serializedssrKey = JsonConvert.SerializeObject(ssrKey);
             //// Store the serialized string in session
             //HttpContext.Session.SetString("SSRKey", serializedssrKey);
