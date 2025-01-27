@@ -1865,6 +1865,9 @@
                     <tbody>
                         <tr>
                             <td>Cancellation Charges</td>
+                            @{
+                                var flightClass = Context.Request.Query["FlightClass"];
+                            }
                             @if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("SG"))
                             {
                                 <td>3600 RS. </td>
@@ -1873,9 +1876,21 @@
                             }
                             else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("6E"))
                             {
-                                <td>3999 RS. </td>
-                                <td>3 hrs before departure</td>
-                                <td>As per Airline Fare rule</td>
+
+                                if (flightClass == "B")
+                                {
+                                    <td>3499 RS. </td>
+                                    <td>Fee starts at Onward.</td>
+                                    <td>As per Airline Fare rule</td>
+                                }
+                                else
+                                {
+                                    <td>3999 RS. </td>
+                                    <td>3 hrs before departure</td>
+                                    <td>As per Airline Fare rule</td>
+
+                                }
+
                             }
                             else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("QP"))
                             {

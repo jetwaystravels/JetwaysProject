@@ -358,7 +358,7 @@
                 { className: 'contactFname', errorMessage: 'First name is required', validationdata: /^[A-Za-z]{1,32}$/ },
                 { className: 'contactLname', errorMessage: 'Last name is required', validationdata: /^[A-Za-z]{1,32}$/ },
                 { className: 'contactemail', errorMessage: 'Email is invalid', validationdata: /^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$/ },
-                { className: 'contactphone', errorMessage: 'Phone number at least 10 digits', validationdata: /^\d{10,}$/ }
+                { className: 'contactphone', errorMessage: 'Phone number at least 10 digits', validationdata: /^[1-9][0-9]{9}$/ }
             ];
 
             let firstInvalidElement = null;
@@ -470,6 +470,35 @@
                 if (month === 2) {
                     if (!isValidFebruaryDay(year, day)) {
                         alert("Invalid date! For February, the day must be 1-28 for a non-leap year or 1-29 for a leap year.");
+                        return false;
+                    }
+                }
+
+
+                 else if (month === 4) {
+                    if (day > 30) {
+                        alert("Invalid date! April has only 30 days.");
+                        return false;
+                    }
+                }
+
+                else if (month === 6) {
+                    if (day > 30) {
+                        alert("Invalid date! June has only 30 days.");
+                        return false;
+                    }
+                }
+
+                else if (month === 9) {
+                    if (day > 30) {
+                        alert("Invalid date! September has only 30 days.");
+                        return false;
+                    }
+                }
+
+                else if (month === 11) {
+                    if (day > 30) {
+                        alert("Invalid date! November has only 30 days.");
                         return false;
                     }
                 }

@@ -1179,6 +1179,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                         }
 
                                     }
+                                    fareIndividualsList.RemoveAll(x => !x.fareKey.Contains("^"));
                                     #endregion
                                 }
 
@@ -3496,7 +3497,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
 
 
 
-                        return RedirectToAction("FlightView", "ResultFlightView", new { Guid = SearchGuid, TripType = SameAirlineRT, Origin = orgincity, OriginCode = orgincode, Destination = destinationCity, DestinationCode = destinationcode, BeginDate = _GetfligthModel.beginDate, AdultCount = _GetfligthModel.passengercount != null ? _GetfligthModel.passengercount.adultcount : _GetfligthModel.adultcount, ChildCount = _GetfligthModel.passengercount != null ? _GetfligthModel.passengercount.childcount : _GetfligthModel.childcount, InfantCount = _GetfligthModel.passengercount != null ? _GetfligthModel.passengercount.infantcount : _GetfligthModel.infantcount });
+                        return RedirectToAction("FlightView", "ResultFlightView", new { Guid = SearchGuid, TripType = SameAirlineRT, Origin = orgincity, OriginCode = orgincode, Destination = destinationCity, DestinationCode = destinationcode, BeginDate = _GetfligthModel.beginDate, AdultCount = _GetfligthModel.passengercount != null ? _GetfligthModel.passengercount.adultcount : _GetfligthModel.adultcount, ChildCount = _GetfligthModel.passengercount != null ? _GetfligthModel.passengercount.childcount : _GetfligthModel.childcount, InfantCount = _GetfligthModel.passengercount != null ? _GetfligthModel.passengercount.infantcount : _GetfligthModel.infantcount, FlightClass = flightclass });
 
                     }
 

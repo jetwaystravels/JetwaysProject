@@ -309,15 +309,36 @@
                         //     aircraftModel = hyphenIndex == -1 ? AirCraftname : AirCraftname.Substring(0, hyphenIndex);
                         //     if (!aircraftModel.ToLower().Contains("boeing"))
                         //         aircraftModel = aircraftModel.Replace("B", "Boeing ");
+                        //     if (AirCraftname.ToLower().Contains("dual cabin"))
+                        //     {
+                        //         string[] parts = AirCraftname.Split(new string[] { " - " }, StringSplitOptions.None);
+                        //         if (parts.Length > 1)
+                        //         {
+                        //             aircraftModel = parts[0];
+                        //             string cabinType = parts[1];
+
+                        //         }
+                        //     }
                         // }
 
                         if (AirCraftname != null)
                         {
-
                             int hyphenIndex = AirCraftname.LastIndexOf('_');
                             aircraftModel = hyphenIndex == -1 ? AirCraftname : AirCraftname.Substring(0, hyphenIndex);
+
+                            // Adjust to extract only up to the second hyphen
+                            int firstHyphenIndex = aircraftModel.IndexOf('-');
+                            int secondHyphenIndex = aircraftModel.IndexOf('-', firstHyphenIndex + 1);
+
+                            if (secondHyphenIndex != -1)
+                            {
+                                // Truncate the string to the second hyphen
+                                aircraftModel = aircraftModel.Substring(0, secondHyphenIndex);
+                            }
+
                             if (!aircraftModel.ToLower().Contains("boeing"))
                                 aircraftModel = aircraftModel.Replace("B", "Boeing ");
+
                             if (AirCraftname.ToLower().Contains("dual cabin"))
                             {
                                 string[] parts = AirCraftname.Split(new string[] { " - " }, StringSplitOptions.None);

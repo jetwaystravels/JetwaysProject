@@ -531,7 +531,8 @@
     //GstComapany
     function validateInputgst(event) {
         const input = event.target.value;
-        var regex = /^[a-zA-Z\s.,'-]{1,100}$/;
+        //var regex = /^[a-zA-Z\s.,'-]{1,100}$/;
+        var regex = /^(?!\.)(?!.*\.\.\.)[a-zA-Z\s.,'-]{1,100}$/;
         if (!regex.test(input)) {
             document.getElementById('errorMessagegst').innerText = "";
             event.target.value = input.replace(/[^a-zA-Z]/g, '');
