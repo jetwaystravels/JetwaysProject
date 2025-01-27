@@ -4,152 +4,152 @@
 <style>
     /* Styles for modal box and overlay */
     .modalTrip {
-        display: none;
-        position: fixed;
-        z-index: 9999;
-        left: 50%;
-        width: 60%;
-        height: 80%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        background-color: #fff;
-        padding: 8px;
-        border-radius: 5px;
-        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 50%;
+    width: 60%;
+    height: 80%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 8px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
     }
 
     .overlayTrip {
-        display: none;
-        position: fixed;
-        z-index: 9998;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
     }
 
     .tripmodal {
-        background: #366480;
-        padding: 6px;
+    background: #366480;
+    padding: 6px;
     }
 
-        .tripmodal h4 {
-            color: #fff;
-        }
+    .tripmodal h4 {
+    color: #fff;
+    }
 
-        .tripmodal button {
-            color: #fff;
-        }
+    .tripmodal button {
+    color: #fff;
+    }
 
 
 
     /* Styles for tabs */
     .tab {
-        display: none;
+    display: none;
     }
 
     /* Styles for active tab */
     .active {
-        display: block;
+    display: block;
     }
 
     /* Styles for tab buttons */
     .tab-btn {
-        cursor: pointer;
-        padding: 10px 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        margin-right: 10px;
+    cursor: pointer;
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
     }
 
-        .tab-btn.active {
-            background-color: #ccd6dd; /* Change background color for active tab */
-        }
+    .tab-btn.active {
+    background-color: #ccd6dd; /* Change background color for active tab */
+    }
 
     .tooltipF {
-        position: relative;
-        display: inline-block;
+    position: relative;
+    display: inline-block;
     }
 
-        .tooltipF .tooltiptext {
-            visibility: hidden;
-            width: 220px;
-            background-color: #366480;
-            color: #fff;
-            text-align: left;
-            border-radius: 2px;
-            padding: 6px;
-            position: absolute;
-            z-index: 1;
-            top: 0;
-            left: 100%;
-            font-size: 12px;
-            margin-left: 6px; /* Adjust as needed */
-        }
+    .tooltipF .tooltiptext {
+    visibility: hidden;
+    width: 220px;
+    background-color: #366480;
+    color: #fff;
+    text-align: left;
+    border-radius: 2px;
+    padding: 6px;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 100%;
+    font-size: 12px;
+    margin-left: 6px; /* Adjust as needed */
+    }
 
-        .tooltipF:hover .tooltiptext {
-            visibility: visible;
-        }
+    .tooltipF:hover .tooltiptext {
+    visibility: visible;
+    }
 
     table {
-        border-collapse: collapse;
+    border-collapse: collapse;
     }
 
     td,
     th {
-        border: 1px solid black;
-        padding: 10px 20px;
+    border: 1px solid black;
+    padding: 10px 20px;
     }
 
     .fligtbox {
-        margin: 4px 15px;
-        border: 1px solid #366480;
+    margin: 4px 15px;
+    border: 1px solid #366480;
     }
 
     .firstdiv {
-        background-color: #edcbcb;
-        margin: 15px;
-        padding: 8px;
+    background-color: #edcbcb;
+    margin: 15px;
+    padding: 8px;
     }
 
     .airliname {
-        border-radius: 20px;
-        margin-left: 8px;
-        padding: 7px 12px;
-        font-size: 13px;
-        border: 1px solid #2f647e;
-        font-weight: 700;
+    border-radius: 20px;
+    margin-left: 8px;
+    padding: 7px 12px;
+    font-size: 13px;
+    border: 1px solid #2f647e;
+    font-weight: 700;
     }
 
 
 </style>
 <script>
     $(document).ready(function () {
-        // Open modal box
-        $("#openModal_0").click(function () {
-            $("#modal, #overlay").fadeIn();
-            $("body").css("overflow", "hidden");
-        });
+    // Open modal box
+    $("#openModal_0").click(function () {
+    $("#modal, #overlay").fadeIn();
+    $("body").css("overflow", "hidden");
+    });
 
-        // Close modal box
-        $("#closeModal, #overlay").click(function () {
-            $("#modal, #overlay").fadeOut();
-            $("body").css("overflow", "auto");
-        });
+    // Close modal box
+    $("#closeModal, #overlay").click(function () {
+    $("#modal, #overlay").fadeOut();
+    $("body").css("overflow", "auto");
+    });
 
 
 
-        $("#tabContent1").addClass("active");
+    $("#tabContent1").addClass("active");
 
-        // Show/hide tab content on click
-        $(".tab-btn").click(function () {
-            var tabId = $(this).attr("id").replace("tabBtn", "");
-            $(".tab").removeClass("active");
-            $(".tab-btn").removeClass("active");
-            $("#tabContent" + tabId).addClass("active");
-            $(this).addClass("active");
-        });
+    // Show/hide tab content on click
+    $(".tab-btn").click(function () {
+    var tabId = $(this).attr("id").replace("tabBtn", "");
+    $(".tab").removeClass("active");
+    $(".tab-btn").removeClass("active");
+    $("#tabContent" + tabId).addClass("active");
+    $(this).addClass("active");
+    });
 
 
     });
@@ -192,7 +192,7 @@
                 // Extract the substring before the hyphen
                 string result = hyphenIndex == -1 ? seatMapName : seatMapName.Substring(0, hyphenIndex);
                 string aircraftModel = result.Replace("B", "Boeing ").Replace("A", "Airbus ");
-              
+
 
 
                 if (i == 1)
@@ -295,11 +295,11 @@
                                             <div class="col-auto">
                                                 @{
                                                     var allCityData = Citynamelist.GetAllCityData();
-                                                    string QueryOriginAirportName = item.segments[i].legs[j].designator.origin;
-                                                    string QueryDestinationAirportName = item.segments[i].legs[j].designator.destination;
+                                                    string QueryOriginAirportName = queryorigin;// item.segments[i].legs[j].designator.origin;
+                                                    string QueryDestinationAirportName = querydestination;// item.segments[i].legs[j].designator.destination;
 
-                                                    var originCity = allCityData.SingleOrDefault(x => x.cityname == QueryOriginAirportName);
-                                                    var destinationCity = allCityData.SingleOrDefault(x => x.cityname == QueryDestinationAirportName);
+                                                    var originCity = allCityData.SingleOrDefault(x => x.citycode == QueryOriginAirportName);
+                                                    var destinationCity = allCityData.SingleOrDefault(x => x.citycode == QueryDestinationAirportName);
 
                                                     if (originCity != null)
                                                     {
@@ -312,7 +312,7 @@
                                                 }
                                                 @*<div class="lh-14 fw-500">@item.segments[i].legs[j].designator.origin <span class="text-13 ml-2 fw-600">( @formatteddepartureDate<span class="text-13 text-light-1 ml-2"> Indira Gandhi, T-@item.segments[i].legs[j].legInfo.departureTerminal </span> )</span></div>*@
                                                 <div class="lh-14 fw-500">
-                                                    @QueryOriginAirportName<span class="text-13 ml-2 fw-600">
+                                                    @originCity.cityname<span class="text-13 ml-2 fw-600">
                                                         ( @formatteddepartureDate<span class="text-13 text-light-1 ml-2">@originCity?.airportname</span>
                                                         @if (@item.segments[i].legs[j].legInfo.departureTerminal != null && @item.segments[i].legs[j].legInfo.departureTerminal != "")
                                                         {
@@ -360,7 +360,7 @@
                                             <div class="col-auto">
                                                 @*<div class="lh-14 fw-500">@item.segments[i].legs[j].designator.destination<span class="text-13 ml-2 fw-600">( @formattedarrivalDate<span class="text-13 text-light-1 ml-2"> Sanganeer, T-@item.segments[i].legs[j].legInfo.arrivalTerminal </span> )</span></div>*@
                                                 <div class="lh-14 fw-500">
-                                                    @QueryDestinationAirportName
+                                                    @destinationCity.cityname
                                                     <span class="text-13 ml-2 fw-600">
                                                         (@formattedarrivalDate
                                                         <span class="text-13 text-light-1 ml-2">@destinationCity?.airportname</span>

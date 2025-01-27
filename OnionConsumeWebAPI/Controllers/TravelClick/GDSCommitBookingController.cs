@@ -136,6 +136,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                     }
 
                     //retrive PNR
+                    
                     string res = _objAvail.CreatePNR(_testURL, createPNRReq, newGuid.ToString(), _targetBranch, _userName, _password, AdultTraveller, _data, _Total, "GDSOneWay", _unitkey, _SSRkey,_pricesolution);
 
                     //string RecordLocator = Regex.Match(res, @"universal:ProviderReservationInfo[\s\S]*?LocatorCode=""(?<LocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["LocatorCode"].Value.Trim();

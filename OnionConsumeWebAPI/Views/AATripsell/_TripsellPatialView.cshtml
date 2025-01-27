@@ -168,11 +168,11 @@
                                             <div class="col-auto">
                                                 @{
                                                     var allCityData = Citynamelist.GetAllCityData();
-                                                    string QueryOriginAirportName = item.segments[i].legs[j].designator.origin;
-                                                    string QueryDestinationAirportName = item.segments[i].legs[j].designator.destination;
+                                                    string QueryOriginAirportName = QueryOrigin;//item.segments[i].legs[j].designator.origin;
+                                                    string QueryDestinationAirportName = QueryDestination;//item.segments[i].legs[j].designator.destination;
 
-                                                    var originCity = allCityData.SingleOrDefault(x => x.cityname == QueryOriginAirportName);
-                                                    var destinationCity = allCityData.SingleOrDefault(x => x.cityname == QueryDestinationAirportName);
+                                                    var originCity = allCityData.SingleOrDefault(x => x.citycode == QueryOriginAirportName);
+                                                    var destinationCity = allCityData.SingleOrDefault(x => x.citycode == QueryDestinationAirportName);
 
                                                     if (originCity != null)
                                                     {
@@ -185,7 +185,7 @@
                                                 }
 
                                                 <div class="lh-14 fw-500">
-                                                    @QueryOriginAirportName
+                                                    @originCity.cityname
                                                     <span class="text-13 ml-2 fw-600">
                                                         (@FormatTeddepartureDate
                                                         <span class="text-13 text-light-1 ml-2">@originCity?.airportname</span>
@@ -235,7 +235,7 @@
 
 
                                                 <div class="lh-14 fw-500">
-                                                    @QueryDestinationAirportName
+                                                    @destinationCity.cityname
                                                     <span class="text-13 ml-2 fw-600">
                                                         (@formattedarrivalDate
                                                         <span class="text-13 text-light-1 ml-2">@destinationCity?.airportname</span>

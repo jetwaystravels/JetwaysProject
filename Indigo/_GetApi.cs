@@ -12,6 +12,7 @@ namespace Indigo
 {
     public class _getapi
     {
+        Logs logs = new Logs();
         #region Signature
         public async Task<LogonResponse> Signature(LogonRequest _logonRequestobj)
         {
@@ -64,6 +65,8 @@ namespace Indigo
             catch (Exception ex)
             {
                 //return Ok(session);
+                
+                logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_SellRQ) + "\n\n Response: " + ex.ToString(), "sell", "IndigoOneWay", "oneway");
             }
             return _SellResponse;
         }

@@ -2376,10 +2376,13 @@ namespace OnionArchitectureAPI.Services.Travelport
                         createPNRReq.Append("<Email EmailID=\"" + passengerdetails[i].Email + "\" />");
                         foreach (Match itemsegment in Regex.Matches(Getdetails.PriceSolution, "AirSegment Key=\"(?<Segmentid>[\\s\\S]*?)\""))
                         {
-                            string[] unitsubKey2 = _SSRkey[_id].Split('_');
-                            string pas_unitKey = unitsubKey2[0];
-                            createPNRReq.Append("<SSR Type=\"" + pas_unitKey + "\" Status=\"NN\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" Key=\"" + passengerdetails[i].passengerkey + "_" + _id + "\" SegmentRef=\"" + itemsegment.Groups["Segmentid"].Value.Trim() + "\"/>");
-                            _id++;
+                            if (_SSRkey.Count > _id)
+                            {
+                                string[] unitsubKey2 = _SSRkey[_id].Split('_');
+                                string pas_unitKey = unitsubKey2[0];
+                                createPNRReq.Append("<SSR Type=\"" + pas_unitKey + "\" Status=\"NN\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" Key=\"" + passengerdetails[i].passengerkey + "_" + _id + "\" SegmentRef=\"" + itemsegment.Groups["Segmentid"].Value.Trim() + "\"/>");
+                                _id++;
+                            }
                         }
                     }
                     else
