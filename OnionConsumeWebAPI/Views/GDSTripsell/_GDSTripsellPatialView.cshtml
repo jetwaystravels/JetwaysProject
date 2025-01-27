@@ -249,13 +249,37 @@
                                         imagePath = "~/img/flight-logo-icon/vistara.png";
                                         break;
                                     case "OD":
-                                        CarrierCodeName = "MALINDO AIRWAYS";
+                                        CarrierCodeName = "Batik Airlines";
+                                        break;
+                                    case "UL":
+                                        CarrierCodeName = "SriLankan Airlines";
                                         break;
                                     case "TG":
                                         CarrierCodeName = "Thai Airways International";
                                         break;
-                                    case "UL":
-                                        CarrierCodeName = "SriLankan Airlines";
+                                    case "SV":
+                                        CarrierCodeName = "Saudia";
+                                        break;
+                                    case "SG":
+                                        CarrierCodeName = "SpiceJet";
+                                        break;
+                                    case "6E":
+                                        CarrierCodeName = "Indigo";
+                                        break;
+                                    case "CX":
+                                        CarrierCodeName = "Cathay Pacific Airways";
+                                        break;
+                                    case "SQ":
+                                        CarrierCodeName = "Singapore Airlines";
+                                        break;
+                                    case "EY":
+                                        CarrierCodeName = "Etihad Airways";
+                                        break;
+                                    case "QR":
+                                        CarrierCodeName = "Qatar Airways";
+                                        break;
+                                    case "EK":
+                                        CarrierCodeName = "Emirates Airlines";
                                         break;
                                     default:
                                         try
@@ -279,6 +303,57 @@
                                         else if (@item.segments[i].identifier.carrierCode == "H1")
                                         {
                                             <img class="size-30" src="~/img/flight-logo-icon/hahnair.png" alt="Hahnair">
+                                        }
+
+                                        else if (@item.segments[i].identifier.carrierCode == "AI")
+                                        {
+                                            <img class="size-40" src="~/img/flight-logo-icon/airindia.png" alt="image">
+                                        }
+                                        else if (@item.segments[i].identifier.carrierCode == "TG")
+                                        {
+                                            <img class="size-40" src="~/img/flight-logo-icon/ta.png" alt="image">
+                                        }
+                                        else if (@item.segments[i].identifier.carrierCode == "SV")
+                                        {
+                                            <img class="size-40" src="~/img/flight-logo-icon/SV.png" alt="image">
+                                        }
+                                        else if (@item.segments[i].identifier.carrierCode == "QR")
+                                        {
+                                            <img class="size-40" src="~/img/flight-logo-icon/qa.png" alt="image">
+                                        }
+                                        else if (@item.segments[i].identifier.carrierCode == "EK")
+                                        {
+                                            <img class="size-40" src="~/img/flight-logo-icon/eta.png" alt="image">
+                                        }
+                                        else if (@item.segments[i].identifier.carrierCode == "EY")
+                                        {
+                                            <img class="size-40" src="~/img/flight-logo-icon/ea.png" alt="image">
+                                        }
+                                        else if (@item.segments[i].identifier.carrierCode == "CX")
+                                        {
+                                            <img class="size-40" src="~/img/flight-logo-icon/cp.png" alt="image">
+                                        }
+                                        else if (@item.segments[i].identifier.carrierCode == "SQ")
+                                        {
+                                            <img class="size-40" src="~/img/flight-logo-icon/sp.png" alt="image">
+                                        }
+                                        else if (@item.segments[i].identifier.carrierCode == "MH")
+                                        {
+                                            <img class="size-40" src="~/img/flight-logo-icon/ml.png" alt="image">
+                                        }
+                                        else if (@item.segments[i].identifier.carrierCode == "WY")
+                                        {
+                                            <img class="size-40" src="~/img/flight-logo-icon/wy.png" alt="image">
+                                        }
+                                        else if (@item.segments[i].identifier.carrierCode == "UL")
+                                        {
+                                            <img class="size-40" src="~/img/flight-logo-icon/SL.png" alt="image">
+                                        }
+
+                                        else if (@item.segments[i].identifier.carrierCode == "OD")
+                                        {
+                                            
+                                            <img class="size-40" src="~/img/flight-logo-icon/batik.png" alt="image">
                                         }
                                         else
                                         {
