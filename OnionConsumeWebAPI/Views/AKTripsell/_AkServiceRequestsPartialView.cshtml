@@ -171,10 +171,24 @@
 
         });
 
+        // $("#btnfocus").click(function () {
+        //     alert("Do you want select connect seat");
+        //     $("#seattab2").click();
+        // });
+
         $("#btnfocus").click(function () {
-            alert("Do you want select connect seat");
-            $("#seattab2").click();
+            var confirmation = confirm("Do you want to select a connecting seat?");
+            if (confirmation == true) {
+                if ($("#seattab2").is(":visible")) {
+                    $("#seattab2").click();
+                }
+            }
+            else {
+
+                return false;
+            }
         });
+
 
     });
 

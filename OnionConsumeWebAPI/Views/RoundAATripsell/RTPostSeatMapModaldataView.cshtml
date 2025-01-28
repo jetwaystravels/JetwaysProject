@@ -268,30 +268,64 @@
             }
         });
 
-        $("#leftConnectbtn_2").click(function () {
-            debugger;
-            var confirmation = confirm("Do you want to select a connecting seat?"); // Non Stop Left Side
-            if (confirmation == true) {
-                if ($("#seattabRT1waypopup").is(":visible")) {
-                    $("#RightNonstop").show();
-                    $("#leftConnect").hide();
-                    $("#leftConnect_2").hide();
-                    $("#rightConnect1").hide();
-                    $("#rightConnect2").hide();
-                    $("#seattabRT1waypopup").click();
-                } else if ($("#seattabRT1Popup").is(":visible")) {
-                    $("#leftConnect").hide();
-                    $("#leftConnect_2").hide();
-                    $("#rightConnect1").show();
-                    $("#rightNonstop").hide();
-                    $("#rightConnect2").hide();
-                    $("#seattabRT1Popup").click();
-                }
-            }
-            else {
-                return false;
-            }
-        });
+        // $("#leftConnectbtn_2").click(function () {
+        //     debugger;
+        //     var confirmation = confirm("Do you want to select a connecting seat?"); // Non Stop Left Side
+        //     if (confirmation == true) {
+        //         if ($("#seattabRT1waypopup").is(":visible")) { 
+        //             $("#RightNonstop").show();
+        //             $("#leftConnect").hide();
+        //             $("#leftConnect_2").hide();
+        //             $("#rightConnect1").hide();
+        //             $("#rightConnect2").hide();
+        //             $("#seattabRT1waypopup").click();
+        //         } 
+                
+        //         if ($("#seattabRT1Popup").is(":visible")) {
+        //             $("#leftConnect").hide();
+        //             $("#leftConnect_2").hide();
+        //             $("#rightConnect1").show();
+        //             $("#rightNonstop").hide();
+        //             $("#rightConnect2").hide();
+        //             $("#seattabRT1Popup").click();
+        //         }
+        //     }
+        //     else {
+        //         return false;
+        //     }
+        // });
+
+    
+$("#leftConnectbtn_2").off("click").on("click", function () {
+    let isProcessing = false;
+    if (isProcessing) return;
+    isProcessing = true; 
+    var confirmation = confirm("Do you want to select a connecting seat?"); 
+    if (confirmation) {
+        $("#leftConnect").hide();
+        $("#leftConnect_2").hide();
+        $("#rightConnect1").hide();
+        $("#rightConnect2").hide();
+        $("#rightNonstop").hide();
+        if ($("#seattabRT1waypopup").is(":visible")) {
+            $("#RightNonstop").show();
+            $("#seattabRT1waypopup").click();
+        } 
+        
+        if ($("#seattabRT1Popup").is(":visible")) {
+            $("#rightConnect1").show();
+            $("#seattabRT1Popup").click();
+        }
+    }
+    setTimeout(() => {
+        isProcessing = false;
+    }, 500);
+});
+
+
+
+
+
 
         $("#rightconnect2").click(function () {
             var confirmation = confirm("Do you want to select a connecting seat?"); // Non Stop Left Side
