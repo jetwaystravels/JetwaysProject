@@ -220,7 +220,7 @@
                                             }
                                             else
                                             {
-                                                <div class="r-stop"> @stops Stop via @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].legs[0].designator.destination  <b>,</b></div>
+                                                <div class="r-stop"> @stops Stop via @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].legs[0].designator.destination,@Model.SimpleAvailibilityaAddResponcelist[j].segments[1].legs[0].designator.destination</div>
 
                                             }
 
@@ -823,8 +823,8 @@
         }
         else
         {
-            originR = queryorigin;
-            destinationR = querydestination;
+            originR = querydestination;
+            destinationR = queryorigin;
         }
         //string originR = Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault().cityname;
         //string destinationR = Citynamelist.GetAllCityData().Where(x => x.citycode == querydestination).SingleOrDefault().cityname;
@@ -965,7 +965,7 @@
                                             }
                                             else if (Model.SimpleAvailibilityaAddResponcelistR[j].segments.Count == 2)
                                             {
-                                                <div class="r-stop"> @Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].legs[0].designator.destination </div>
+                                                <div class="r-stop"> @Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].legs[0].designator.destination,@Model.SimpleAvailibilityaAddResponcelist[j].segments[1].legs[0].designator.destination </div>
 
                                             }
                                             else
@@ -994,7 +994,7 @@
                                             }
                                             else
                                             {
-                                                <div class="r-stop"> @stops Stop via @Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].legs[0].designator.destination  <b>,</b></div>
+                                                <div class="r-stop"> @stops Stop via @Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].legs[0].designator.destination,@Model.SimpleAvailibilityaAddResponcelist[j].segments[1].legs[0].designator.destination</div>
 
                                             }
 
@@ -1473,7 +1473,7 @@
                                             //     <td>As per Airline Fare rule</td>
 
                                             // }
-                                        
+
                                         }
                                         else if (Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("QP"))
                                         {

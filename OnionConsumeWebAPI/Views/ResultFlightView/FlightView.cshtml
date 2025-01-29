@@ -18,13 +18,13 @@
     <link rel="icon" href="~/img/favicon.png">
     <!-- Style css -->
     <link rel="stylesheet" href="~/css/vendors.min.css">
-   @*  <link rel="stylesheet" href="~/css/main.css">
+    @*  <link rel="stylesheet" href="~/css/main.css">
     <link rel="stylesheet" href="~/css/style.css">
     <link rel="stylesheet" href="~/css/daterangepicker.css"> *@
     <link rel="stylesheet" href="/css/style.min.css" />
-   @*  <link href="~/css/roundviewpage.css" rel="stylesheet" />
+    @*  <link href="~/css/roundviewpage.css" rel="stylesheet" />
     <link href="~/css/indexvny.css" rel="stylesheet" /> *@
-   
+
 </head>
 <body>
 
@@ -201,32 +201,27 @@
                                                     </span>
                                                 </div>
                                                 @{
-                                                   
+
 
                                                     int AdultCount = 0;
                                                     int ChildCount = 0;
                                                     int InfantCount = 0;
-                                                   
-                                                    if (Model.simpleAvailabilityRequestModelEdit.passengers.types.Count > 0
-                                                    && Model.simpleAvailabilityRequestModelEdit.passengers.types[0].type == "ADT")
-                                                    {
-                                                        AdultCount = Model.simpleAvailabilityRequestModelEdit.passengers.types[0].count;
-                                                    }
 
-                                                    
-                                                    if (Model.simpleAvailabilityRequestModelEdit.passengers.types.Count > 1
-                                                    && Model.simpleAvailabilityRequestModelEdit.passengers.types[1].type == "CHD")
+                                                    for (int i = 0; i < @Model.simpleAvailabilityRequestModelEdit.passengers.types.Count; i++)
                                                     {
-                                                        ChildCount = Model.simpleAvailabilityRequestModelEdit.passengers.types[1].count;
+                                                        if (Model.simpleAvailabilityRequestModelEdit.passengers.types[i].type == "ADT")
+                                                        {
+                                                            AdultCount = Model.simpleAvailabilityRequestModelEdit.passengers.types[i].count;
+                                                        }
+                                                        if (Model.simpleAvailabilityRequestModelEdit.passengers.types[i].type == "CHD")
+                                                        {
+                                                            ChildCount = Model.simpleAvailabilityRequestModelEdit.passengers.types[i].count;
+                                                        }
+                                                        if (Model.simpleAvailabilityRequestModelEdit.passengers.types[i].type == "INFT")
+                                                        {
+                                                            InfantCount = Model.simpleAvailabilityRequestModelEdit.passengers.types[i].count;
+                                                        }
                                                     }
-
-                                                    
-                                                    if (Model.simpleAvailabilityRequestModelEdit.passengers.types.Count > 2
-                                                    && Model.simpleAvailabilityRequestModelEdit.passengers.types[2].type == "INFT")
-                                                    {
-                                                        InfantCount = Model.simpleAvailabilityRequestModelEdit.passengers.types[2].count;
-                                                    }
-
 
                                                     <div class="col-12 col-md-10 col-lg-2 space travellers">
                                                         <label style="margin-bottom: 0.1rem;">Travellers </label>
@@ -2144,11 +2139,11 @@
 
         //***********Strip Validation*/
         $(document).ready(function () {
-           
+
 
             var maxField = 6;
             var maxField_adult = 9;
-            var count_adult = parseInt(localStorage.getItem("adultcount")) || 1; 
+            var count_adult = parseInt(localStorage.getItem("adultcount")) || 1;
             var count_child = 0;
             var count_infant = 0;
 
@@ -2199,7 +2194,7 @@
             $('.increment2').on('click', function (event) {
                 debugger;
                 if (count_infant < maxField) {
-                    var adultcounttotal = parseInt(localStorage.getItem("adultcount")) || 1; 
+                    var adultcounttotal = parseInt(localStorage.getItem("adultcount")) || 1;
                     if (count_infant >= adultcounttotal) {
                         alert("Number of infants cannot be more than adults");
                         return false;
@@ -2208,7 +2203,7 @@
                         count_infant++;
                         $('#count_infant').text(count_infant);
                         $('#field_infant').val(count_infant);
-                   
+
                 }
             });
 
@@ -2219,7 +2214,7 @@
                     $('#field_infant').val(count_infant);
                 }
             });
-            
+
 
         });
 
@@ -2265,7 +2260,7 @@
                 return false;
                 event.preventDefault();
             }
-           
+
             var adulttravelcount = $('#field_adult').val();
             var infanttravelcount = $('#field_infant').val();
             if (infanttravelcount > adulttravelcount || infanttravelcount > 6) {
@@ -2628,7 +2623,7 @@
             var chosenInput = document.querySelector('.chosen-search input');
             chosenInput.focus();
 
-            
+
 
             if (!chosenInput.hasAttribute("onkeyup")) {
                 chosenInput.setAttribute("onkeyup", "filterCities(this.value)");

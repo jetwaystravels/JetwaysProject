@@ -50,7 +50,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
             return View();
         }
         // Mongo DB
-       // private readonly MongoDbService _mongoDbService;
+        // private readonly MongoDbService _mongoDbService;
 
         public readonly IDistributedCache _distributedCache;
         private readonly CredentialService _credentialService;
@@ -59,7 +59,8 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
         {
             _distributedCache = distributedcache;
             //_mongoDbService = mongoDbService;
-            _credentialService = credentialService;            _configuration = configuration;
+            _credentialService = credentialService;
+            _configuration = configuration;
 
         }
         private string KeyName = string.Empty;
@@ -124,7 +125,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                 KeyName = _GetfligthModel.origin + "_" + _GetfligthModel.destination + "_" + _GetfligthModel.beginDate + "_" + _GetfligthModel.adultcount;
             }
             // Mongo DB
-            
+
 
             //START:21-12-2024 SAVE SEARCH LOG DATA
             string SearchGuid = Guid.NewGuid().ToString().ToUpper();
@@ -217,12 +218,12 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                     //client.BaseAddress = new Uri("http://localhost:5225/");
                     client.BaseAddress = new Uri(AppUrlConstant.BaseURL);
                     HttpResponseMessage response = await client.GetAsync("api/Login/getotacredairasia");
-                   //Air Asia login
+                    //Air Asia login
                     var _credentialsAirasia = new _credentials();
                     if (response.IsSuccessStatusCode)
                     {
                         await _credentialService.PopulateCredentialsAsync(response, _credentialsAirasia, 1);
-                        
+
                     }
 
                     airlineLogin login = new airlineLogin();
@@ -246,7 +247,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                         //token = ((Newtonsoft.Json.Linq.JValue)value).Value.ToString();
                     }
 
-                   
+
 
                     //MongoHelper objMongoHelper = new MongoHelper();
                     //MongoDBHelper _mongoDBHelper = new MongoDBHelper(_mongoDbService);
@@ -1299,8 +1300,8 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                             origin = Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault().cityname;
                             Designatorobj.origin = origin;
                             string querydestination = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[0][0].ArrivalStation;
-                            if(string.IsNullOrEmpty(querydestination))
-                                querydestination= _GetfligthModel.destination;
+                            if (string.IsNullOrEmpty(querydestination))
+                                querydestination = _GetfligthModel.destination;
 
                             destination1 = Citynamelist.GetAllCityData().Where(x => x.citycode == querydestination).SingleOrDefault().cityname;
                             Designatorobj.destination = destination1;
@@ -1515,7 +1516,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                         await _credentialService.PopulateCredentialsAsync(response, _CredentialsGDS, 5);
 
                     }
-                   
+
                     sbReq = new StringBuilder();
                     Guid newGuid = Guid.NewGuid();
                     httpContextAccessorInstance = new HttpContextAccessor();
@@ -1740,7 +1741,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                         {
                                         }
                                     }
-                                    if(getAvailRes[i].Bonds[k].Legs[l].FlightNumber=="573" || getAvailRes[i].Bonds[k].Legs[l].FlightNumber == "545")
+                                    if (getAvailRes[i].Bonds[k].Legs[l].FlightNumber == "573" || getAvailRes[i].Bonds[k].Legs[l].FlightNumber == "545")
                                     {
 
                                     }
@@ -1811,7 +1812,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                 _SimpleAvailibilityaAddResponceobj.segments = Segmentobjlist;
                                 DateTime currentDate = DateTime.Now;
                                 var bookingdate1 = currentDate; //"2023-12-10T00:00:00";
-                                _SimpleAvailibilityaAddResponceobj.bookingdate = bookingdate1.ToString();
+                                _SimpleAvailibilityaAddResponceobj.bookingdate = Convert.ToDateTime(Segmentobjlist[0].designator._DepartureDate).ToString("dddd, dd MMM yyyy");
                                 //if (_IndigoAvailabilityResponseobj == null)
                                 //{
                                 //    _SimpleAvailibilityaAddResponceobj.bookingdate = bookingdate1.ToString(); ;
@@ -1972,11 +1973,11 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                         var result1s = response.Content.ReadAsStringAsync().Result;
                         var JsonObject = JsonConvert.DeserializeObject<List<_credentials>>(result1s);
                         var _credentialsAirasiaR = new _credentials();
-                       
+
                         //AirAsia round login
 
                         await _credentialService.PopulateCredentialsAsync(response, _credentialsAirasiaR, 1);
-                        
+
                         login = new airlineLogin();
                         login.credentials = _credentialsAirasiaR;
 
@@ -2120,13 +2121,13 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                             var fareAmount = 0;
                                             for (int fc = 0; fc < fareAvilableCount; fc++)
                                             {
-                                              int fareH=  JsonObjR.data.faresAvailable[fareAvailabilityKeyhead].fares[fc].passengerFares[0].fareAmount;
-                                              
+                                                int fareH = JsonObjR.data.faresAvailable[fareAvailabilityKeyhead].fares[fc].passengerFares[0].fareAmount;
+
                                                 fareTotalsum += fareH;
                                                 int fare = JsonObjR.data.faresAvailable[fareAvailabilityKey].fares[fc].passengerFares[0].fareAmount;
                                                 fareAmount = fare + fareAmount;
                                             }
-                                           // var fareAmount = JsonObjR.data.faresAvailable[fareAvailabilityKey].fares[0].passengerFares[0].fareAmount;
+                                            // var fareAmount = JsonObjR.data.faresAvailable[fareAvailabilityKey].fares[0].passengerFares[0].fareAmount;
 
 
 
@@ -2806,7 +2807,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                     _SimpleAvailibilityaAddResponceobjR.segments = Segmentobjlist;
                                     DateTime currentDate = DateTime.Now;
                                     var bookingdate = currentDate; //"2023-12-10T00:00:00";
-                                    _SimpleAvailibilityaAddResponceobjR.bookingdate = Convert.ToDateTime(bookingdate).ToString("dddd, dd MMM yyyy");
+                                    _SimpleAvailibilityaAddResponceobjR.bookingdate = Convert.ToDateTime(_getAvailabilityVer2ReturnResponse.GetTripAvailabilityVer2Response.Schedules[0][0].DepartureDate).ToString("dddd, dd MMM yyyy");// Convert.ToDateTime(bookingdate).ToString("dddd, dd MMM yyyy");
                                     _SimpleAvailibilityaAddResponceobjR.fareTotalsum = Math.Round(fareTotalsum, 0);
 
                                     _SimpleAvailibilityaAddResponceobjR.journeyKey = journeyKey;
@@ -3397,7 +3398,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                     _SimpleAvailibilityaAddResponceobjR.segments = Segmentobjlist;
                                     DateTime currentDate = DateTime.Now;
                                     var bookingdate1 = currentDate; //"2023-12-10T00:00:00";
-                                    _SimpleAvailibilityaAddResponceobjR.bookingdate = Convert.ToDateTime(bookingdate1).ToString("dddd, dd MMM yyyy");
+                                    _SimpleAvailibilityaAddResponceobjR.bookingdate = Convert.ToDateTime(Segmentobjlist[0].designator._DepartureDate).ToString("dddd, dd MMM yyyy");// Convert.ToDateTime(bookingdate1).ToString("dddd, dd MMM yyyy");
                                     //if (_IndigoAvailabilityResponseobj == null)
                                     //{
                                     // _SimpleAvailibilityaAddResponceobjR.bookingdate = bookingdate1.ToString(); ;
