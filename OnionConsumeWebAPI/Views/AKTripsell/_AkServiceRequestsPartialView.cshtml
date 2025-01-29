@@ -575,7 +575,7 @@
                                                             {
                                                                 string ssrprice = Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[0].price;
                                                                 string Mealcode = Model.AkMealslist.legSsrs[0].legssrs[s].ssrCode;
-                                                                string Mealname = Model.AkMealslist.legSsrs[0].legssrs[s].name + " ₹" + @Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[0].price + "_" + Model.AkMealslist.legSsrs[0].legssrs[s].ssrCode;
+                                                                string Mealname = Mealcode + "-" + Model.AkMealslist.legSsrs[0].legssrs[s].name + " ₹" + @Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[0].price + "_" + Model.AkMealslist.legSsrs[0].legssrs[s].ssrCode;
                                                                 ssrkey = Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[pa].ssrKey + "_" + @Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[0].price;
                                                                 string passengerKey = Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[pa].passengerKey;
 
@@ -758,7 +758,7 @@
                                                                 {
                                                                     string ssrprice = Model.AkMealslist.legSsrs[1].legssrs[s].legpassengers[0].price;
                                                                     string Mealcode = Model.AkMealslist.legSsrs[1].legssrs[s].ssrCode;
-                                                                    string Mealname = Model.AkMealslist.legSsrs[1].legssrs[s].name + " @" + @Model.AkMealslist.legSsrs[1].legssrs[s].legpassengers[0].price;
+                                                                    string Mealname = Mealcode + "-" + Model.AkMealslist.legSsrs[1].legssrs[s].name + " @" + @Model.AkMealslist.legSsrs[1].legssrs[s].legpassengers[0].price;
                                                                     ssrkey = Model.AkMealslist.legSsrs[1].legssrs[s].legpassengers[pas].ssrKey + "_" + @Model.AkMealslist.legSsrs[1].legssrs[s].legpassengers[0].price;
                                                                     string passengerKey = Model.AkMealslist.legSsrs[1].legssrs[s].legpassengers[pas].passengerKey;
                                                                     ssrAvailable = Model.AkMealslist.legSsrs[1].legssrs[s].available.ToString();

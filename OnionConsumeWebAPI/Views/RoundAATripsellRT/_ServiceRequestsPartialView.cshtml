@@ -663,7 +663,7 @@
                                                             string Mealcode = Model.MealslistRT[0].legSsrs[0].legssrs[s].ssrCode + "_" + Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[0].price + "_" + "OneWay0" + "_" + Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[0].Airline;
                                                             //  string MealcodeData = Mealcode.StartsWith("V", StringComparison.OrdinalIgnoreCase).ToString();
                                                             AirLine = Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[0].Airline.ToString();
-                                                            string Mealname = Model.MealslistRT[0].legSsrs[0].legssrs[s].name + " (" + Model.MealslistRT[0].legSsrs[0].legssrs[s].ssrCode + ") " + " ₹" + @Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[0].price;
+                                                            string Mealname = Model.MealslistRT[0].legSsrs[0].legssrs[s].ssrCode + "-" + Model.MealslistRT[0].legSsrs[0].legssrs[s].name + " ₹" + @Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[0].price;
                                                             ssrkeyAA = Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[pas].ssrKey + "_" + @Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[0].price + "_" + "OneWay0" + "_" + Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[0].Airline;
                                                             string Mcode = (Mealcode.StartsWith("E", StringComparison.OrdinalIgnoreCase) ||
                                                             Mealcode.StartsWith("INFT", StringComparison.OrdinalIgnoreCase) ||
@@ -715,7 +715,7 @@
                                                                             string Mealcode = Model.MealslistRT[0].legSsrs[i].legssrs[s].ssrCode + "_" + Model.MealslistRT[0].legSsrs[i].legssrs[s].legpassengers[0].price + "_" + "OneWay0" + "_" + Model.MealslistRT[0].legSsrs[i].legssrs[s].legpassengers[0].Airline;
                                                                             //string MealcodeData = Mealcode.StartsWith("V", StringComparison.OrdinalIgnoreCase).ToString();
                                                                             AirLine = Model.MealslistRT[0].legSsrs[i].legssrs[s].legpassengers[0].Airline.ToString();
-                                                                            string Mealname = Model.MealslistRT[0].legSsrs[i].legssrs[s].name + " (" + Model.MealslistRT[0].legSsrs[i].legssrs[s].ssrCode + ") " + " ₹" + @Model.MealslistRT[0].legSsrs[i].legssrs[s].legpassengers[0].price;
+                                                                            string Mealname = Model.MealslistRT[0].legSsrs[i].legssrs[s].ssrCode  +"-" + Model.MealslistRT[0].legSsrs[i].legssrs[s].name + " ₹" + @Model.MealslistRT[0].legSsrs[i].legssrs[s].legpassengers[0].price;
                                                                             if (AirLine.ToLower() == "airasia" || AirLine.ToLower() == "akasaair")
                                                                             {
                                                                                 ssrkeyAA = Model.MealslistRT[0].legSsrs[i].legssrs[s].legpassengers[pas].ssrKey + "_" + @Model.MealslistRT[0].legSsrs[i].legssrs[s].legpassengers[0].price + "_" + "OneWay0" + "_" + Model.MealslistRT[0].legSsrs[i].legssrs[s].legpassengers[0].Airline;
@@ -1063,7 +1063,7 @@
                                                                 
                                                                 string Mealcode = Model.MealslistRT[0].legSsrs[1].legssrs[s].ssrCode + "_" + Model.MealslistRT[0].legSsrs[1].legssrs[s].legpassengers[0].price + "_" + "OneWay1" + "_" + Model.MealslistRT[0].legSsrs[1].legssrs[s].legpassengers[0].Airline;
                                                                 // string MealData = Mealcode.StartsWith("V", StringComparison.OrdinalIgnoreCase).ToString();
-                                                                string Mealname = Model.MealslistRT[0].legSsrs[1].legssrs[s].name + " (" + Model.MealslistRT[0].legSsrs[1].legssrs[s].ssrCode + ") " + " ₹" + @Model.MealslistRT[0].legSsrs[1].legssrs[s].legpassengers[0].price;
+                                                                string Mealname = Model.MealslistRT[0].legSsrs[1].legssrs[s].ssrCode +"-"+ Model.MealslistRT[0].legSsrs[1].legssrs[s].name  + " ₹" + @Model.MealslistRT[0].legSsrs[1].legssrs[s].legpassengers[0].price;
                                                                 AirLine = Model.MealslistRT[0].legSsrs[1].legssrs[s].legpassengers[0].Airline.ToString();
                                                                 ssrkeyAA = Model.MealslistRT[0].legSsrs[1].legssrs[s].legpassengers[pas].ssrKey + "_" + @Model.MealslistRT[0].legSsrs[1].legssrs[s].legpassengers[0].price + "_" + "OneWay1" + "_" + Model.MealslistRT[0].legSsrs[1].legssrs[s].legpassengers[0].Airline;
 
@@ -1115,7 +1115,7 @@
                                                                     mealnamedisplay = Model.MealslistRT[0].legSsrs[1].legssrs[s].name;
                                                                     string Mealcode = Model.MealslistRT[0].legSsrs[1].legssrs[s].ssrCode + "_" + Model.MealslistRT[0].legSsrs[1].legssrs[s].legpassengers[0].price + "_" + "OneWay1" + "_" + Model.MealslistRT[0].legSsrs[1].legssrs[s].legpassengers[0].Airline;
                                                                     //string MealData = Mealcode.StartsWith("V", StringComparison.OrdinalIgnoreCase).ToString();
-                                                                    string Mealname = Model.MealslistRT[0].legSsrs[1].legssrs[s].name + " (" + Model.MealslistRT[0].legSsrs[1].legssrs[s].ssrCode + ") " + " ₹" + @Model.MealslistRT[0].legSsrs[1].legssrs[s].legpassengers[0].price;
+                                                                    string Mealname = Model.MealslistRT[0].legSsrs[1].legssrs[s].ssrCode + "-"+Model.MealslistRT[0].legSsrs[1].legssrs[s].name  + " ₹" + @Model.MealslistRT[0].legSsrs[1].legssrs[s].legpassengers[0].price;
                                                                     AirLine = Model.MealslistRT[0].legSsrs[1].legssrs[s].legpassengers[0].Airline.ToString();
                                                                     if (AirLine.ToLower() == "airasia" || AirLine.ToLower() == "akasaair")
                                                                     {
@@ -1348,7 +1348,7 @@
                                                                         string ssrprice = Model.MealslistRT[0].legSsrs[j].legssrs[s].legpassengers[0].price;
                                                                         string Mealcode = Model.MealslistRT[0].legSsrs[j].legssrs[s].ssrCode + "_" + Model.MealslistRT[0].legSsrs[j].legssrs[s].legpassengers[0].price + "_" + "RT0" + "_" + Model.MealslistRT[0].legSsrs[j].legssrs[s].legpassengers[0].Airline;
                                                                         //  string MealcodeCondata = Mealcode.StartsWith("V", StringComparison.OrdinalIgnoreCase).ToString();
-                                                                        string Mealname = Model.MealslistRT[0].legSsrs[j].legssrs[s].name + " (" + Model.MealslistRT[0].legSsrs[j].legssrs[s].ssrCode + ") " + " ₹" + @Model.MealslistRT[0].legSsrs[j].legssrs[s].legpassengers[0].price;
+                                                                        string Mealname = Model.MealslistRT[0].legSsrs[j].legssrs[s].ssrCode + "-"+Model.MealslistRT[0].legSsrs[j].legssrs[s].name  + " ₹" + @Model.MealslistRT[0].legSsrs[j].legssrs[s].legpassengers[0].price;
                                                                         AirLine = Model.MealslistRT[0].legSsrs[j].legssrs[s].legpassengers[0].Airline.ToString();
                                                                         ssrkeyAA = Model.MealslistRT[0].legSsrs[j].legssrs[s].legpassengers[pas].ssrKey + "_" + @Model.MealslistRT[0].legSsrs[j].legssrs[s].legpassengers[0].price + "_" + "RT0" + "_" + Model.MealslistRT[0].legSsrs[j].legssrs[s].legpassengers[0].Airline;
 
@@ -1427,7 +1427,7 @@
                                                                                         mealnamedisplay = Model.MealslistRT[0].legSsrs[i].legssrs[s].name;
                                                                                         string Mealcode = Model.MealslistRT[0].legSsrs[i].legssrs[s].ssrCode + "_" + Model.MealslistRT[0].legSsrs[i].legssrs[s].legpassengers[0].price + "_" + "RT0" + "_" + Model.MealslistRT[0].legSsrs[i].legssrs[s].legpassengers[0].Airline;
                                                                                         //string MealcodeCondata = Mealcode.StartsWith("V", StringComparison.OrdinalIgnoreCase).ToString();
-                                                                                        string Mealname = Model.MealslistRT[0].legSsrs[i].legssrs[s].name + " (" + Model.MealslistRT[0].legSsrs[i].legssrs[s].ssrCode + ") " + " ₹" + @Model.MealslistRT[0].legSsrs[i].legssrs[s].legpassengers[0].price;
+                                                                                        string Mealname = Model.MealslistRT[0].legSsrs[i].legssrs[s].ssrCode + "-"+Model.MealslistRT[0].legSsrs[i].legssrs[s].name  + " ₹" + @Model.MealslistRT[0].legSsrs[i].legssrs[s].legpassengers[0].price;
                                                                                         AirLine = Model.MealslistRT[0].legSsrs[i].legssrs[s].legpassengers[0].Airline.ToString();
                                                                                         if (AirLine.ToLower() == "airasia" || AirLine.ToLower() == "akasaair")
                                                                                         {
@@ -1839,7 +1839,7 @@
                                                                     string ssrprice = Model.MealslistRT[0].legSsrs[k].legssrs[s].legpassengers[0].price;
                                                                     string Mealcode = Model.MealslistRT[0].legSsrs[k].legssrs[s].ssrCode + "_" + Model.MealslistRT[0].legSsrs[k].legssrs[s].legpassengers[0].price + "_" + "RT1" + "_" + Model.MealslistRT[0].legSsrs[k].legssrs[s].legpassengers[0].Airline;
                                                                     //  string MealcodeRT = Mealcode.StartsWith("V", StringComparison.OrdinalIgnoreCase).ToString();
-                                                                    string Mealname = Model.MealslistRT[0].legSsrs[k].legssrs[s].name + " (" + Model.MealslistRT[0].legSsrs[k].legssrs[s].ssrCode + ") " + " ₹" + @Model.MealslistRT[0].legSsrs[k].legssrs[s].legpassengers[0].price;
+                                                                    string Mealname = Model.MealslistRT[0].legSsrs[k].legssrs[s].ssrCode +"-"+Model.MealslistRT[0].legSsrs[k].legssrs[s].name  + " ₹" + @Model.MealslistRT[0].legSsrs[k].legssrs[s].legpassengers[0].price;
                                                                     AirLine = Model.MealslistRT[0].legSsrs[k].legssrs[s].legpassengers[0].Airline.ToString();
                                                                     ssrkeyAA = Model.MealslistRT[0].legSsrs[k].legssrs[s].legpassengers[pas].ssrKey + "_" + @Model.MealslistRT[0].legSsrs[k].legssrs[s].legpassengers[0].price + "_" + "RT1" + "_" + Model.MealslistRT[0].legSsrs[k].legssrs[s].legpassengers[0].Airline;
 
@@ -1895,7 +1895,7 @@
                                                                                     string mealnamedisplay = Model.MealslistRT[0].legSsrs[i].legssrs[s].name;
                                                                                     string Mealcode = Model.MealslistRT[0].legSsrs[i].legssrs[s].ssrCode + "_" + Model.MealslistRT[0].legSsrs[i].legssrs[s].legpassengers[0].price + "_" + "RT1" + "_" + Model.MealslistRT[0].legSsrs[i].legssrs[s].legpassengers[0].Airline;
                                                                                     //string MealcodeRT = Mealcode.StartsWith("V", StringComparison.OrdinalIgnoreCase).ToString();
-                                                                                    string Mealname = Model.MealslistRT[0].legSsrs[i].legssrs[s].name + " (" + Model.MealslistRT[0].legSsrs[i].legssrs[s].ssrCode + ") " + " ₹" + @Model.MealslistRT[0].legSsrs[i].legssrs[s].legpassengers[0].price;
+                                                                                    string Mealname = Model.MealslistRT[0].legSsrs[i].legssrs[s].ssrCode +"-"+Model.MealslistRT[0].legSsrs[i].legssrs[s].name + " ₹" + @Model.MealslistRT[0].legSsrs[i].legssrs[s].legpassengers[0].price;
                                                                                     AirLine = Model.MealslistRT[0].legSsrs[i].legssrs[s].legpassengers[0].Airline.ToString();
                                                                                     if (AirLine.ToLower() == "airasia" || AirLine.ToLower() == "akasaair")
                                                                                     {

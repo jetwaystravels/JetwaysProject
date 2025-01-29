@@ -571,7 +571,7 @@
                                                         {
                                                             string ssrprice = Model.Meals.legSsrs[0].legssrs[s].legpassengers[0].price;
                                                             string Mealcode = Model.Meals.legSsrs[0].legssrs[s].ssrCode + "_" + Model.Meals.legSsrs[0].legssrs[s].legpassengers[0].price + "_0";
-                                                            string Mealname = Model.Meals.legSsrs[0].legssrs[s].name + " ₹" + @Model.Meals.legSsrs[0].legssrs[s].legpassengers[0].price;
+                                                            string Mealname = Model.Meals.legSsrs[0].legssrs[s].ssrCode + "-" + Model.Meals.legSsrs[0].legssrs[s].name + " ₹" + @Model.Meals.legSsrs[0].legssrs[s].legpassengers[0].price;
                                                             string Mcode = (Mealcode.StartsWith("E", StringComparison.OrdinalIgnoreCase) || Mealcode.StartsWith("INFT", StringComparison.OrdinalIgnoreCase)).ToString();
                                                             if (Mcode.ToLower() == "true")
                                                             {
@@ -775,7 +775,7 @@
                                                         {
                                                             string ssrprice = Model.Meals.legSsrs[0].legssrs[s].legpassengers[0].price;
                                                             string Mealcode = Model.Meals.legSsrs[0].legssrs[s].ssrCode + "_" + Model.Meals.legSsrs[0].legssrs[s].legpassengers[0].price + "_1";
-                                                            string Mealname = Model.Meals.legSsrs[0].legssrs[s].name + " ₹" + @Model.Meals.legSsrs[0].legssrs[s].legpassengers[0].price;
+                                                            string Mealname = Model.Meals.legSsrs[0].legssrs[s].ssrCode + "-" + Model.Meals.legSsrs[0].legssrs[s].name + " ₹" + @Model.Meals.legSsrs[0].legssrs[s].legpassengers[0].price;
 
                                                             string Mcode = (Mealcode.StartsWith("E", StringComparison.OrdinalIgnoreCase) || Mealcode.StartsWith("INFT", StringComparison.OrdinalIgnoreCase)).ToString();
                                                             if (Mcode.ToLower() == "true")

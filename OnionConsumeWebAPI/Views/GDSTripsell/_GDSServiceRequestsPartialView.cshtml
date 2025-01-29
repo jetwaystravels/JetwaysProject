@@ -685,7 +685,7 @@
 							    string ssrprice = Model.Meals.legSsrs[i].legssrs[s].legpassengers[0].price;
 							    string Sssrcode = Model.Meals.legSsrs[i].legssrs[s].ssrCode;
 							    string Mealcode = Model.Meals.legSsrs[i].legssrs[s].ssrCode + "_" + Model.Meals.legSsrs[i].legssrs[s].legpassengers[0].price + "_OneWay0";
-							    string Mealname = Model.Meals.legSsrs[i].legssrs[s].name + " ₹" + @Model.Meals.legSsrs[i].legssrs[s].legpassengers[0].price;
+								string Mealname = Model.Meals.legSsrs[i].legssrs[s].ssrCode  +"-" + Model.Meals.legSsrs[i].legssrs[s].name + " ₹" + @Model.Meals.legSsrs[i].legssrs[s].legpassengers[0].price;
 							    //string Mcode = (Mealcode.StartsWith("E", StringComparison.OrdinalIgnoreCase) ||
 							    //Mealcode.StartsWith("INFT", StringComparison.OrdinalIgnoreCase) ||
 							    //Mealcode.StartsWith("X", StringComparison.OrdinalIgnoreCase)).ToString();
@@ -909,7 +909,7 @@
 							    string ssrprice = Model.Meals.legSsrs[i].legssrs[s].legpassengers[0].price;
 							    string Sssrcode = Model.Meals.legSsrs[i].legssrs[s].ssrCode;
 							    string Mealcode = Model.Meals.legSsrs[i].legssrs[s].ssrCode + "_" + Model.Meals.legSsrs[0].legssrs[s].legpassengers[0].price + "_OneWay1";
-							    string Mealname = Model.Meals.legSsrs[i].legssrs[s].name + " ₹" + @Model.Meals.legSsrs[0].legssrs[s].legpassengers[0].price;
+								string Mealname = Model.Meals.legSsrs[i].legssrs[s].ssrCode + "-" + Model.Meals.legSsrs[i].legssrs[s].name + " ₹" + @Model.Meals.legSsrs[0].legssrs[s].legpassengers[0].price;
 
 							    //string Mcode = (Mealcode.StartsWith("E", StringComparison.OrdinalIgnoreCase) ||
 							    //Mealcode.StartsWith("INFT", StringComparison.OrdinalIgnoreCase) ||
