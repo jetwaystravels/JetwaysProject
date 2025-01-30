@@ -89,47 +89,50 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                     #endregion
                     #region Addpayment Commneted For Api Payment deduction
                     IndigoBookingManager_.AddPaymentToBookingResponse _BookingPaymentResponse = await objcommit.AddpaymenttoBook(token, Totalpayment, "OneWay");
-
+                    if (_BookingPaymentResponse.BookingPaymentResponse.ValidationPayment.PaymentValidationErrors[0].ErrorDescription.ToLower().Contains("not enough funds available"))
+                    {
+                        _AirLinePNRTicket.ErrorDesc = "Not enough funds available.";
+                    }
                     #endregion
 
                     #region Commit Booking
 
                     IndigoBookingManager_.BookingCommitResponse _BookingCommitResponse = await objcommit.commit(token, contactList, passeengerlist, "OneWay");
 
-                    if (_BookingCommitResponse != null && _BookingCommitResponse.BookingUpdateResponseData.Success.RecordLocator != null)
-                    {
-                        IndigoBookingManager_.GetBookingResponse _getBookingResponse = await objcommit.GetBookingdetails(token, _BookingCommitResponse, "OneWay");
-
-                        if (_getBookingResponse != null)
+                        if (_BookingCommitResponse != null && _BookingCommitResponse.BookingUpdateResponseData.Success.RecordLocator != null)
                         {
-                            Hashtable htname = new Hashtable();
-                            Hashtable htnameempty = new Hashtable();
-                            Hashtable htpax = new Hashtable();
-                            Hashtable htseatdata = new Hashtable();
-                            Hashtable htmealdata = new Hashtable();
-                            Hashtable htbagdata = new Hashtable();
-                            Hashtable htFFWDdata = new Hashtable();
-                            int adultcount = Convert.ToInt32(HttpContext.Session.GetString("adultCount"));
-                            int childcount = Convert.ToInt32(HttpContext.Session.GetString("childCount"));
-                            int infantcount = Convert.ToInt32(HttpContext.Session.GetString("infantCount"));
-                            int TotalCount = adultcount + childcount;
-                            string _responceGetBooking = JsonConvert.SerializeObject(_getBookingResponse);
-                            ReturnTicketBooking returnTicketBooking = new ReturnTicketBooking();
-                            //var resultsTripsell = responseTripsell.Content.ReadAsStringAsync().Result;
-                            //var JsonObjTripsell = JsonConvert.DeserializeObject<dynamic>(resultsTripsell);
-                            var totalAmount = _getBookingResponse.Booking.BookingSum.TotalCost;
-                            returnTicketBooking.bookingKey = _getBookingResponse.Booking.BookingID.ToString();
-                            ReturnPaxSeats _unitdesinator = new ReturnPaxSeats();
-                            if (_getBookingResponse.Booking.Journeys[0].Segments[0].PaxSeats.Length > 0)
-                                _unitdesinator.unitDesignatorPax = _getBookingResponse.Booking.Journeys[0].Segments[0].PaxSeats[0].UnitDesignator;
+                            IndigoBookingManager_.GetBookingResponse _getBookingResponse = await objcommit.GetBookingdetails(token, _BookingCommitResponse, "OneWay");
 
-                            //GST Number
-                            if (_getBookingResponse.Booking.BookingContacts[0].TypeCode == "I")
+                            if (_getBookingResponse != null)
                             {
-                                returnTicketBooking.customerNumber = _getBookingResponse.Booking.BookingContacts[0].CustomerNumber;
-                                returnTicketBooking.companyName = _getBookingResponse.Booking.BookingContacts[0].CompanyName;
-                                returnTicketBooking.emailAddressgst = _getBookingResponse.Booking.BookingContacts[0].EmailAddress;
-                            }
+                                Hashtable htname = new Hashtable();
+                                Hashtable htnameempty = new Hashtable();
+                                Hashtable htpax = new Hashtable();
+                                Hashtable htseatdata = new Hashtable();
+                                Hashtable htmealdata = new Hashtable();
+                                Hashtable htbagdata = new Hashtable();
+                                Hashtable htFFWDdata = new Hashtable();
+                                int adultcount = Convert.ToInt32(HttpContext.Session.GetString("adultCount"));
+                                int childcount = Convert.ToInt32(HttpContext.Session.GetString("childCount"));
+                                int infantcount = Convert.ToInt32(HttpContext.Session.GetString("infantCount"));
+                                int TotalCount = adultcount + childcount;
+                                string _responceGetBooking = JsonConvert.SerializeObject(_getBookingResponse);
+                                ReturnTicketBooking returnTicketBooking = new ReturnTicketBooking();
+                                //var resultsTripsell = responseTripsell.Content.ReadAsStringAsync().Result;
+                                //var JsonObjTripsell = JsonConvert.DeserializeObject<dynamic>(resultsTripsell);
+                                var totalAmount = _getBookingResponse.Booking.BookingSum.TotalCost;
+                                returnTicketBooking.bookingKey = _getBookingResponse.Booking.BookingID.ToString();
+                                ReturnPaxSeats _unitdesinator = new ReturnPaxSeats();
+                                if (_getBookingResponse.Booking.Journeys[0].Segments[0].PaxSeats.Length > 0)
+                                    _unitdesinator.unitDesignatorPax = _getBookingResponse.Booking.Journeys[0].Segments[0].PaxSeats[0].UnitDesignator;
+
+                                //GST Number
+                                if (_getBookingResponse.Booking.BookingContacts[0].TypeCode == "I")
+                                {
+                                    returnTicketBooking.customerNumber = _getBookingResponse.Booking.BookingContacts[0].CustomerNumber;
+                                    returnTicketBooking.companyName = _getBookingResponse.Booking.BookingContacts[0].CompanyName;
+                                    returnTicketBooking.emailAddressgst = _getBookingResponse.Booking.BookingContacts[0].EmailAddress;
+                                }
 
                             Contacts _contact = new Contacts();
                             _contact.phoneNumbers = _getBookingResponse.Booking.BookingContacts[0].HomePhone.ToString();

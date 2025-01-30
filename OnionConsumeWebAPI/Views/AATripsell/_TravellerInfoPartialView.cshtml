@@ -135,7 +135,7 @@
                             }
                         }
                         
-                        <input type="text" class="contactFname validate-field" data-validate="name" maxlength="32" oninput="validateInputT(event ,@i)" id="LeadPass1" placeholder="First & middle name" name="passengerdetails[@i].First" style='text-transform:uppercase' required />
+                        <input type="text" class="contactFname validate-field" data-validate="name" maxlength="16" oninput="validateInputT(event ,@i)" id="LeadPass1" placeholder="First & middle name" name="passengerdetails[@i].First" style='text-transform:uppercase' required />
 
                     </div>
                     <p id="error-Fname" class="error-message  error-CFname" style="display: none;"></p>
@@ -144,7 +144,7 @@
                 <div class="col-md-2">
 
                     <div class="form-input">
-                        <input type="text" class="contactLname validate-field" data-validate="last" oninput="validateInputT(event,@i)" maxlength="32" placeholder="Last name" name="passengerdetails[@i].Last" style='text-transform:uppercase' required />
+                        <input type="text" class="contactLname validate-field" data-validate="last" oninput="validateInputT(event,@i)" maxlength="16" placeholder="Last name" name="passengerdetails[@i].Last" style='text-transform:uppercase' required />
 
                     </div>
                     <p id="error-Lname" class="error-message error-CLname" style="display:none"></p>
@@ -445,7 +445,16 @@
                                 firstInvalidElement = element;
                             }
                         }
-                    } else if (field.className === 'contactphone' && element.value.trim().length < 10) {
+                    } 
+                    
+                     else if (element.value.trim().startsWith('0')) {
+                        showError(element, 'Phone number cannot start with 0');
+                        if (!firstInvalidElement) {
+                            firstInvalidElement = element;
+                        }
+                    }
+
+                    else if (field.className === 'contactphone' && element.value.trim().length < 10) {
                         // If the phone number has fewer than 10 digits, show an error message
                         showError(element, 'Phone number must be at least 10 digits');
                         if (!firstInvalidElement) {

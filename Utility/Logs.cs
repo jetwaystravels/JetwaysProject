@@ -39,7 +39,14 @@ namespace Utility
                 {
                     System.IO.Directory.CreateDirectory(_path);
                 }
-                File.WriteAllText(_path + "\\" + name + "-" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".txt", logs);
+                if (AirLine.ToLower() == "gdsoneway")
+                {
+                    File.WriteAllText(_path + "\\" + name + "-" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".xml", logs);
+                }
+                else
+                {
+                    File.WriteAllText(_path + "\\" + name + "-" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".txt", logs);
+                }
             }
             catch (Exception ex)
             {
@@ -65,7 +72,14 @@ namespace Utility
                 {
                     System.IO.Directory.CreateDirectory(_path);
                 }
-                File.WriteAllText(_path + "\\" + name + "-" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".txt", logs);
+                if (AirLine.ToLower() == "gdsoneway")
+                {
+                    File.WriteAllText(_path + "\\" + name + "-" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".xml", logs);
+                }
+                else
+                {
+                    File.WriteAllText(_path + "\\" + name + "-" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".txt", logs);
+                }
             }
             catch (Exception ex)
             {

@@ -110,18 +110,18 @@
                                     </select>
                                     <select class="brd-none month-select" id="month_@inafantIdx" required>
                                         <option value="" disabled selected>Month</option>
-                                        <option value="0">January</option>
-                                        <option value="1">February</option>
-                                        <option value="2">March</option>
-                                        <option value="3">April</option>
-                                        <option value="4">May</option>
-                                        <option value="5">June</option>
-                                        <option value="6">July</option>
-                                        <option value="7">August</option>
-                                        <option value="8">September</option>
-                                        <option value="9">October</option>
-                                        <option value="10">November</option>
-                                        <option value="11">December</option>
+                                        <option value="1">January</option>
+                                        <option value="2">February</option>
+                                        <option value="3">March</option>
+                                        <option value="4">April</option>
+                                        <option value="5">May</option>
+                                        <option value="6">June</option>
+                                        <option value="7">July</option>
+                                        <option value="8">August</option>
+                                        <option value="9">September</option>
+                                        <option value="10">October</option>
+                                        <option value="11">November</option>
+                                        <option value="12">December</option>
                                     </select>
                                     <select class="brd-none day-select" id="day_@inafantIdx" required>
                                         <option value="" disabled selected>Day</option>
@@ -530,7 +530,18 @@
                                 firstInvalidElement = element;
                             }
                         }
-                    } else if (field.className === 'contactphone' && element.value.trim().length < 10) {
+                    }
+
+                    else if (element.value.trim().startsWith('0')) {
+                        showError(element, 'Phone number cannot start with 0');
+                        if (!firstInvalidElement) {
+                            firstInvalidElement = element;
+                        }
+                    }
+
+                    
+                    
+                    else if (field.className === 'contactphone' && element.value.trim().length < 10) {
                         // If the phone number has fewer than 10 digits, show an error message
                         showError(element, 'Phone number must be at least 10 digits');
                         if (!firstInvalidElement) {
@@ -605,7 +616,7 @@
             function validateInfantDOB(inafantIdx) {
                 var year = document.getElementById("year_" + inafantIdx).value;
                 //var month = document.getElementById("month_" + inafantIdx).value;
-                var month = parseInt(document.getElementById("month_" + inafantIdx).value) + 1;
+                var month = parseInt(document.getElementById("month_" + inafantIdx).value);
                 var day = document.getElementById("day_" + inafantIdx).value;
                 var dob = year + "-" + month + "-" + day;
                 /****************************/

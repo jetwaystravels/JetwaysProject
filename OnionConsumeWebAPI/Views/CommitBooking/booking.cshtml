@@ -674,13 +674,29 @@
                                                 <td>Rs.@Model.AirlinePNR[0].TotalAmountMeal</td>
                                             </tr>
                                         }
-                                        else
+
+                                        if (@Model.AirlinePNR[0].TotalAmountMeal == 0)
                                         {
-                                            <tr>
-                                                <td>Addon Meal Amount:</td>
-                                                <td>Free</td>
-                                            </tr>
+                                            if (@Model.AirlinePNR[0].TotalAmountMeal == 0)
+                                            {
+                                                <tr style="display: none;">
+                                                    <td>Addon Meal Amount:</td>
+                                                    <td>-</td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td>Addon Meal Amount:</td>
+                                                    <td>Free</td>
+                                                </tr>
+                                            }
+
+
                                         }
+
+
+
                                         if (@Model.AirlinePNR[0].TotaAmountBaggage > 0)
                                         {
 
@@ -690,13 +706,29 @@
                                             </tr>
 
                                         }
-                                        else
+
+                                        if (@Model.AirlinePNR[0].TotaAmountBaggage == 0)
                                         {
-                                            <tr>
-                                                <td>Addon Bagg Amount:</td>
-                                                <td>Free</td>
-                                            </tr>
+                                            if (@Model.AirlinePNR[0].TotaAmountBaggage == 0)
+                                            {
+                                                <tr style="display: none;">
+                                                    <td>Addon Bagg Amount:</td>
+                                                    <td>-</td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td>Addon Bagg Amount:</td>
+                                                    <td>Free</td>
+                                                </tr>
+                                            }
+
+
                                         }
+
+
+
                                         if (@Model.AirlinePNR[0].breakdown.passengerTotals.seats.totalSeatAmount > 0)
                                         {
                                             <tr>
@@ -704,12 +736,26 @@
                                                 <td>Rs. @Model.AirlinePNR[0].breakdown.passengerTotals.seats.totalSeatAmount</td>
                                             </tr>
                                         }
-                                        else
+
+
+                                        if (@Model.AirlinePNR[0].breakdown.passengerTotals.seats.totalSeatAmount == 0)
                                         {
-                                            <tr>
-                                                <td>Seat Amount:</td>
-                                                <td>Free</td>
-                                            </tr>
+                                            if (@Model.AirlinePNR[0].breakdown.passengerTotals.seats.totalSeatAmount == 0)
+                                            {
+                                                <tr style="display: none;">
+                                                    <td>Seat Amount:</td>
+                                                    <td>-</td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td>Seat Amount:</td>
+                                                    <td>Free</td>
+                                                </tr>
+                                            }
+
+
                                         }
                                     }
 

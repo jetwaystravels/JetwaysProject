@@ -11,5 +11,6 @@ namespace DomainLayer.ViewModel
     {
 
         public List<ReturnTicketBooking> AirlinePNR { set; get; }
+        public string? ErrorDesc { get; set; }
     }
 }

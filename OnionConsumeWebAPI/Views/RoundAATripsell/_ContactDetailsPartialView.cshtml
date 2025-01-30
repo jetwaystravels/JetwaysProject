@@ -473,7 +473,6 @@
     function validateEmailGST(event) {
 
         var email = event.target.value;
-        //var regex = /^(?!.*\.\.)[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
         var regex = /^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         var errorMessage = document.getElementById('emailErrorMessageGST');
         //var errorDisplay = document.getElementById('error-message7');
@@ -527,8 +526,8 @@
     function validateInputgst(event) {
 
         const input = event.target.value;
-        //const regex = /^[a-zA-Z]*$/;
-        var regex = /^[a-zA-Z\s.,'-]{1,100}$/;
+        //var regex = /^[a-zA-Z\s.,'-]{1,100}$/;
+        var regex = /^(?!\.)(?!.*\.\.\.)[a-zA-Z\s.,'-]{1,100}$/;
         if (!regex.test(input)) {
             document.getElementById('errorMessagegst').innerText = "";
             event.target.value = input.replace(/[^a-zA-Z]/g, '');

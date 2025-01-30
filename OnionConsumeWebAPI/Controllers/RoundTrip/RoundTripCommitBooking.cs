@@ -2191,6 +2191,10 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                 IndigoBookingManager_.AddPaymentToBookingResponse _BookingPaymentResponse = await objcommit.AddpaymenttoBook(token, Totalpayment);
 
                                 #endregion
+                                if (_BookingPaymentResponse.BookingPaymentResponse.ValidationPayment.PaymentValidationErrors[0].ErrorDescription.ToLower().Contains("not enough funds available"))
+                                {
+                                    _AirLinePNRTicket.ErrorDesc = "Not enough funds available.";
+                                }
                                 #region Commit Booking
 
 

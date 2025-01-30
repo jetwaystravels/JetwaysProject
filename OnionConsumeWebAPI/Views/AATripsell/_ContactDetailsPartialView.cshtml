@@ -8,7 +8,7 @@
                     <option value="MRS">Mrs.</option>
                     <option value="MS">Ms.</option>
                 </select>
-                <input type="text" name="first" maxlength="32" oninput="validateInput(event)" id="first" class="firstNClass" style='text-transform:uppercase' placeholder="First Name">
+                <input type="text" name="first" maxlength="16" oninput="validateInput(event)" id="first" class="firstNClass" style='text-transform:uppercase' placeholder="First Name">
             </div>
             <p id="error-message1" class="error-message" style="display:none">Enter first name</p>
             <p id="errorMessage" style="color: red;font-size:13px;"></p>
@@ -16,7 +16,7 @@
 
         <div class="col-md-3">
             <div class="form-input ">
-                <input type="text" name="last" maxlength="32" id="last" oninput="validateInput2(event)" style='text-transform:uppercase' class="lastNClass" placeholder="Last Name">
+                <input type="text" name="last" maxlength="16" id="last" oninput="validateInput2(event)" style='text-transform:uppercase' class="lastNClass" placeholder="Last Name">
             </div>
             <p id="error-message2" class="error-message" style="display:none">Enter last name</p>
             <p id="errorMessage2" style="color: red;font-size:13px;"></p>
@@ -538,7 +538,8 @@
     function validateInputgst(event) {
 
         const input = event.target.value;
-        var regex = /^[a-zA-Z\s.,'-]{1,100}$/;
+        //var regex = /^[a-zA-Z\s.,'-]{1,100}$/;
+        var regex = /^(?!\.)(?!.*\.\.\.)[a-zA-Z\s.,'-]{1,100}$/;
         //var regex = /^[a-zA-Z]{1,100}$/;
         if (!regex.test(input)) {
             document.getElementById('errorMessagegst').innerText = "";
