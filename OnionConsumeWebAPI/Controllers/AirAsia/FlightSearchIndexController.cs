@@ -1448,6 +1448,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                     }
                                 }
                                 #endregion
+                                fareIndividualsList.RemoveAll(x => !x.fareKey.Contains("^"));
                             }
                             fareIndividualsconnectedList = fareIndividualsList;
                             var duplicates = fareIndividualsconnectedList.GroupBy(x => x.procuctclass).Where(g => g.Count() > 1).SelectMany(g => g).ToHashSet();
@@ -1780,6 +1781,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                                 continue;
                                         }
                                     }
+                                    fareIndividualsList.RemoveAll(x => !x.fareKey.Contains("^"));
                                 }
                                 #endregion
                                 fareIndividualsconnectedList = fareIndividualsList;
@@ -2777,6 +2779,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                             }
                                         }
                                         #endregion
+                                        fareIndividualsList.RemoveAll(x => !x.fareKey.Contains("^"));
                                     }
                                     fareIndividualsconnectedList = fareIndividualsList;
                                     int StopCounter = 0;
@@ -3017,6 +3020,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                     }
                                 }
                                 #endregion
+                                fareIndividualsList.RemoveAll(x => !x.fareKey.Contains("^"));
                             }
                             fareIndividualsconnectedList = fareIndividualsList;
                             //fareIndividualsconnectedList = fareIndividualsconnectedList.Where(d => d.fareKey.Contains('^')).ToList();
@@ -3374,6 +3378,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                                     continue;
                                             }
                                         }
+                                        fareIndividualsList.RemoveAll(x => !x.fareKey.Contains("^"));
                                     }
 
                                     fareIndividualsconnectedList = fareIndividualsList;

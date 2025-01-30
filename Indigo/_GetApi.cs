@@ -66,7 +66,7 @@ namespace Indigo
             {
                 //return Ok(session);
                 
-                logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_SellRQ) + "\n\n Response: " + ex.ToString(), "sell", "IndigoOneWay", "oneway");
+                logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_SellRQ) + "\n\n Response: " + ex.ToString(), "sellException", "IndigoOneWay", "oneway");
             }
             return _SellResponse;
         }

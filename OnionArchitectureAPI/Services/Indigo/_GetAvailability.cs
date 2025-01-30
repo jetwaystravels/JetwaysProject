@@ -80,7 +80,7 @@ namespace OnionArchitectureAPI.Services.Indigo
             else //Retails
             {
                 //string[] productclassesreturn = { "R", "J", "A", "O", "S", "N", "B", "T" };
-                string[] productclassesreturn = { "R", "J", "O", "S", "N", "B", "T" };
+                string[] productclassesreturn = { "R", "J", "O", "S", "N", "B", "T", "A" };
                 _getAvailabilityReturnRQ.TripAvailabilityRequest.AvailabilityRequests[0].ProductClasses = productclassesreturn;
             }
             _getAvailabilityReturnRQ.TripAvailabilityRequest.AvailabilityRequests[0].MaximumConnectingFlights = 20;

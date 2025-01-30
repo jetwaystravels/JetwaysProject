@@ -1502,6 +1502,7 @@
                                             <h1>Oops!</h1>
                                             <p>Due to a technical issue, your onward journey ticket could not be generated.</p>
                                             <a class="button btncstm" asp-controller="FlightSearchIndex" asp-action="Index">
+                                                <p style="color:red;">@Model.ErrorDesc</p>
                                                 Go to Home Page
                                             </a>
                                         </div>
@@ -1517,6 +1518,7 @@
                                         <div class="error-message">
                                             <h1>Oops!</h1>
                                             <p>Due to a technical issue, your return journey ticket could not be generated.</p>
+                                            <p style="color:red;">@Model.ErrorDesc</p>
                                             <a class="button btncstm" asp-controller="FlightSearchIndex" asp-action="Index">
                                                 Go to Home Page
                                             </a>

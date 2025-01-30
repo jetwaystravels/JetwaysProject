@@ -1252,6 +1252,7 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                                                     continue;
                                             }
                                         }
+                                        fareIndividualsList.RemoveAll(x => !x.fareKey.Contains("^"));
                                         #endregion
                                     }
                                     fareIndividualsconnectedList = fareIndividualsList;
@@ -1540,8 +1541,9 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                                             else
                                                 continue;
                                         }
-                                    }
-                                    #endregion
+                                        }
+                                        fareIndividualsList.RemoveAll(x => !x.fareKey.Contains("^"));
+                                        #endregion
                                 }
                                 fareIndividualsconnectedList = fareIndividualsList;
                                 //fareIndividualsconnectedList = fareIndividualsconnectedList.Where(d => d.fareKey.Contains('^')).ToList();
@@ -1906,6 +1908,7 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                                                 continue;
                                         }
                                     }
+                                    fareIndividualsList.RemoveAll(x => !x.fareKey.Contains("^"));
                                 }
                                 fareIndividualsconnectedList = fareIndividualsList;
                                 fareTotalsum = 0;
@@ -1985,7 +1988,7 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
 
                                     //}
                                     //if (matchingItineraries1.Count >= 1)
-                                        //continue;
+                                    //continue;
                                 }
                                 catch (Exception ex)
                                 {
@@ -2206,6 +2209,7 @@ namespace OnionConsumeWebAPI.Controllers.SameAirlineRoundTrip
                                                 continue;
                                         }
                                     }
+                                    fareIndividualsList.RemoveAll(x => !x.fareKey.Contains("^"));
                                 }
                                 //#endregion
                                 fareIndividualsconnectedList = fareIndividualsList;
