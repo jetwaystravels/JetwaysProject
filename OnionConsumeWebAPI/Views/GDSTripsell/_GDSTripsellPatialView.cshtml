@@ -496,7 +496,8 @@
                         {
                             @for (int f = 0; f < @item.segments[i].fares.Count; f++)
                             {
-
+                                string[] parts = item.segments[i].fares[f].productClass.Split('_');
+                                item.segments[i].fares[f].productClass = parts[0].Trim();
                                 <div class="col-auto text-right md:text-left">
 
                                     @{
@@ -667,6 +668,61 @@
                                             </span>
 
                                         }
+                                        else if (item.segments[i].fares[f].productClass.Equals("Eco Flex"))
+                                        {
+
+                                            <span class="tooltipF">
+                                                Fare Type:  @Faretype<b>Premium Comfort Plus</b>
+                                                <span class="tooltiptext">
+                                                    <ul>
+                                                        <li>1: Cabin Bag: 7 k.g</li>
+                                                        <li>2: Check-In: 25 k.g</li>
+                                                        <li>3: Cancellation: 1000 :-  (3 days upto 2 hrs prior from departure)</li>
+                                                        <li>4: Date Change: FREE</li>
+                                                        <li>5: Seat : -</li>
+                                                        <li>6: Meal : -</li>
+                                                    </ul>
+                                                </span>
+                                            </span>
+
+                                        }
+                                        else if (item.segments[i].fares[f].productClass.Equals("Eco Value"))
+                                        {
+
+                                            <span class="tooltipF">
+                                                Fare Type:  @Faretype<b>Premium Comfort Plus</b>
+                                                <span class="tooltiptext">
+                                                    <ul>
+                                                        <li>1: Cabin Bag: 7 k.g</li>
+                                                        <li>2: Check-In: 15 k.g</li>
+                                                        <li>3: Cancellation: 4000 :-  (3 days upto 2 hrs prior from departure)</li>
+                                                        <li>4: Date Change: 3000 :-  (3 days upto 2 hrs prior from departure)</li>
+                                                        <li>5: Seat : -</li>
+                                                        <li>6: Meal : -</li>
+                                                    </ul>
+                                                </span>
+                                            </span>
+
+                                        }
+                                        else if (item.segments[i].fares[f].productClass.Equals("Eco Classic"))
+                                        {
+
+                                            <span class="tooltipF">
+                                                Fare Type:  @Faretype<b>Premium Comfort Plus</b>
+                                                <span class="tooltiptext">
+                                                    <ul>
+                                                        <li>1: Cabin Bag: 7 k.g</li>
+                                                        <li>2: Check-In: 15 k.g</li>
+                                                        <li>3: Cancellation: 3500 :-  (3 days upto 2 hrs prior from departure)</li>
+                                                        <li>4: Date Change: 1000 :-  (3 days upto 2 hrs prior from departure)</li>
+                                                        <li>5: Seat : -</li>
+                                                        <li>6: Meal : -</li>
+                                                    </ul>
+                                                </span>
+                                            </span>
+
+                                        }
+
 
                                         <div class="text-13 mt-1">
                                             <button id="openModal_0" style="color:#366480;">View Fare Rules</button>
@@ -871,7 +927,45 @@
                                             </tr>
                                         </table>
                                     }
-
+                                    else if (item.segments[i].fares[f].productClass.Equals("Eco Flex"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>(3 days upto 2 hrs prior from departure)</td>
+                                                <td>Rs. 1000 </td>
+                                            </tr>
+                                        </table>
+                                    }
+                                    else if (item.segments[i].fares[f].productClass.Equals("Eco Value"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td>Rs. 4000  </td>
+                                            </tr>
+                                        </table>
+                                    }
+                                    else if (item.segments[i].fares[f].productClass.Equals("Eco Classic"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>(3 days upto 2 hrs prior from departure)</td>
+                                                <td>Rs. 3500 </td>
+                                            </tr>
+                                        </table>
+                                    }
 
 
                                 }
@@ -1035,6 +1129,50 @@
                                             </tr>
                                         </table>
                                     }
+
+                                    else if (item.segments[i].fares[f].productClass.Equals("Eco Flex"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>-</td>
+                                                <td>FREE</td>
+                                            </tr>
+                                        </table>
+                                    }
+                                    else if (item.segments[i].fares[f].productClass.Equals("Eco Value"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>(3 days upto 2 hrs prior from departure)</td>
+                                                <td>Rs. 3000 </td>
+                                            </tr>
+                                        </table>
+                                    }
+                                    else if (item.segments[i].fares[f].productClass.Equals("Eco Classic"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>(3 days upto 2 hrs prior from departure)</td>
+                                                <td>Rs. 1000</td>
+                                            </tr>
+                                        </table>
+                                    }
+
+
+
+
 
                                 }
                             </div>

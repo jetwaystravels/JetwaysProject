@@ -870,7 +870,7 @@
                                     <td>
 
                                         <div>
-                                            --
+                                            7 kg
                                         </div>
                                     </td>
                                     <td>
@@ -881,13 +881,13 @@
                                     </td>
                                     <td>
                                         <div>
-                                            --
+                                            4000 (Upto 2 hrs before departure)
                                         </div>
 
                                     </td>
                                     <td>
                                         <div>
-                                            --
+                                            3000 (Upto 2 hrs before departure)
                                         </div>
                                     </td>
 
@@ -898,27 +898,26 @@
                                     <td><strong>7 Kg</strong></td>
                                     <td>
                                         <strong>
-                                            25 k.g  (1 piece)
+                                            25 k.g 
                                         </strong>
                                     </td>
                                     <td>
 
-                                        <div>3500 (upto 2 hrs prior from departure)</div>
+                                        <div>4000 (Upto 2 hrs before departure)</div>
                                     </td>
                                     <td>
 
-                                        <div>3000 (upto 2 hrs prior from departure)</div>
+                                        <div>3000 (Upto 2 hrs before departure)</div>
                                     </td>
                                     <td>
                                         <div>
-
-                                            (Free seats)
+                                            Free
                                         </div>
 
                                     </td>
                                     <td>
                                         <div>
-                                            (Free meal) per person
+                                            Free
                                         </div>
                                     </td>
 
@@ -1979,16 +1978,25 @@
                                 else
                                 {
                                     <td>Rs. 4000</td>
-                                    <td>Rs. 3000</td>
+                                    <td>3 days upto 2 hrs prior from departure</td>
                                     <td>As per Airline Fare rule</td>
                                 }
 
                             }
-                            else
+                            else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("IX"))
                             {
-                                <td>3500 Rs.</td>
-                                <td>upto 2 hrs prior from departure</td>
-                                <td>As per Airline Fare rule</td>
+                                if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("EC"))
+                                {
+                                    <td>Rs. 3500 </td>
+                                    <td>Upto 72 hrs before departure</td>
+                                    <td>As per Airline Fare rule</td>
+                                }
+                                 else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("VV"))
+                                {
+                                    <td>Rs. 4000</td>
+                                    <td>Upto 2 hrs before departure</td>
+                                    <td>As per Airline Fare rule</td>
+                                }
                             }
 
 
