@@ -108,14 +108,11 @@
                                     </select>
                                 </div> *@
                                 <div class="dob-picker">
-                                    <select class="brd-none year-select" id="year_@inafantIdx" required>
+                                    <select class="brd-none year-select" id="year_@inafantIdx" name="passengerdetails[@i].year" required>
                                         <option value="" disabled selected>Year</option>
-                                        <option value="2025">2025</option>
-                                        <option value="2024">2024</option>
-                                        <option value="2023">2023</option>
-                                        <option value="2022">2022</option>
+                                      
                                     </select>
-                                    <select class="brd-none month-select" id="month_@inafantIdx" required>
+                                    <select class="brd-none month-select" id="month_@inafantIdx" name="passengerdetails[@i].month" required>
                                         <option value="" disabled selected>Month</option>
                                         <option value="0">January</option>
                                         <option value="1">February</option>
@@ -130,7 +127,7 @@
                                         <option value="10">November</option>
                                         <option value="11">December</option>
                                     </select>
-                                    <select class="brd-none day-select" id="day_@inafantIdx" required>
+                                    <select class="brd-none day-select" id="day_@inafantIdx" name="passengerdetails[@i].day" required>
                                         <option value="" disabled selected>Day</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
