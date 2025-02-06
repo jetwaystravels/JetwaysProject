@@ -117,9 +117,11 @@
                                         @{
 
                                             string seatMapName = @Model.Seatmaplist.datalist[i].seatMap.name;
-                                            int hyphenIndex = @Model.Seatmaplist.datalist[i].seatMap.name.LastIndexOf('-');
-                                            // Extract the substring before the hyphen
-                                            string aircraftModel = hyphenIndex == -1 ? seatMapName : seatMapName.Substring(0, hyphenIndex);
+
+                                            string aircraftModel = seatMapName.Split('_')[0];
+                                            // int hyphenIndex = @Model.Seatmaplist.datalist[i].seatMap.name.LastIndexOf('-');
+                                            // // Extract the substring before the hyphen
+                                            // string aircraftModel = hyphenIndex == -1 ? seatMapName : seatMapName.Substring(0, hyphenIndex);
 
                                        // var aircraftname= @Model.Seatmaplist.datalist[i].seatMap.name;
 
