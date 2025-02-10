@@ -595,6 +595,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
 
                 List<Trip> AkasaTripslist = new List<Trip>();
                 Trip AkasaTripobj = new Trip();
+                AkasaTripobj.destination = AKpasseengerKeyList.journeys[0].designator.destination;
                 AkasaTripobj.origin = AKpasseengerKeyList.journeys[0].designator.origin;
                 List<TripIdentifier> AkasaTripIdentifierlist = new List<TripIdentifier>();
                 TripIdentifier AkasaTripIdentifierobj = new TripIdentifier();

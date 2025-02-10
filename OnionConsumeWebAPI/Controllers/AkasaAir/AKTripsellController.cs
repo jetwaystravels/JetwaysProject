@@ -617,6 +617,55 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
 
 
                 }
+                #region Baggage
+                //var baggagecount = BaggageSSrkey.Count;
+                //int baggageSsr = BaggageDetails.journeySsrsBaggage.Count;
+                int baggageSsr= BaggageSSrkey.Count;
+                if (baggageSsr > 0)
+                {
+                    int baggageid = 0;
+                    for (int k = 0; k < baggageSsr; k++)
+                    {
+                        for (int i = 0; i < passengerscount; i++)
+                        {
+                            if (baggageid < BaggageSSrkey.Count) // Check if mealid is within bounds
+                            {
+
+
+                                string BaggageKey = string.Empty;
+                                BaggageKey = BaggageSSrkey[baggageid];
+                                string[] BaggageSSrKeyData = BaggageKey.Split('_');
+                                string pas_BaggageSsrKey = BaggageSSrKeyData[0];
+
+                                SellSSRModel _sellSSRModel = new SellSSRModel();
+                                _sellSSRModel.count = 1;
+                                _sellSSRModel.note = "PYOG";
+                               // _sellSSRModel.forceWaveOnSell = false;
+                                _sellSSRModel.currencyCode = "INR";
+                                var jsonSellSSR = JsonConvert.SerializeObject(_sellSSRModel, Formatting.Indented);
+                                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                                HttpResponseMessage responseSellSSR = await client.PostAsJsonAsync(AppUrlConstant.AkasaAirMealBaggage + pas_BaggageSsrKey, _sellSSRModel);
+                                if (responseSellSSR.IsSuccessStatusCode)
+                                {
+                                    var _responseresponseSellSSR = responseSellSSR.Content.ReadAsStringAsync().Result;
+                                    //logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + pas_BaggageSsrKey) + "Request: " + jsonSellSSR + "\n\n Response: " + JsonConvert.SerializeObject(_responseresponseSellSSR), "SellSSR Baggage" + k, "AirAsiaOneWay", "oneway");
+                                    logs.WriteLogs(jsonSellSSR, "14-SellSSRBaggageReq" + k, "AirAsiaOneWay", "oneway");
+                                    logs.WriteLogs(_responseresponseSellSSR, "14-SellSSRBaggageRes" + k, "AirAsiaOneWay", "oneway");
+                                    // var JsonObjresponseresponseSellSSR = JsonConvert.DeserializeObject<dynamic>(_responseresponseSellSSR);
+                                }
+                                var errorResult = responseSellSSR.Content.ReadAsStringAsync().Result;
+                                baggageid++;
+                            }
+                            else
+                            {
+                                break;
+                            }
+
+                        }
+                    }
+                }
+                #endregion
             }
             return RedirectToAction("AkasaAirPaymentView", "AkasaAirPayment");
 
