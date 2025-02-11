@@ -46,6 +46,7 @@
             new { MealCode = "VMFF", MealImage = "Vegetable Manchurian with Fried Rice " },
             new { MealCode = "VMGB", MealImage = "Mushroom Ghee Roast with Sriracha Fried Rice" },
             new { MealCode = "VKDB", MealImage = "Kaju Katli white chocolate Mousse" },
+            new { MealCode = "VIGB", MealImage = "Dry Fruits Gujiya" },
 
             new { MealCode = "MMFD", MealImage = "MOJO BAR ORANGE DARK CHOCOLATE + VITAMIN C" },
             new { MealCode = "LSCB", MealImage = "Lemon Samiya ( Vakulaa)" },
@@ -53,6 +54,16 @@
             new { MealCode = "CPMD", MealImage = "CHOWPATTY PHUDINA BHEL" },
             new { MealCode = "CCCB", MealImage = "Chicken Curry Rice" },
             new { MealCode = "LTML", MealImage = "Late Meal ₹0" },
+            new { MealCode = "VRPB", MealImage = "Veg Red Sause Pasta" },
+            new { MealCode = "VFSB", MealImage = "Feta Vegetable Salad" },
+            new { MealCode = "TMAI", MealImage = "Masala Chai" },
+            new { MealCode = "NKPB", MealImage = "Non-Veg Kabab" },
+            new { MealCode = "NCOB", MealImage = "Cheddar & Chives Omelette" },
+            new { MealCode = "NCCB", MealImage = "Chicken Ghee Roast with Siracha Fried Rice" },
+            new { MealCode = "CFMR", MealImage = "BLACK COFFEE" },
+           
+
+
             //wheelchair
              new { MealCode = "WCHS", MealImage = "Wheelchair Unable to ascend and descend step" },
              new { MealCode = "WCHR", MealImage = "Wheelchair Unable to walk long distance"},
