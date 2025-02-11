@@ -831,8 +831,10 @@ $("#leftConnectbtn_2").off("click").on("click", function () {
                     }
                 }
                 passengerdata = passengerdataValue;
-                for (int pas = 0; pas < passengerdata; pas++)
+                for (int pas = 0; pas < Model.passengerNamedetails.Count; pas++)
                 {
+                    //if (Model.passengerNamedetails[pas].passengertypecode == "INF" || Model.passengerNamedetails[pas].passengertypecode == "INFT")
+                        //continue;
                     <div class="">
                         <div class="servc-content popinput1">
                             <div>
@@ -869,8 +871,10 @@ $("#leftConnectbtn_2").off("click").on("click", function () {
                     }
                 }
                 passengerdata1 = passengerdataValue1;
-                for (int pas = 0; pas < passengerdata1; pas++)
+                for (int pas = 0; pas < Model.passengerNamedetails.Count; pas++)
                 {
+                    //if (Model.passengerNamedetails[pas].passengertypecode == "INF" || Model.passengerNamedetails[pas].passengertypecode == "INFT")
+                       // continue;
                     <div class="py-3">
                         <div class="servc-content popinput2">
                             <div>
@@ -906,8 +910,10 @@ $("#leftConnectbtn_2").off("click").on("click", function () {
                     }
                 }
                 passengerdata = passengerdataValue;
-                for (int pasRT = 0; pasRT < passengerdata; pasRT++)
+                for (int pasRT = 0; pasRT < Model.passengerNamedetails.Count; pasRT++)
                 {
+                    //if (Model.passengerNamedetails[pasRT].passengertypecode == "INF" || Model.passengerNamedetails[pasRT].passengertypecode == "INFT")
+                        //continue;
                     <div class="">
                         <div class="servc-content popinput1">
                             <div>
@@ -944,8 +950,10 @@ $("#leftConnectbtn_2").off("click").on("click", function () {
                     }
                 }
                 passengerdata1 = passengerdataValue1;
-                for (int pas = 0; pas < passengerdata1; pas++)
+                for (int pas = 0; pas < Model.passengerNamedetails.Count; pas++)
                 {
+                    //if (Model.passengerNamedetails[pas].passengertypecode == "INF" || Model.passengerNamedetails[pas].passengertypecode == "INFT")
+                        //continue;
                     <div class="py-3">
                         <div class="servc-content popinput2">
                             <div>
@@ -994,9 +1002,9 @@ $("#leftConnectbtn_2").off("click").on("click", function () {
                                 if (Model.SeatmaplistRT[0].datalist[k].seatMap.decksindigo[k1].units[j].assignable == true)
                                 {
 
-                                    if (!ht0.Contains(Model.SeatmaplistRT[0].datalist[k].seatMap.decksindigo[k1].units[j].designator))
+                                    if (!ht0.Contains(Model.SeatmaplistRT[0].datalist[k].seatMap.decksindigo[k1].units[j].designator.Replace("-", "")))
                                     {
-                                        ht0.Add(Model.SeatmaplistRT[0].datalist[k].seatMap.decksindigo[k1].units[j].designator, Math.Round(Model.SeatmaplistRT[0].datalist[k].seatMap.decksindigo[k1].units[j].servicechargefeeAmount, 0) + "_@" + Model.SeatmaplistRT[0].datalist[k].seatMap.decksindigo[k1].units[j].unitKey + "_@" + Model.SeatmaplistRT[0].datalist[k].seatMap.decksindigo[k1].units[j].Airline + "_@" + Model.SeatmaplistRT[0].datalist[k].seatMap.decksindigo[k1].units[j].availability);
+                                        ht0.Add(Model.SeatmaplistRT[0].datalist[k].seatMap.decksindigo[k1].units[j].designator.Replace("-", ""), Math.Round(Model.SeatmaplistRT[0].datalist[k].seatMap.decksindigo[k1].units[j].servicechargefeeAmount, 0) + "_@" + Model.SeatmaplistRT[0].datalist[k].seatMap.decksindigo[k1].units[j].unitKey + "_@" + Model.SeatmaplistRT[0].datalist[k].seatMap.decksindigo[k1].units[j].Airline + "_@" + Model.SeatmaplistRT[0].datalist[k].seatMap.decksindigo[k1].units[j].availability);
                                     }
                                 }
 
@@ -1005,9 +1013,9 @@ $("#leftConnectbtn_2").off("click").on("click", function () {
                             {
                                 if (Model.SeatmaplistRT[0].datalist[k].seatMap.decksindigo[k1].units[j].assignable == true)
                                 {
-                                    if (!ht1.Contains(Model.SeatmaplistRT[0].datalist[k].seatMap.decksindigo[k1].units[j].designator))
+                                    if (!ht1.Contains(Model.SeatmaplistRT[0].datalist[k].seatMap.decksindigo[k1].units[j].designator.Replace("-", "")))
                                     {
-                                        ht1.Add(Model.SeatmaplistRT[0].datalist[k].seatMap.decksindigo[k1].units[j].designator, Math.Round(Model.SeatmaplistRT[0].datalist[k].seatMap.decksindigo[k1].units[j].servicechargefeeAmount, 0) + "_@" + Model.SeatmaplistRT[0].datalist[k].seatMap.decksindigo[k1].units[j].unitKey + "_@" + Model.SeatmaplistRT[0].datalist[k].seatMap.decksindigo[k1].units[j].Airline + "_@" + Model.SeatmaplistRT[0].datalist[k].seatMap.decksindigo[k1].units[j].availability);
+                                        ht1.Add(Model.SeatmaplistRT[0].datalist[k].seatMap.decksindigo[k1].units[j].designator.Replace("-", ""), Math.Round(Model.SeatmaplistRT[0].datalist[k].seatMap.decksindigo[k1].units[j].servicechargefeeAmount, 0) + "_@" + Model.SeatmaplistRT[0].datalist[k].seatMap.decksindigo[k1].units[j].unitKey + "_@" + Model.SeatmaplistRT[0].datalist[k].seatMap.decksindigo[k1].units[j].Airline + "_@" + Model.SeatmaplistRT[0].datalist[k].seatMap.decksindigo[k1].units[j].availability);
                                     }
                                 }
 
@@ -1078,10 +1086,32 @@ $("#leftConnectbtn_2").off("click").on("click", function () {
                                                                 seatavailability = arrayofseat[3].Trim();
                                                             }
 
-                                                            if (seatavailability != "5")
+                                                            if (seatavailability == "100")
                                                             {
-                                                                <li class="seat-li chkbox">
+                                                                <li class="seat-li chkbox tooltip">
                                                                     <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
+                                                                    <span class="tooltiptext">Paid Seat: Available After Reservation.</span>
+                                                                </li>
+                                                            }
+                                                            else if (seatavailability == "10")
+                                                            {
+                                                                <li class="seat-li chkbox tooltip">
+                                                                    <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
+                                                                    <span class="tooltiptext">Sorry, seat is Blocked.</span>
+                                                                </li>
+                                                            }
+                                                            else if (seatavailability == "5")
+                                                            {
+                                                                <li class="seat-li chkbox tooltip">
+                                                                    <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
+                                                                    <span class="tooltiptext">Sorry, seat is occupied.</span>
+                                                                </li>
+                                                            }
+                                                            else if (seatavailability == "11")
+                                                            {
+                                                                <li class="seat-li chkbox tooltip" style="background: #fff;border: none;">
+                                                                    <input type="checkbox" name="unitKey" value="" class="chkbox d-none" disabled />
+                                                                    <span class="tooltiptext">No Seat Available.</span>
                                                                 </li>
                                                             }
                                                             else
@@ -1186,10 +1216,32 @@ $("#leftConnectbtn_2").off("click").on("click", function () {
                                                                 feeamountF1 = arrayofseat[0].Trim();
                                                                 seatavailability = arrayofseat[3].Trim();
                                                             }
-                                                            if (seatavailability != "5")
+                                                            if (seatavailability == "100")
                                                             {
-                                                                <li class="seat-li chkbox">
+                                                                <li class="seat-li chkbox tooltip">
                                                                     <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
+                                                                    <span class="tooltiptext">Paid Seat: Available After Reservation.</span>
+                                                                </li>
+                                                            }
+                                                            else if (seatavailability == "10")
+                                                            {
+                                                                <li class="seat-li chkbox tooltip">
+                                                                    <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
+                                                                    <span class="tooltiptext">Sorry, seat is Blocked.</span>
+                                                                </li>
+                                                            }
+                                                            else if (seatavailability == "5")
+                                                            {
+                                                                <li class="seat-li chkbox tooltip">
+                                                                    <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
+                                                                    <span class="tooltiptext">Sorry, seat is occupied.</span>
+                                                                </li>
+                                                            }
+                                                            else if (seatavailability == "11")
+                                                            {
+                                                                <li class="seat-li chkbox tooltip" style="background: #fff;border: none;">
+                                                                    <input type="checkbox" name="unitKey" value="" class="chkbox d-none" disabled />
+                                                                    <span class="tooltiptext">No Seat Available.</span>
                                                                 </li>
                                                             }
                                                             else
@@ -1266,9 +1318,9 @@ $("#leftConnectbtn_2").off("click").on("click", function () {
                                 {
                                     if (Model.SeatmaplistRT[1].datalist[k].seatMap.decksindigo[k1].units[j].assignable == true)
                                     {
-                                        if (!htRT0.Contains(Model.SeatmaplistRT[1].datalist[k].seatMap.decksindigo[k1].units[j].designator))
+                                        if (!htRT0.Contains(Model.SeatmaplistRT[1].datalist[k].seatMap.decksindigo[k1].units[j].designator.Replace("-", "")))
                                         {
-                                            htRT0.Add(Model.SeatmaplistRT[1].datalist[k].seatMap.decksindigo[k1].units[j].designator, Math.Round(Model.SeatmaplistRT[1].datalist[k].seatMap.decksindigo[k1].units[j].servicechargefeeAmount, 0) + "_@" + Model.SeatmaplistRT[1].datalist[k].seatMap.decksindigo[k1].units[j].unitKey + "_@" + Model.SeatmaplistRT[1].datalist[k].seatMap.decksindigo[k1].units[j].Airline + "_@" + Model.SeatmaplistRT[1].datalist[k].seatMap.decksindigo[k1].units[j].availability);
+                                            htRT0.Add(Model.SeatmaplistRT[1].datalist[k].seatMap.decksindigo[k1].units[j].designator.Replace("-", ""), Math.Round(Model.SeatmaplistRT[1].datalist[k].seatMap.decksindigo[k1].units[j].servicechargefeeAmount, 0) + "_@" + Model.SeatmaplistRT[1].datalist[k].seatMap.decksindigo[k1].units[j].unitKey + "_@" + Model.SeatmaplistRT[1].datalist[k].seatMap.decksindigo[k1].units[j].Airline + "_@" + Model.SeatmaplistRT[1].datalist[k].seatMap.decksindigo[k1].units[j].availability);
                                         }
                                     }
 
@@ -1277,9 +1329,9 @@ $("#leftConnectbtn_2").off("click").on("click", function () {
                                 {
                                     if (Model.SeatmaplistRT[1].datalist[k].seatMap.decksindigo[k1].units[j].assignable == true)
                                     {
-                                        if (!htRT1.Contains(Model.SeatmaplistRT[1].datalist[k].seatMap.decksindigo[k1].units[j].designator))
+                                        if (!htRT1.Contains(Model.SeatmaplistRT[1].datalist[k].seatMap.decksindigo[k1].units[j].designator.Replace("-", "")))
                                         {
-                                            htRT1.Add(Model.SeatmaplistRT[1].datalist[k].seatMap.decksindigo[k1].units[j].designator, Math.Round(Model.SeatmaplistRT[1].datalist[k].seatMap.decksindigo[k1].units[j].servicechargefeeAmount, 0) + "_@" + Model.SeatmaplistRT[1].datalist[k].seatMap.decksindigo[k1].units[j].unitKey + "_@" + Model.SeatmaplistRT[1].datalist[k].seatMap.decksindigo[k1].units[j].Airline + "_@" + Model.SeatmaplistRT[1].datalist[k].seatMap.decksindigo[k1].units[j].availability);
+                                            htRT1.Add(Model.SeatmaplistRT[1].datalist[k].seatMap.decksindigo[k1].units[j].designator.Replace("-", ""), Math.Round(Model.SeatmaplistRT[1].datalist[k].seatMap.decksindigo[k1].units[j].servicechargefeeAmount, 0) + "_@" + Model.SeatmaplistRT[1].datalist[k].seatMap.decksindigo[k1].units[j].unitKey + "_@" + Model.SeatmaplistRT[1].datalist[k].seatMap.decksindigo[k1].units[j].Airline + "_@" + Model.SeatmaplistRT[1].datalist[k].seatMap.decksindigo[k1].units[j].availability);
                                         }
                                     }
 
@@ -1348,10 +1400,32 @@ $("#leftConnectbtn_2").off("click").on("click", function () {
                                                                     seatavailability = arrayofseat[3].Trim();
                                                                 }
 
-                                                                if (seatavailability != "5")
+                                                                if (seatavailability == "100")
                                                                 {
-                                                                    <li class="seat-li chkbox">
+                                                                    <li class="seat-li chkbox tooltip">
                                                                         <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
+                                                                        <span class="tooltiptext">Paid Seat: Available After Reservation.</span>
+                                                                    </li>
+                                                                }
+                                                                else if (seatavailability == "10")
+                                                                {
+                                                                    <li class="seat-li chkbox tooltip">
+                                                                        <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
+                                                                        <span class="tooltiptext">Sorry, seat is Blocked.</span>
+                                                                    </li>
+                                                                }
+                                                                else if (seatavailability == "5")
+                                                                {
+                                                                    <li class="seat-li chkbox tooltip">
+                                                                        <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
+                                                                        <span class="tooltiptext">Sorry, seat is occupied.</span>
+                                                                    </li>
+                                                                }
+                                                                else if (seatavailability == "11")
+                                                                {
+                                                                    <li class="seat-li chkbox tooltip" style="background: #fff;border: none;">
+                                                                        <input type="checkbox" name="unitKey" value="" class="chkbox d-none" disabled />
+                                                                        <span class="tooltiptext">No Seat Available.</span>
                                                                     </li>
                                                                 }
                                                                 else
@@ -1457,10 +1531,32 @@ $("#leftConnectbtn_2").off("click").on("click", function () {
                                                                     feeamountF1 = arrayofseat[0].Trim();
                                                                     seatavailability = arrayofseat[3].Trim();
                                                                 }
-                                                                if (seatavailability != "5")
+                                                                if (seatavailability == "100")
                                                                 {
-                                                                    <li class="seat-li chkbox">
+                                                                    <li class="seat-li chkbox tooltip">
                                                                         <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
+                                                                        <span class="tooltiptext">Paid Seat: Available After Reservation.</span>
+                                                                    </li>
+                                                                }
+                                                                else if (seatavailability == "10")
+                                                                {
+                                                                    <li class="seat-li chkbox tooltip">
+                                                                        <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
+                                                                        <span class="tooltiptext">Sorry, seat is Blocked.</span>
+                                                                    </li>
+                                                                }
+                                                                else if (seatavailability == "5")
+                                                                {
+                                                                    <li class="seat-li chkbox tooltip">
+                                                                        <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
+                                                                        <span class="tooltiptext">Sorry, seat is occupied.</span>
+                                                                    </li>
+                                                                }
+                                                                else if (seatavailability == "11")
+                                                                {
+                                                                    <li class="seat-li chkbox tooltip" style="background: #fff;border: none;">
+                                                                        <input type="checkbox" name="unitKey" value="" class="chkbox d-none" disabled />
+                                                                        <span class="tooltiptext">No Seat Available.</span>
                                                                     </li>
                                                                 }
                                                                 else

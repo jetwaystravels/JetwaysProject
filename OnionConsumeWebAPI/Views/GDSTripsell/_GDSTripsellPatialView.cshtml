@@ -723,6 +723,25 @@
 
                                         }
 
+                                        else if (item.segments[i].fares[f].productClass.Equals("Premium Classic"))
+                                        {
+
+                                            <span class="tooltipF">
+                                                Fare Type:  @Faretype<b>Premium Classic</b>
+                                                <span class="tooltiptext">
+                                                    <ul>
+                                                        <li>1: Cabin Bag: 7 k.g</li>
+                                                        <li>2: Check-In: 15 k.g</li>
+                                                        <li>3: Cancellation: 3500 :-  (3 days upto 2 hrs prior from departure)</li>
+                                                        <li>4: Date Change: 2500 :-  (3 days upto 2 hrs prior from departure)</li>
+                                                        <li>5: Seat : -</li>
+                                                        <li>6: Meal : -</li>
+                                                    </ul>
+                                                </span>
+                                            </span>
+
+                                        }
+
 
                                         <div class="text-13 mt-1">
                                             <button id="openModal_0" style="color:#366480;">View Fare Rules</button>
@@ -829,6 +848,24 @@
 
                                         </table>
                                     }
+
+                                    else if (item.segments[i].fares[f].productClass.Equals("Premium Classic"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>3 days upto 2 hrs prior from departure</td>
+                                                <td>Rs.3500</td>
+
+                                            </tr>
+
+                                        </table>
+                                    }
+
                                     else if (item.segments[i].fares[f].productClass.Equals("Economy Flexi"))
                                     {
                                         <table style="width:100%">
@@ -1169,11 +1206,19 @@
                                             </tr>
                                         </table>
                                     }
-
-
-
-
-
+                                    else if (item.segments[i].fares[f].productClass.Equals("Premium Classic"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>3 days upto 2 hrs prior from departure</td>
+                                                <td>Rs. 2500</td>
+                                            </tr>
+                                        </table>
+                                    }
                                 }
                             </div>
                         }

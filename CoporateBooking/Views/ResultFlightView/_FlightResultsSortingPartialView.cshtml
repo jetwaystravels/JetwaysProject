@@ -416,6 +416,8 @@
                                         Faretype = "Xpress lite";
                                     else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass.Equals("VV"))
                                         Faretype = "Xpress Bizz";
+                                     else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass.Equals("FS"))
+                                        Faretype = "Corporate Flex";
                                     //else
                                         //Faretype = "Saver Fare";
                                 }
@@ -432,21 +434,21 @@
                                     <td><strong>15 kg (1 piece)</strong></td>
                                     <td>
 
-                                        <div>3500 (upto 2 hrs prior from departure)</div>
+                                        <div>3500 (Upto 72 hrs before departure)</div>
                                     </td>
                                     <td>
 
-                                        <div>3000 (upto 2 hrs prior from departure)</div>
+                                        <div>3250 (Upto 72 hrs before departure)</div>
                                     </td>
                                     <td>
                                         <div>
-                                            (Chargeable)
+                                            Chargeable
                                         </div>
 
                                     </td>
                                     <td>
                                         <div>
-                                            (Chargeable)
+                                            Chargeable
                                         </div>
                                     </td>
 
@@ -557,6 +559,58 @@
 
                                 } 
 
+                              else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass == "FS")
+                                {
+                                    <td>7 Kg</td>
+                                    <td><strong>15 (kg)</strong></td>
+                                    <td>
+
+                                        <div>500 (Upto 2 hrs before departure)</div>
+                                    </td>
+                                    <td>
+
+                                        <div>Free</div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            Standard seats free
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        <div>
+                                            Free
+                                        </div>
+                                    </td>
+
+                                }
+                                else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass == "SM")
+                                {
+                                    <td>7 Kg</td>
+                                    <td><strong>15 (kg)</strong></td>
+                                    <td>
+
+                                        <div>1500 (1 day before to departure)</div>
+                                    </td>
+                                    <td>
+
+                                        <div>500 (Upto 2 hrs before departure)</div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            Chargeable
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        <div>
+                                            Chargeable
+                                        </div>
+                                    </td>
+
+                                }
+
+
                                 // Spice Jet Corporate Fare
                                  else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass == "CP")
                                 {
@@ -564,21 +618,21 @@
                                     <td><strong>15 kg (1 piece)</strong></td>
                                     <td>
 
-                                        <div>3600 (within 96 hrs from Departure)</div>
+                                        <div>Rs.3150 Before 96 Hrs from departure</div>
                                     </td>
                                     <td>
 
-                                        <div>3350 (within 96 hrs from Departure)</div>
+                                        <div>(Rs.2250 + Fare Difference) Before 96 Hrs from departure</div>
                                     </td>
                                     <td>
                                         <div>
-                                            Free seats
+                                            -
                                         </div>
 
                                     </td>
                                     <td>
                                         <div>
-                                            Complimentary meal
+                                            -
                                         </div>
                                     </td>
 
@@ -970,29 +1024,29 @@
                                     <td><strong>15 kg (1 piece)</strong></td>
                                     <td>
 
-                                        <div>3500 (upto 2 hrs prior from departure)</div>
+                                        <div>Rs.3500 (Upto 72 hrs before departure)</div>
                                     </td>
                                     <td>
 
                                         <div>
-                                            FREE (upto 2 hrs prior from departure)
+                                            Rs.3000 (Upto 72 hrs before departure)
                                         </div>
                                     </td>
                                     <td>
                                         <div>
-
                                             Standard seats free
                                         </div>
 
                                     </td>
                                     <td>
                                         <div>
-
-                                            (Free meal) per person
+                                           Free
                                         </div>
                                     </td>
 
                                 }
+
+
                                 else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass == "LT")
                                 {
                                     <td>0</td>

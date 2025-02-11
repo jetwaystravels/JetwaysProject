@@ -3140,12 +3140,12 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
                                 if (k1 == 0)
                                 {
-                                    Logfolder = "GDSOneWay";
+                                    //Logfolder = "GDSOneWay";
                                     _pricesolution = HttpContext.Session.GetString("PricingSolutionValue_0");
                                 }
                                 else
                                 {
-                                    Logfolder = "GDSRT";
+                                    //Logfolder = "GDSRT";
                                     _pricesolution = HttpContext.Session.GetString("PricingSolutionValue_1");
                                 }
                                 string strAirTicket = string.Empty;
@@ -3171,7 +3171,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     _SSRkey = JsonConvert.DeserializeObject<List<string>>(serializedSSRKey);
                                 }
 
-                                res = _objAvail.CreatePNR(_testURL, createPNRReq, newGuid.ToString(), _targetBranch, _userName, _password, AdultTraveller, _data, _Total, Logfolder, _unitkey, _SSRkey, _pricesolution);
+                                res = _objAvail.CreatePNRRoundTrip(_testURL, createPNRReq, newGuid.ToString(), _targetBranch, _userName, _password, AdultTraveller, _data, _Total, Logfolder,k1, _unitkey, _SSRkey, _pricesolution);
 
                                 //string RecordLocator = Regex.Match(res, @"universal:ProviderReservationInfo[\s\S]*?LocatorCode=""(?<LocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["LocatorCode"].Value.Trim();
                                 RecordLocator = Regex.Match(res, @"universal:UniversalRecord\s*LocatorCode=""(?<LocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["LocatorCode"].Value.Trim();

@@ -1198,6 +1198,10 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             }
             unitKey = new List<string>();
             unitKey = _unitkey;
+            string serializedUnitKey = JsonConvert.SerializeObject(unitKey);
+            // Store the serialized string in session
+            HttpContext.Session.SetString("UnitKey", serializedUnitKey);
+
             if (BaggageSSrkey.Count > 0 && BaggageSSrkey[0] == null)
             {
                 BaggageSSrkey = new List<string>();
@@ -1206,6 +1210,18 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             {
                 ssrKey = new List<string>();
             }
+            List<string> _ssrKey = new List<string>();
+            for (int i = 0; i < ssrKey.Count; i++)
+            {
+                if (ssrKey[i] == null)
+                    continue;
+                _ssrKey.Add(ssrKey[i].Trim());
+            }
+            ssrKey = new List<string>();
+            ssrKey = _ssrKey;
+            string serializedSSRKey = JsonConvert.SerializeObject(ssrKey);
+            // Store the serialized string in session
+            HttpContext.Session.SetString("ssrKey", serializedSSRKey);
             if (unitKey.Count > 0 && unitKey[0] == null)
             {
                 unitKey = new List<string>();

@@ -12,6 +12,7 @@ using Utility;
 using ZXing.QrCode.Internal;
 using static DomainLayer.Model.GDSResModel;
 using static DomainLayer.Model.ReturnTicketBooking;
+using static OnionArchitectureAPI.Services.Indigo._SellSSR;
 
 namespace OnionArchitectureAPI.Services.Travelport
 {
@@ -1180,6 +1181,265 @@ namespace OnionArchitectureAPI.Services.Travelport
             }
             return res;
         }
+
+        public string GetSeatMapRoundTrip(string _testURL, StringBuilder SeatMapReq, SimpleAvailabilityRequestModel _GetfligthModel, string newGuid, string _targetBranch, string _userName, string _password, SimpleAvailibilityaAddResponce AirfaredataL, string farebasisdataL, string hostTokenKey, string hostTokenValue, int p, string _AirlineWay)
+        {
+
+            int count = 0;
+            int paxCount = 0;
+            int legcount = 0;
+            string origin = string.Empty;
+            int legKeyCounter = 0;
+            //<SeatMapReq xmlns="http://www.travelport.com/schema/air_v52_0" TraceId="bd4398ec-5a0f-4918-82a9-7571c4536227" AuthorizedBy="Travelport" TargetBranch="P7087680" ReturnSeatPricing="true" ReturnBrandingInfo="true">
+            SeatMapReq = new StringBuilder();
+            SeatMapReq.Append("<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"><soap:Body> <SeatMapReq xmlns=\"http://www.travelport.com/schema/air_v52_0\" TraceId=\"" + newGuid + "\" AuthorizedBy=\"Travelport\" TargetBranch=\"" + _targetBranch + "\" ReturnSeatPricing=\"false\" ReturnBrandingInfo=\"true\">");
+            SeatMapReq.Append("<BillingPointOfSaleInfo xmlns=\"http://www.travelport.com/schema/common_v52_0\" OriginApplication=\"uAPI\" />");
+
+            // to do
+            string segmentIdDataL = string.Empty;
+            string FarebasisDataL = farebasisdataL;
+            if (p == 0)
+            {
+                segmentIdDataL = AirfaredataL.SegmentidLeftdata;
+            }
+            else
+            {
+                segmentIdDataL = AirfaredataL.SegmentidRightdata;
+            }
+
+            string[] segmentIdsL = segmentIdDataL.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] FarebasisL = FarebasisDataL.Split(new char[] { '^' }, StringSplitOptions.RemoveEmptyEntries);
+            string FarebasisDataL0 = string.Empty;
+            string FarebasisDataL1 = string.Empty;
+            string FarebasisDataL2 = string.Empty;
+
+            string segmentIdAtIndex0 = string.Empty;
+            string segmentIdAtIndex1 = string.Empty;
+            string segmentIdAtIndex2 = string.Empty;
+            // Checking if the array has at least two elements
+            if (segmentIdsL.Length == 3)
+            {
+                segmentIdAtIndex0 = segmentIdsL[0];
+                segmentIdAtIndex1 = segmentIdsL[1];
+                segmentIdAtIndex2 = segmentIdsL[2];
+
+                FarebasisDataL0 = FarebasisL[0];
+                FarebasisDataL1 = FarebasisL[1];
+                FarebasisDataL2 = FarebasisL[2];
+
+            }
+            else if (segmentIdsL.Length == 2)
+            {
+                // Accessing elements by index
+                segmentIdAtIndex0 = segmentIdsL[0];
+                segmentIdAtIndex1 = segmentIdsL[1];
+
+                FarebasisDataL0 = FarebasisL[0];
+                FarebasisDataL1 = FarebasisL[1];
+            }
+            else
+            {
+                segmentIdAtIndex0 = segmentIdsL[0];
+                FarebasisDataL0 = FarebasisL[0];
+            }
+
+
+
+            foreach (var segment in AirfaredataL.segments)
+            {
+                if (count == 0)
+                {
+                    segmentIdAtIndex0 = segmentIdAtIndex0;
+                }
+                else if (count == 1)
+                {
+                    segmentIdAtIndex0 = segmentIdAtIndex1;
+                }
+                else
+                {
+                    segmentIdAtIndex0 = segmentIdAtIndex2;
+                }
+                SeatMapReq.Append("<AirSegment Key=\"" + segmentIdAtIndex0 + "\" HostTokenRef=\"" + hostTokenKey + "\" AvailabilitySource=\"" + segment.designator._AvailabilitySource + "\" ");
+                SeatMapReq.Append("Equipment=\"" + segment.designator._Equipment + "\" AvailabilityDisplayType=\"Fare Specific Fare Quote Unbooked\" Group=\"" + segment.designator._Group + "\" Carrier=\"" + segment.identifier.carrierCode + "\" ");
+                SeatMapReq.Append("FlightNumber=\"" + segment.identifier.identifier + "\" Origin=\"" + segment.designator.origin + "\" Destination=\"" + segment.designator.destination + "\" ");
+                SeatMapReq.Append("DepartureTime=\"" + segment.designator._DepartureDate + "\" ArrivalTime=\"" + segment.designator._ArrivalDate + "\" FlightTime=\"" + segment.designator._FlightTime + "\" TravelTime=\"130\" Distance=\"" + segment.designator._Distance + "\" ProviderCode=\"" + segment.designator._ProviderCode + "\" ClassOfService=\"" + segment.designator._ClassOfService + "\">");
+                SeatMapReq.Append("<CodeshareInfo OperatingCarrier=\"" + segment.identifier.carrierCode + "\" />");
+                SeatMapReq.Append("</AirSegment>");
+                count++;
+            }
+            foreach (var segment in AirfaredataL.segments)
+            {
+                SeatMapReq.Append("<HostToken xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + hostTokenKey + "\">" + hostTokenValue + "</HostToken>");
+            }
+            //fareRepriceReq.Append("</AirItinerary>");
+            //fareRepriceReq.Append("<AirPricingModifiers ETicketability=\"Required\" FaresIndicator=\"AllFares\" InventoryRequestType=\"DirectAccess\">");
+            //fareRepriceReq.Append("<BrandModifiers>");
+            //fareRepriceReq.Append("<FareFamilyDisplay ModifierType=\"FareFamily\"/>");
+            //fareRepriceReq.Append("</BrandModifiers>");
+            //fareRepriceReq.Append("</AirPricingModifiers>");
+            if (_GetfligthModel.passengercount != null)
+            {
+                if (_GetfligthModel.passengercount.adultcount != 0)
+                {
+                    for (int i = 0; i < _GetfligthModel.passengercount.adultcount; i++)
+                    {
+                        SeatMapReq.Append("<SearchTraveler Code=\"ADT\" Age=\"40\" Key=\"" + paxCount + "\">");
+                        SeatMapReq.Append("<Name xmlns=\"http://www.travelport.com/schema/common_v52_0\" Prefix=\"Mr\" First=\"ADT\" Last=\"One\" /></SearchTraveler>");
+                        paxCount++;
+
+                    }
+                }
+                if (_GetfligthModel.passengercount.infantcount != 0)
+                {
+                    for (int i = 0; i < _GetfligthModel.passengercount.infantcount; i++)
+                    {
+                        SeatMapReq.Append("<SearchTraveler Code=\"INF\"  PricePTCOnly=\"true\" Key=\"" + paxCount + "\" Age=\"1\">");
+                        SeatMapReq.Append("<Name xmlns=\"http://www.travelport.com/schema/common_v52_0\" Prefix=\"MSTR\" First=\"INFT\" Last=\"One\" /></SearchTraveler>");
+                        paxCount++;
+                    }
+                }
+
+                if (_GetfligthModel.passengercount.childcount != 0)
+                {
+                    for (int i = 0; i < _GetfligthModel.passengercount.childcount; i++)
+                    {
+                        SeatMapReq.Append("<SearchTraveler Code=\"CNN\" Key=\"" + paxCount + "\" Age=\"11\">");
+                        SeatMapReq.Append("<Name xmlns=\"http://www.travelport.com/schema/common_v52_0\" Prefix=\"MSTR\" First=\"CHD\" Last=\"One\" /></SearchTraveler>");
+                        paxCount++;
+                    }
+                }
+
+            }
+            else
+            {
+
+                if (_GetfligthModel.adultcount != 0)
+                {
+                    for (int i = 0; i < _GetfligthModel.adultcount; i++)
+                    {
+                        SeatMapReq.Append("<SearchTraveler Code=\"ADT\" Age=\"40\" Key=\"" + paxCount + "\">");
+                        SeatMapReq.Append("<Name xmlns=\"http://www.travelport.com/schema/common_v52_0\" Prefix=\"Mr\" First=\"ADT\" Last=\"One\" /></SearchTraveler>");
+                        paxCount++;
+                    }
+                }
+
+                if (_GetfligthModel.infantcount != 0)
+                {
+                    for (int i = 0; i < _GetfligthModel.infantcount; i++)
+                    {
+                        SeatMapReq.Append("<SearchTraveler Code=\"INF\"  PricePTCOnly=\"true\" Key=\"" + paxCount + "\" Age=\"1\">");
+                        SeatMapReq.Append("<Name xmlns=\"http://www.travelport.com/schema/common_v52_0\" Prefix=\"MSTR\" First=\"INFT\" Last=\"One\" /></SearchTraveler>");
+                        paxCount++;
+                    }
+                }
+
+
+                if (_GetfligthModel.childcount != 0)
+                {
+                    for (int i = 0; i < _GetfligthModel.childcount; i++)
+                    {
+                        SeatMapReq.Append("<SearchTraveler Code=\"CNN\" Key=\"" + paxCount + "\" Age=\"11\">");
+                        SeatMapReq.Append("<Name xmlns=\"http://www.travelport.com/schema/common_v52_0\" Prefix=\"MSTR\" First=\"CHD\" Last=\"One\" /></SearchTraveler>");
+                        paxCount++;
+                    }
+                }
+
+            }
+            SeatMapReq.Append("</SeatMapReq></soap:Body></soap:Envelope>");
+            //if (segmentIdsL.Length == 3)
+            //{
+            //    segmentIdAtIndex0 = segmentIdsL[0];
+            //    segmentIdAtIndex1 = segmentIdsL[1];
+            //    segmentIdAtIndex2 = segmentIdsL[2];
+
+            //    FarebasisDataL0 = FarebasisL[0];
+            //    FarebasisDataL1 = FarebasisL[1];
+            //    FarebasisDataL2 = FarebasisL[2];
+
+            //}
+            //else if (segmentIdsL.Length == 2)
+            //{
+            //    // Accessing elements by index
+            //    segmentIdAtIndex0 = segmentIdsL[0];
+            //    segmentIdAtIndex1 = segmentIdsL[1];
+
+            //    FarebasisDataL0 = FarebasisL[0];
+            //    FarebasisDataL1 = FarebasisL[1];
+            //}
+            //else
+            //{
+            //    segmentIdAtIndex0 = segmentIdsL[0];
+            //    FarebasisDataL0 = FarebasisL[0];
+            //}
+            //foreach (var segment in AirfaredataL.segments)
+            //{
+            //    if (legKeyCounter == 0)
+            //    {
+            //        segmentIdAtIndex0 = segmentIdAtIndex0;
+
+            //        FarebasisDataL = FarebasisDataL0;
+            //    }
+            //    else if (legKeyCounter == 1)
+            //    {
+            //        segmentIdAtIndex0 = segmentIdAtIndex1;
+            //        FarebasisDataL = FarebasisDataL1;
+            //    }
+            //    else
+            //    {
+            //        segmentIdAtIndex0 = segmentIdAtIndex2;
+            //        FarebasisDataL = FarebasisDataL2;
+            //    }
+            //    fareRepriceReq.Append("<AirSegmentPricingModifiers AirSegmentRef = \"" + segmentIdAtIndex0 + "\" FareBasisCode=\"" + FarebasisDataL + "\">");
+            //    //fareRepriceReq.Append("<AirSegmentPricingModifiers AirSegmentRef = \"" + segmentIdAtIndex0 + "\"\">");
+            //    fareRepriceReq.Append("<PermittedBookingCodes>");
+            //    fareRepriceReq.Append("<BookingCode Code = \"" + segment.designator._ClassOfService + "\"/>");
+            //    //fareRepriceReq.Append("<BookingCode Code = \"E\"/>");
+            //    fareRepriceReq.Append("</PermittedBookingCodes>");
+            //    fareRepriceReq.Append("</AirSegmentPricingModifiers>");
+            //    legKeyCounter++;
+            //}
+            //fareRepriceReq.Append("</AirPricingCommand>");
+            //fareRepriceReq.Append("<FormOfPayment xmlns = \"http://www.travelport.com/schema/common_v52_0\" Type = \"Credit\" />");
+            //fareRepriceReq.Append("</AirPriceReq></soap:Body></soap:Envelope>");
+
+
+
+            string res = Methodshit.HttpPost(_testURL, SeatMapReq.ToString(), _userName, _password);
+
+            //// Load XML into XmlDocument
+            //XmlDocument xmlDoc = new XmlDocument();
+            //xmlDoc.LoadXml(res);
+
+            // Convert XML to JSON
+            //string json = JsonConvert.SerializeXmlNode(xmlDoc, Newtonsoft.Json.Formatting.Indented);
+
+            SetSessionValue("GDSAvailibilityRequest", JsonConvert.SerializeObject(_GetfligthModel));
+            SetSessionValue("GDSPassengerModel", JsonConvert.SerializeObject(_GetfligthModel));
+
+
+            if (_AirlineWay.ToLower() == "gdsoneway")
+            {
+                //logs.WriteLogs("URL: " + _testURL + "\n\n Request: " + fareRepriceReq + "\n\n Response: " + res, "GetAirPrice", "GDSOneWay","oneway");
+                logs.WriteLogs(SeatMapReq.ToString(), "3-GetSeatMapReq", "GDSOneWay", "oneway");
+                logs.WriteLogs(res, "2-GetSeatMapRes", "GDSOneWay", "oneway");
+            }
+            else
+            {
+                //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(fareRepriceReq) + "\n\n Response: " + JsonConvert.SerializeObject(res), "GetAirprice", "GDSRT");
+                if (p == 0)
+                {
+                    logs.WriteLogsR(SeatMapReq.ToString(), "3-GetSeatMapReq_Left", "GDSRT");
+                    logs.WriteLogsR(res, "2-GetSeatMapRes_Left", "GDSRT");
+                }
+                else
+                {
+                    logs.WriteLogsR(SeatMapReq.ToString(), "3-GetSeatMapReq_Right", "GDSRT");
+                    logs.WriteLogsR(res, "2-GetSeatMapRes_Right", "GDSRT");
+                }
+            }
+            return res;
+        }
+
         public string AirPriceGetRT(string _testURL, StringBuilder fareRepriceReq, SimpleAvailabilityRequestModel _GetfligthModel, string newGuid, string _targetBranch, string _userName, string _password, dynamic AirfaredataL, dynamic AirfaredataR, string _AirlineWay)
         {
 
@@ -2308,7 +2568,7 @@ namespace OnionArchitectureAPI.Services.Travelport
             return res;
         }
 
-        public string CreatePNR(string _testURL, StringBuilder createPNRReq, string newGuid, string _targetBranch, string _userName, string _password, string AdultTraveller, string _data, string _Total, string _AirlineWay, List<string> _unitkey, List<string> _SSRkey, string? _pricesolution = null)
+        public string CreatePNRRoundTrip(string _testURL, StringBuilder createPNRReq, string newGuid, string _targetBranch, string _userName, string _password, string AdultTraveller, string _data, string _Total, string _AirlineWay, int p1, List<string> _unitkey, List<string> _SSRkey, string? _pricesolution = null)
         {
 
             int count = 0;
@@ -2374,15 +2634,113 @@ namespace OnionArchitectureAPI.Services.Travelport
                     {
                         createPNRReq.Append("<PhoneNumber Number=\"" + passengerdetails[i].mobile + "\"  />");
                         createPNRReq.Append("<Email EmailID=\"" + passengerdetails[i].Email + "\" />");
-                        foreach (Match itemsegment in Regex.Matches(Getdetails.PriceSolution, "AirSegment Key=\"(?<Segmentid>[\\s\\S]*?)\""))
+                        int seg = 0;
+                        
+                        foreach(Match itemsegment in Regex.Matches(Getdetails.PriceSolution, "AirSegment Key=\"(?<Segmentid>[\\s\\S]*?)\""))
                         {
+                            
                             if (_SSRkey.Count > _id)
                             {
-                                string[] unitsubKey2 = _SSRkey[_id].Split('_');
-                                string pas_unitKey = unitsubKey2[0];
-                                createPNRReq.Append("<SSR Type=\"" + pas_unitKey + "\" Status=\"NN\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" Key=\"" + passengerdetails[i].passengerkey + "_" + _id + "\" SegmentRef=\"" + itemsegment.Groups["Segmentid"].Value.Trim() + "\"/>");
-                                _id++;
+                                ssrsegmentwise _obj = new ssrsegmentwise();
+                                _obj.SSRcodeOneWayI = new List<ssrsKey>();
+                                _obj.SSRcodeOneWayII = new List<ssrsKey>();
+                                _obj.SSRcodeRTI = new List<ssrsKey>();
+                                _obj.SSRcodeRTII = new List<ssrsKey>();
+
+                                for (int k = 0; k < _SSRkey.Count; k++)
+                                {
+                                    if (_SSRkey[k].Contains("_OneWay0"))
+                                    {
+                                        string[] wordsArray = _SSRkey[k].ToString().Split('_');
+                                        if (wordsArray.Length > 1 && !string.IsNullOrEmpty(wordsArray[0]))
+                                        {
+                                            ssrsKey _obj0 = new ssrsKey();
+                                            _obj0.key = _SSRkey[k];
+                                            _obj.SSRcodeOneWayI.Add(_obj0);
+                                        }
+
+                                    }
+                                    else if (_SSRkey[k].Contains("_OneWay1"))
+                                    {
+                                        string[] wordsArray = _SSRkey[k].ToString().Split('_');
+                                        if (wordsArray.Length > 1 && !string.IsNullOrEmpty(wordsArray[0]))
+                                        {
+                                            ssrsKey _obj1 = new ssrsKey();
+                                            _obj1.key = _SSRkey[k];
+                                            _obj.SSRcodeOneWayII.Add(_obj1);
+                                        }
+                                    }
+                                    else if (_SSRkey[k].Contains("_RT0"))
+                                    {
+                                        string[] wordsArray = _SSRkey[k].ToString().Split('_');
+                                        if (wordsArray.Length > 1 && !string.IsNullOrEmpty(wordsArray[0]))
+                                        {
+                                            ssrsKey _obj2 = new ssrsKey();
+                                            _obj2.key = _SSRkey[k];
+                                            _obj.SSRcodeRTI.Add(_obj2);
+                                        }
+                                    }
+                                    else if (_SSRkey[k].Contains("_RT1"))
+                                    {
+                                        string[] wordsArray = _SSRkey[k].ToString().Split('_');
+                                        if (wordsArray.Length > 1 && !string.IsNullOrEmpty(wordsArray[0]))
+                                        {
+                                            ssrsKey _obj3 = new ssrsKey();
+                                            _obj3.key = _SSRkey[k];
+                                            _obj.SSRcodeRTII.Add(_obj3);
+                                        }
+                                    }
+                                }
+                                
+                                
+                                for (int k = 0; k < _obj.SSRcodeOneWayI.Count; k++)
+                                {
+                                    if (p1 == 0 && (_obj.SSRcodeOneWayI[k].key.Contains("_OneWay0") && seg == 0) && _obj.SSRcodeOneWayI[k].key.Split('/').Last() == passengerdetails[i].passengertypecode && _obj.SSRcodeOneWayI[k].key.Contains(passengerdetails[i].first+"/"+ passengerdetails[i].last))// || _SSRkey[_id].Contains("_OneWay1")))
+                                    {
+                                        //}
+                                        string[] unitsubKey2 = _obj.SSRcodeOneWayI[k].key.Split('_');
+                                        string pas_unitKey = unitsubKey2[0];
+                                        createPNRReq.Append("<SSR Type=\"" + pas_unitKey + "\" Status=\"NN\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" Key=\"" + passengerdetails[i].passengerkey + "_" + _id + "\" SegmentRef=\"" + itemsegment.Groups["Segmentid"].Value.Trim() + "\"/>");
+                                        _id++;
+                                    }
+                                }
+                                for (int k = 0; k < _obj.SSRcodeOneWayII.Count; k++)
+                                {
+                                    if (p1 == 0 && (_obj.SSRcodeOneWayII[k].key.Contains("_OneWay1") && seg == 1) && _obj.SSRcodeOneWayII[k].key.Split('/').Last() == passengerdetails[i].passengertypecode && _obj.SSRcodeOneWayII[k].key.Contains(passengerdetails[i].first + "/" + passengerdetails[i].last))
+                                    {
+                                        string[] unitsubKey2 = _obj.SSRcodeOneWayII[k].key.Split('_');
+                                        string pas_unitKey = unitsubKey2[0];
+                                        createPNRReq.Append("<SSR Type=\"" + pas_unitKey + "\" Status=\"NN\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" Key=\"" + passengerdetails[i].passengerkey + "_" + _id + "\" SegmentRef=\"" + itemsegment.Groups["Segmentid"].Value.Trim() + "\"/>");
+                                        _id++;
+                                    }
+                                }
+                                for (int k = 0; k < _obj.SSRcodeRTI.Count; k++)
+                                {
+                                    if (p1 == 1 && (_obj.SSRcodeRTI[k].key.Contains("_RT0") && seg == 0) && _obj.SSRcodeRTI[k].key.Split('/').Last() == passengerdetails[i].passengertypecode && _obj.SSRcodeRTI[k].key.Contains(passengerdetails[i].first + "/" + passengerdetails[i].last))//|| _SSRkey[_id].Contains("_RT1")))
+                                    {
+                                        //}
+                                        string[] unitsubKey2 = _obj.SSRcodeRTI[k].key.Split('_');
+                                        string pas_unitKey = unitsubKey2[0];
+                                        createPNRReq.Append("<SSR Type=\"" + pas_unitKey + "\" Status=\"NN\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" Key=\"" + passengerdetails[i].passengerkey + "_" + _id + "\" SegmentRef=\"" + itemsegment.Groups["Segmentid"].Value.Trim() + "\"/>");
+                                        _id++;
+                                    }
+                                }
+                                for (int k = 0; k < _obj.SSRcodeRTII.Count; k++)
+                                {
+                                    if (p1 == 1 && (_obj.SSRcodeRTII[k].key.Contains("_RT1") && seg == 1) && _obj.SSRcodeRTII[k].key.Split('/').Last() == passengerdetails[i].passengertypecode && _obj.SSRcodeRTII[k].key.Contains(passengerdetails[i].first + "/" + passengerdetails[i].last))//|| _SSRkey[_id].Contains("_RT1")))
+                                    {
+                                        //}
+                                        string[] unitsubKey2 = _obj.SSRcodeRTII[k].key.Split('_');
+                                        string pas_unitKey = unitsubKey2[0];
+                                        createPNRReq.Append("<SSR Type=\"" + pas_unitKey + "\" Status=\"NN\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" Key=\"" + passengerdetails[i].passengerkey + "_" + _id + "\" SegmentRef=\"" + itemsegment.Groups["Segmentid"].Value.Trim() + "\"/>");
+                                        _id++;
+                                    }
+                                }
+                                
+                                //}
+
                             }
+                            seg++;
                         }
                     }
                     else
@@ -2647,7 +3005,437 @@ namespace OnionArchitectureAPI.Services.Travelport
                             createPNRReq.Append("<SpecificSeatAssignment xmlns=\"http://www.travelport.com/schema/air_v52_0\" BookingTravelerRef=\"" + mitem.Groups["Travllerref"].Value + "\" SegmentRef=\"" + itemsegment.Groups["Segmentid"].Value.Trim() + "\" SeatId=\"" + pas_unitKey.Trim() + "\"/>");
                             idx++;
                         }
-                            
+
+                    }
+                }
+                #endregion
+
+                createPNRReq.Append("</AirCreateReservationReq></soap:Body></soap:Envelope>");
+            }
+            //}
+            string res = Methodshit.HttpPost(_testURL, createPNRReq.ToString(), _userName, _password);
+            //SetSessionValue("GDSAvailibilityRequest", JsonConvert.SerializeObject(_GetfligthModel));
+            //SetSessionValue("GDSPassengerModel", JsonConvert.SerializeObject(_GetfligthModel));
+            //if (_AirlineWay.ToLower() == "gdsoneway")
+            //{
+            //    logs.WriteLogs("URL: " + _testURL + "\n\n Request: " + createPNRReq + "\n\n Response: " + res, "GetPNR", "GDSOneWay");
+            //}
+            //else
+            //{
+            //    logs.WriteLogsR("Request: " + createPNRReq + "\n\n Response: " + res, "GetPNR", "SameGDSRT");
+            //}
+            if (_AirlineWay.ToLower() == "gdsoneway")
+            {
+                //logs.WriteLogs("URL: " + _testURL + "\n\n Request: " + fareRepriceReq + "\n\n Response: " + res, "GetAirPrice", "GDSOneWay","oneway");
+                logs.WriteLogs(createPNRReq.ToString(), "3-GetPNRReq", "GDSOneWay", "oneway");
+                logs.WriteLogs(res, "3-GetPNRRes", "GDSOneWay", "oneway");
+            }
+            else
+            {
+                //    //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(fareRepriceReq) + "\n\n Response: " + JsonConvert.SerializeObject(res), "GetAirprice", "GDSRT");
+                if (p1 == 0)
+                {
+                    logs.WriteLogsR(createPNRReq.ToString(), "3-GetPNRReq_Left", "GDSRT");
+                    logs.WriteLogsR(res, "3-GetPNRRes_Left", "GDSRT");
+                }
+                else
+                {
+                    logs.WriteLogsR(createPNRReq.ToString(), "3-GetPNRReq_Right", "GDSRT");
+                    logs.WriteLogsR(res, "3-GetPNRRes_Right", "GDSRT");
+                }
+                //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(createPNRReq) + "\n\n Response: " + JsonConvert.SerializeObject(res), "GetPNR", "GDSRT");
+
+            }
+            return res;
+        }
+
+        public string CreatePNR(string _testURL, StringBuilder createPNRReq, string newGuid, string _targetBranch, string _userName, string _password, string AdultTraveller, string _data, string _Total, string _AirlineWay, List<string> _unitkey, List<string> _SSRkey, string? _pricesolution = null)
+        {
+
+            int count = 0;
+            int icount = 100;
+            //int paxCount = 0;
+            //int legcount = 0;
+            //string origin = string.Empty;
+            //int legKeyCounter = 0;
+
+            createPNRReq = new StringBuilder();
+            createPNRReq.Append("<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">");
+            createPNRReq.Append("<soap:Body>");
+            createPNRReq.Append("<AirCreateReservationReq xmlns=\"http://www.travelport.com/schema/universal_v52_0\" TraceId=\"" + newGuid + "\" AuthorizedBy = \"Travelport\" TargetBranch=\"" + _targetBranch + "\" ProviderCode=\"1G\" RetainReservation=\"Both\">");
+            createPNRReq.Append("<BillingPointOfSaleInfo xmlns=\"http://www.travelport.com/schema/common_v52_0\" OriginApplication=\"UAPI\"/>");
+            List<passkeytype> passengerdetails = (List<passkeytype>)JsonConvert.DeserializeObject(AdultTraveller, typeof(List<passkeytype>));
+
+
+
+            AirAsiaTripResponceModel Getdetails = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(_data, typeof(AirAsiaTripResponceModel));
+            Getdetails.PriceSolution = _pricesolution.Replace("\\", "");
+
+            if (passengerdetails.Count > 0)
+            {
+                int _id = 0;
+                for (int i = 0; i < passengerdetails.Count; i++)
+                {
+                    if (passengerdetails[i].passengertypecode == "ADT")
+                    {
+                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + count + "\"  TravelerType=\"ADT\">");
+                    }
+                    else if (passengerdetails[i].passengertypecode == "CHD" || passengerdetails[i].passengertypecode == "CNN")
+                    {
+                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + count + "\"  TravelerType=\"CNN\">");
+                    }
+                    else if (passengerdetails[i].passengertypecode == "INF" || passengerdetails[i].passengertypecode == "INFT")
+                    {
+                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + count + "\" TravelerType=\"INF\">");
+                    }
+                    else
+                    {
+                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + count + "\"  TravelerType=\"ADT\">");
+                    }
+
+
+                    //Title
+                    if (passengerdetails[i].passengertypecode == "ADT")
+                    {
+                        passengerdetails[i].title = "MR";
+                    }
+                    else
+                    {
+                        passengerdetails[i].title = "MSTR";
+                    }
+                    if (!string.IsNullOrEmpty(passengerdetails[i].middle))
+                    {
+                        createPNRReq.Append("<BookingTravelerName  First=\"" + passengerdetails[i].first.ToUpper() + "\" Last=\"" + passengerdetails[i].last.ToUpper() + "\" Middle=\"" + passengerdetails[i].middle.ToUpper() + "\" Prefix=\"" + passengerdetails[i].title.ToUpper().Replace(".", "") + "\" />");
+                    }
+                    else
+                    {
+                        createPNRReq.Append("<BookingTravelerName  First=\"" + passengerdetails[i].first.ToUpper() + "\" Last=\"" + passengerdetails[i].last.ToUpper() + "\" Prefix=\"" + passengerdetails[i].title.ToUpper().Replace(".", "") + "\" />");
+                    }
+                    if (passengerdetails[i].passengertypecode == "ADT" || passengerdetails[i].passengertypecode == "CHD" || passengerdetails[i].passengertypecode == "CNN")
+                    {
+                        createPNRReq.Append("<PhoneNumber Number=\"" + passengerdetails[i].mobile + "\"  />");
+                        createPNRReq.Append("<Email EmailID=\"" + passengerdetails[i].Email + "\" />");
+                        int seg = 0;
+                        foreach (Match itemsegment in Regex.Matches(Getdetails.PriceSolution, "AirSegment Key=\"(?<Segmentid>[\\s\\S]*?)\""))
+                        {
+                            if (_SSRkey.Count > _id)
+                            {
+                                ssrsegmentwise _obj = new ssrsegmentwise();
+                                _obj.SSRcodeOneWayI = new List<ssrsKey>();
+                                _obj.SSRcodeOneWayII = new List<ssrsKey>();
+                                for (int k = 0; k < _SSRkey.Count; k++)
+                                {
+                                    if (_SSRkey[k].Contains("_OneWay0"))
+                                    {
+                                        string[] wordsArray = _SSRkey[k].ToString().Split('_');
+                                        if (wordsArray.Length > 1 && !string.IsNullOrEmpty(wordsArray[0]))
+                                        {
+                                            ssrsKey _obj0 = new ssrsKey();
+                                            _obj0.key = _SSRkey[k];
+                                            _obj.SSRcodeOneWayI.Add(_obj0);
+                                        }
+
+                                    }
+                                    else if (_SSRkey[k].Contains("_OneWay1"))
+                                    {
+                                        string[] wordsArray = _SSRkey[k].ToString().Split('_');
+                                        if (wordsArray.Length > 1 && !string.IsNullOrEmpty(wordsArray[0]))
+                                        {
+                                            ssrsKey _obj1 = new ssrsKey();
+                                            _obj1.key = _SSRkey[k];
+                                            _obj.SSRcodeOneWayII.Add(_obj1);
+                                        }
+                                    }
+                                }
+                                for (int k = 0; k < _obj.SSRcodeOneWayI.Count; k++)
+                                {
+                                    if (_obj.SSRcodeOneWayI[k].key.Contains("_OneWay0") && seg == 0 && _obj.SSRcodeOneWayI[k].key.Split('/').Last() == passengerdetails[i].passengertypecode && _obj.SSRcodeOneWayI[k].key.Contains(passengerdetails[i].first + "/" + passengerdetails[i].last))// || _SSRkey[_id].Contains("_OneWay1")))
+                                    {
+                                        //}
+                                        string[] unitsubKey2 = _obj.SSRcodeOneWayI[k].key.Split('_');
+                                        string pas_unitKey = unitsubKey2[0];
+                                        createPNRReq.Append("<SSR Type=\"" + pas_unitKey + "\" Status=\"NN\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" Key=\"" + passengerdetails[i].passengerkey + "_" + _id + "\" SegmentRef=\"" + itemsegment.Groups["Segmentid"].Value.Trim() + "\"/>");
+                                        _id++;
+                                    }
+                                }
+                                for (int k = 0; k < _obj.SSRcodeOneWayII.Count; k++)
+                                {
+                                    if (_obj.SSRcodeOneWayII[k].key.Contains("_OneWay1") && seg == 1 && _obj.SSRcodeOneWayII[k].key.Split('/').Last() == passengerdetails[i].passengertypecode && _obj.SSRcodeOneWayII[k].key.Contains(passengerdetails[i].first + "/" + passengerdetails[i].last))
+                                    {
+                                        string[] unitsubKey2 = _obj.SSRcodeOneWayII[k].key.Split('_');
+                                        string pas_unitKey = unitsubKey2[0];
+                                        createPNRReq.Append("<SSR Type=\"" + pas_unitKey + "\" Status=\"NN\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" Key=\"" + passengerdetails[i].passengerkey + "_" + _id + "\" SegmentRef=\"" + itemsegment.Groups["Segmentid"].Value.Trim() + "\"/>");
+                                        _id++;
+                                    }
+                                }
+
+                            }
+                            seg++;
+                        }
+                    }
+                    else
+                    {
+                        createPNRReq.Append("<PhoneNumber Number=\"" + passengerdetails[0].mobile + "\"  />");
+                        createPNRReq.Append("<Email EmailID=\"" + passengerdetails[0].Email + "\" />");
+                        //foreach (Match itemsegment in Regex.Matches(Getdetails.PriceSolution, "AirSegment Key=\"(?<Segmentid>[\\s\\S]*?)\""))
+                        //{
+                        //    string[] unitsubKey2 = _SSRkey[i].Split('_');
+                        //    string pas_unitKey = unitsubKey2[0];
+                        //    createPNRReq.Append("<SSR Type=\"" + pas_unitKey + "\" Status=\"NN\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" Key=\"" + passengerdetails[i].passengerkey + "\" SegmentRef=\"" + itemsegment.Groups["Segmentid"].Value.Trim() + "\"/>");
+                        //}
+                    }
+
+                    //if (!String.IsNullOrEmpty(paxDetail.FrequentFlierNumber) && paxDetail.FrequentFlierNumber.Length > 5)
+                    //{
+                    //if (segment_.Bonds[0].Legs[0].AirlineName.Equals("UK"))
+                    //{
+                    //createPNRReq.Append("<SSR  Key='" + count + "' Type='FQTV' Status='HK' Carrier='UK' FreeText='" + paxDetail.FrequentFlierNumber + "-" + paxDetail.LastName + "/" + paxDetail.FirstName + "" + paxDetail.Title.ToUpper() + "'/>");
+                    //}
+                    //else
+                    //{
+                    //  createPNRReq.Append("<com:LoyaltyCard SupplierCode='" + segment_.Bonds[0].Legs[0].AirlineName + "' CardNumber='" + paxDetail.FrequentFlierNumber + "'/>");
+                    //}
+                    //}
+                    //if (!IsDomestic)
+                    //{
+                    //    if (IsSSR)
+                    //    {
+                    //        pnrreq.Append("<com:SSR Type='DOCS'  Key='" + count + "' FreeText='P/" + paxDetail.Nationality + "/" + paxDetail.PassportNo + "/" + paxDetail.Nationality + "/" + paxDetail.DOB.ToString("ddMMMyy") + "/" + PaxGender(paxDetail.Gender) + "/" + paxDetail.PassportExpiryDate.ToString("ddMMMyy") + "/" + paxDetail.FirstName + "/" + paxDetail.LastName + "' Carrier='" + segment_.Bonds[0].Legs[0].AirlineName + "'/>");
+                    //    }
+                    //    else if (ISSSR(segment_.Bonds))
+                    //    {
+                    //        pnrreq.Append("<com:SSR Type='DOCS'  Key='" + count + "' FreeText='P/" + paxDetail.Nationality + "/" + paxDetail.PassportNo + "/" + paxDetail.Nationality + "/" + paxDetail.DOB.ToString("ddMMMyy") + "/" + PaxGender(paxDetail.Gender) + "/" + paxDetail.PassportExpiryDate.ToString("ddMMMyy") + "/" + paxDetail.FirstName + "/" + paxDetail.LastName + "' Carrier='" + segment_.Bonds[0].Legs[0].AirlineName + "'/>");
+                    //    }
+                    //}
+                    if (i == 0 && passengerdetails[i].passengertypecode == "ADT")
+                    {
+                        if (passengerdetails[i].title.ToLower() == "mr")
+                        {
+                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN/03Dec06/M/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+
+                            //foreach (Match itemsegment in Regex.Matches(Getdetails.PriceSolution, "AirSegment Key=\"(?<Segmentid>[\\s\\S]*?)\""))
+                            //{
+                            //    string[] unitsubKey2 = _SSRkey[i].Split('_');
+                            //    string pas_unitKey = unitsubKey2[0];
+                            //    createPNRReq.Append("<SSR Type=\"" + pas_unitKey + "\" Status=\"NN\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" Key=\"" + passengerdetails[i].passengerkey + "\" SegmentRef=\"" + itemsegment.Groups["Segmentid"].Value.Trim() + "\"/>");
+                            //}
+                        }
+                        else
+                        {
+                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN/03Dec06/F/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                            //foreach (Match itemsegment in Regex.Matches(Getdetails.PriceSolution, "AirSegment Key=\"(?<Segmentid>[\\s\\S]*?)\""))
+                            //{
+                            //    string[] unitsubKey2 = _SSRkey[i].Split('_');
+                            //    string pas_unitKey = unitsubKey2[0];
+                            //    createPNRReq.Append("<SSR Type=\"" + pas_unitKey + "\" Status=\"NN\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" Key=\"" + passengerdetails[i].passengerkey + "\" SegmentRef=\"" + itemsegment.Groups["Segmentid"].Value.Trim() + "\"/>");
+                            //}
+                        }
+                        createPNRReq.Append("<SSR Type=\"CTCM\" Status=\"HK\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" FreeText=\"1234567890\"/>");
+                        createPNRReq.Append("<SSR Type=\"CTCE\" Status=\"HK\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" FreeText=\"test//ENDFARE.in\"/>");
+
+                        //Domestic
+                        //createPNRReq.Append("<Address>");
+                        //createPNRReq.Append("<AddressName>Home</AddressName>");
+                        //createPNRReq.Append("<Street>20th I Cross</Street>");
+                        //createPNRReq.Append("<City>Bangalore</City>");
+                        //createPNRReq.Append("<State>KA</State>");
+                        //createPNRReq.Append("<PostalCode>560047</PostalCode>");
+                        //createPNRReq.Append("<Country>IN</Country>");
+                        //createPNRReq.Append("</Address>");
+                        //International
+                        createPNRReq.Append("<Address>");
+                        createPNRReq.Append("<AddressName>DemoSiteAddress</AddressName>");
+                        createPNRReq.Append("<Street>Via Augusta 59 5</Street>");
+                        createPNRReq.Append("<City>Delhi</City>");
+                        createPNRReq.Append("<State>DL</State>");
+                        createPNRReq.Append("<PostalCode>111001</PostalCode>");
+                        createPNRReq.Append("<Country>IN</Country>");
+                        createPNRReq.Append("</Address>");
+
+                    }
+                    if (passengerdetails[i].passengertypecode == "CNN" || passengerdetails[i].passengertypecode == "CHD")
+                    {
+                        if (passengerdetails[i].title.ToLower() == "mstr")
+                        {
+                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN/11Dec13/M/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                            //foreach (Match itemsegment in Regex.Matches(Getdetails.PriceSolution, "AirSegment Key=\"(?<Segmentid>[\\s\\S]*?)\""))
+                            //{
+                            //    string[] unitsubKey2 = _SSRkey[i].Split('_');
+                            //    string pas_unitKey = unitsubKey2[0];
+                            //    createPNRReq.Append("<SSR Type=\"" + pas_unitKey + "\" Status=\"NN\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" Key=\"" + passengerdetails[i].passengerkey + "\" SegmentRef=\"" + itemsegment.Groups["Segmentid"].Value.Trim() + "\"/>");
+                            //}
+
+                        }
+                        else
+                        {
+                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN/11Dec13/F/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                            //foreach (Match itemsegment in Regex.Matches(Getdetails.PriceSolution, "AirSegment Key=\"(?<Segmentid>[\\s\\S]*?)\""))
+                            //{
+                            //    string[] unitsubKey2 = _SSRkey[i].Split('_');
+                            //    string pas_unitKey = unitsubKey2[0];
+                            //    createPNRReq.Append("<SSR Type=\"" + pas_unitKey + "\" Status=\"NN\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" Key=\"" + passengerdetails[i].passengerkey + "\" SegmentRef=\"" + itemsegment.Groups["Segmentid"].Value.Trim() + "\"/>");
+                            //}
+                        }
+                        createPNRReq.Append("<SSR Type=\"CTCM\" Status=\"HK\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" FreeText=\"1234567890\"/>");
+                        createPNRReq.Append("<SSR Type=\"CTCE\" Status=\"HK\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" FreeText=\"test//ENDFARE.in\"/>");
+
+                        createPNRReq.Append("<NameRemark>");
+                        createPNRReq.Append("<RemarkData>P-C11 DOB11Dec13</RemarkData>");
+                        createPNRReq.Append("</NameRemark>");
+                    }
+                    string format = "11DEC23";// Convert.ToDateTime(passengerdetails[i].dateOfBirth).ToString("ddMMMyy");
+                    if (passengerdetails[i].passengertypecode == "INF" || passengerdetails[i].passengertypecode == "INFT")
+                    {
+                        if (passengerdetails[i].title.ToLower() == "mstr")
+                        {
+                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN/11DEC23/MI/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                            //int indx = 0;
+                            //foreach (Match itemsegment in Regex.Matches(Getdetails.PriceSolution, "AirSegment Key=\"(?<Segmentid>[\\s\\S]*?)\""))
+                            //{
+                            //    // Ensure each adult/child gets a unique seat per segment
+                            //    foreach (Match mitem in Regex.Matches(Getdetails.PriceSolution, "PassengerType BookingTravelerRef=\'(?<Travllerref>[\\s\\S]*?)\'\\s*Code=\'(?<PaxType>[\\s\\S]*?)'", RegexOptions.IgnoreCase | RegexOptions.Multiline))
+                            //    {
+                            //        if (mitem.Groups["PaxType"].Value == "INF" || mitem.Groups["PaxType"].Value == "INFT")
+                            //        {
+                            //            string[] unitsubKey2 = _SSRkey[indx].Split('_');
+                            //            string pas_unitKey = unitsubKey2[0];
+                            //            createPNRReq.Append("<SSR Type=\"BLML\" Status=\"NN\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" Key=\"" + mitem.Groups["Travllerref"].Value + "\" SegmentRef=\"" + itemsegment.Groups["Segmentid"].Value.Trim() + "\"/>");
+                            //            indx++;
+                            //        }
+                            //    }
+                            //}
+                        }
+                        else
+                        {
+                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN/11DEC23/FI/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                            //int indx = 0;
+                            //foreach (Match itemsegment in Regex.Matches(Getdetails.PriceSolution, "AirSegment Key=\"(?<Segmentid>[\\s\\S]*?)\""))
+                            //{
+                            //    // Ensure each adult/child gets a unique seat per segment
+                            //    foreach (Match mitem in Regex.Matches(Getdetails.PriceSolution, "PassengerType BookingTravelerRef=\'(?<Travllerref>[\\s\\S]*?)\'\\s*Code=\'(?<PaxType>[\\s\\S]*?)'", RegexOptions.IgnoreCase | RegexOptions.Multiline))
+                            //    {
+                            //        if (mitem.Groups["PaxType"].Value == "INF" || mitem.Groups["PaxType"].Value == "INFT")
+                            //        {
+                            //            string[] unitsubKey2 = _SSRkey[indx].Split('_');
+                            //            string pas_unitKey = unitsubKey2[0];
+                            //            createPNRReq.Append("<SSR Type=\"BLML\" Status=\"NN\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" Key=\"" + mitem.Groups["Travllerref"].Value + "\" SegmentRef=\"" + itemsegment.Groups["Segmentid"].Value.Trim() + "\"/>");
+                            //            indx++;
+                            //        }
+                            //    }
+                            //}
+                        }
+                        createPNRReq.Append("<SSR Type=\"CTCM\" Status=\"HK\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" FreeText=\"1234567890\"/>");
+                        createPNRReq.Append("<SSR Type=\"CTCE\" Status=\"HK\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" FreeText=\"test//ENDFARE.in\"/>");
+
+                        createPNRReq.Append("<NameRemark>");
+                        createPNRReq.Append("<RemarkData>" + format + "</RemarkData>");
+                        createPNRReq.Append("</NameRemark>");
+                    }
+                    //if (!IsDomestic)
+                    //{
+                    //    if (IsSSR)
+                    //    {
+                    //        pnrreq.Append("<com:SSR Type='DOCS'  Key='" + count + "' FreeText='P/" + paxDetail.Nationality + "/" + paxDetail.PassportNo + "/" + paxDetail.Nationality + "/" + paxDetail.DOB.ToString("ddMMMyy") + "/" + PaxGender(paxDetail.Gender) + "/" + paxDetail.PassportExpiryDate.ToString("ddMMMyy") + "/" + paxDetail.FirstName + "/" + paxDetail.LastName + "' Carrier='" + segment_.Bonds[0].Legs[0].AirlineName + "'/>");
+                    //    }
+                    //    else if (ISSSR(segment_.Bonds))
+                    //    {
+                    //        pnrreq.Append("<com:SSR Type='DOCS'  Key='" + count + "' FreeText='P/" + paxDetail.Nationality + "/" + paxDetail.PassportNo + "/" + paxDetail.Nationality + "/" + paxDetail.DOB.ToString("ddMMMyy") + "/" + PaxGender(paxDetail.Gender) + "/" + paxDetail.PassportExpiryDate.ToString("ddMMMyy") + "/" + paxDetail.FirstName + "/" + paxDetail.LastName + "' Carrier='" + segment_.Bonds[0].Legs[0].AirlineName + "'/>");
+                    //    }
+                    //}
+                    createPNRReq.Append("</BookingTraveler>");
+                    count++;
+                }
+                //createPNRReq.Append("<AirPricingModifiers ETicketability=\"Required\" FaresIndicator=\"AllFares\" InventoryRequestType=\"DirectAccess\">");
+                //createPNRReq.Append("</AirPricingModifiers>");
+                createPNRReq.Append("<ContinuityCheckOverride xmlns=\"http://www.travelport.com/schema/common_v52_0\">true</ContinuityCheckOverride>");
+                createPNRReq.Append("<AgencyContactInfo xmlns=\"http://www.travelport.com/schema/common_v52_0\">");
+                createPNRReq.Append("<PhoneNumber CountryCode=\"91\" AreaCode=\"011\" Number=\"46615790\" Location=\"DEL\" Type=\"Agency\"/>");
+                createPNRReq.Append("</AgencyContactInfo>");
+                createPNRReq.Append("<FormOfPayment xmlns=\"http://www.travelport.com/schema/common_v52_0\" Type=\"Cash\" Key=\"1\" />");
+                //createPNRReq.Append(Getdetails.PriceSolution.Replace("</air:CancelPenalty>","</air:CancelPenalty><air:AirPricingModifiers ETicketability=\"Required\" FaresIndicator=\"AllFares\"> </air:AirPricingModifiers>"));
+                Getdetails.PriceSolution = Getdetails.PriceSolution.Replace("</air:CancelPenalty>", "</air:CancelPenalty><air:AirPricingModifiers ETicketability=\"Required\" FaresIndicator=\"AllFares\"> </air:AirPricingModifiers>");
+
+                // Define the regex pattern to match any BookingTravelerRef value dynamically
+                //string pattern = @"<air:PassengerType BookingTravelerRef='(\d+)' Code='INF' Age='(\d+)'/>";
+                //// Define the replacement string (maintaining the BookingTravelerRef dynamically)
+                //string replacement = @"<air:PassengerType BookingTravelerRef='$1' Code='INF' PricePTCOnly=""true"" Age='$1'/>";
+                // Perform the replacement
+                //Getdetails.PriceSolution = Regex.Replace(Getdetails.PriceSolution, pattern, replacement);
+                createPNRReq.Append(Getdetails.PriceSolution);
+                createPNRReq.Append("<ActionStatus xmlns=\"http://www.travelport.com/schema/common_v52_0\" Type=\"ACTIVE\" TicketDate=\"T*\" ProviderCode=\"1G\" />");
+                createPNRReq.Append("<Payment xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"2\" Type=\"Itinerary\" FormOfPaymentRef=\"1\" Amount=\"INR" + _Total + "\" />");
+                //if (passengerdetails.Count > 0)
+                //{
+                //    for (int i = 0; i < passengerdetails.Count; i++)
+                //    {
+                //        if (passengerdetails[i].passengertypecode == "INF" || passengerdetails[i].passengertypecode == "INFT")
+                //        {
+                //            continue;
+                //        }
+                //        for (int j = 0; j < Getdetails.segmentid.Length; j++)
+                //        {
+                //            string [] unitsubKey2 = _unitkey[i].Split('_');
+                //            string pas_unitKey = unitsubKey2[1];
+                //            createPNRReq.Append("<SpecificSeatAssignment xmlns=\"http://www.travelport.com/schema/air_v52_0\" BookingTravelerRef=\"" + passengerdetails[i].passengerkey + "\" SegmentRef=\"" + Getdetails.segmentid[j].Trim() + "\" SeatId=\"" + pas_unitKey + "\"/>");
+                //        }
+
+                //    }
+                //}
+                //if (passengerdetails.Count > 0)
+                //{
+                //    int adultIndex = 0;
+                //    int childIndex = 0;
+
+                //    // Loop through the passengers to assign seats, skipping infants
+                //    for (int i = 0; i < passengerdetails.Count; i++)
+                //    {
+                //        if (passengerdetails[i].passengertypecode == "INF" || passengerdetails[i].passengertypecode == "INFT")
+                //        {
+                //            // Skip infants
+                //            continue;
+                //        }
+
+                //        // If we are processing an adult or child, assign seats
+                //        for (int j = 0; j < Getdetails.segmentid.Length; j++)
+                //        {
+                //            // Ensure each adult/child gets a unique seat per segment
+                //            string[] unitsubKey2 = _unitkey[i].Split('_');
+                //            string pas_unitKey = unitsubKey2[1];
+
+                //            // Assign the seat based on segment id and passenger type
+                //            if (passengerdetails[i].passengertypecode == "ADT") // Adult
+                //            {
+                //                createPNRReq.Append("<SpecificSeatAssignment xmlns=\"http://www.travelport.com/schema/air_v52_0\" BookingTravelerRef=\"" + passengerdetails[i].passengerkey + "\" SegmentRef=\"" + Getdetails.segmentid[j].Trim() + "\" SeatId=\"" + pas_unitKey + "\"/>");
+                //                adultIndex++;
+                //            }
+                //            else if (passengerdetails[i].passengertypecode == "CHD") // Child
+                //            {
+                //                createPNRReq.Append("<SpecificSeatAssignment xmlns=\"http://www.travelport.com/schema/air_v52_0\" BookingTravelerRef=\"" + passengerdetails[i].passengerkey + "\" SegmentRef=\"" + Getdetails.segmentid[j].Trim() + "\" SeatId=\"" + pas_unitKey + "\"/>");
+                //                childIndex++;
+                //            }
+                //        }
+                //    }
+                //}
+
+                #region seat
+                int idx = 0;
+                foreach (Match itemsegment in Regex.Matches(Getdetails.PriceSolution, "AirSegment Key=\"(?<Segmentid>[\\s\\S]*?)\""))
+                {
+                    // Ensure each adult/child gets a unique seat per segment
+                    foreach (Match mitem in Regex.Matches(Getdetails.PriceSolution, "PassengerType BookingTravelerRef=\'(?<Travllerref>[\\s\\S]*?)\'\\s*Code=\'(?<PaxType>[\\s\\S]*?)'", RegexOptions.IgnoreCase | RegexOptions.Multiline))
+                    {
+                        if (mitem.Groups["PaxType"].Value == "INFT" || mitem.Groups["PaxType"].Value == "INF")
+                        {  //idx++;
+                            continue;
+                        }
+                        if (_unitkey.Count > 0)
+                        {
+                            string[] unitsubKey2 = _unitkey[idx].Split('_');
+                            string pas_unitKey = unitsubKey2[1];
+                            createPNRReq.Append("<SpecificSeatAssignment xmlns=\"http://www.travelport.com/schema/air_v52_0\" BookingTravelerRef=\"" + mitem.Groups["Travllerref"].Value + "\" SegmentRef=\"" + itemsegment.Groups["Segmentid"].Value.Trim() + "\" SeatId=\"" + pas_unitKey.Trim() + "\"/>");
+                            idx++;
+                        }
+
                     }
                 }
                 #endregion
