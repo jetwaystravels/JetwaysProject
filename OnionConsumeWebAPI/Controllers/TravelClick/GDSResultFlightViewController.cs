@@ -369,6 +369,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                             a++;
                         }
                     }
+                    var sortedList = passkeylist.OrderBy(p => p.passengerTypeCode == "INF" ? 1 : 0).ToList();
                     //}
 
                     //}
@@ -446,7 +447,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                     }
                     AirAsiaTripResponceobj.basefaretax = basefaretax;
                     AirAsiaTripResponceobj.journeys = AAJourneyList;
-                    AirAsiaTripResponceobj.passengers = passkeylist;
+                    AirAsiaTripResponceobj.passengers = sortedList;
                     AirAsiaTripResponceobj.passengerscount = passengercount;
                     AirAsiaTripResponceobj.infttax = basefareInfttax;
                     HttpContext.Session.SetString("PricingSolutionValue_0", JsonConvert.SerializeObject(getAirPriceRes[0].PricingSolutionValue));

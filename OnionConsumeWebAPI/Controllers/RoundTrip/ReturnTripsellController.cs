@@ -2451,6 +2451,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     //a++;
                                 }
                             }
+                            var sortedList = passkeylist.OrderBy(p => p.passengerTypeCode == "INF" ? 1 : 0).ToList();
                             //}
 
                             //}
@@ -2522,7 +2523,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             AirAsiaTripResponceobj.basefaretax = basefaretax;
                             AirAsiaTripResponceobj.journeys = AAJourneyList;
                             //passkeylist = passkeylist.OrderBy(p => p.passengerTypeCode).ToList();
-                            AirAsiaTripResponceobj.passengers = passkeylist;
+                            AirAsiaTripResponceobj.passengers = sortedList;
                             AirAsiaTripResponceobj.passengerscount = passengercount;
                             AirAsiaTripResponceobj.infttax = basefareInfttax;
                             if (_journeySide == "0j")

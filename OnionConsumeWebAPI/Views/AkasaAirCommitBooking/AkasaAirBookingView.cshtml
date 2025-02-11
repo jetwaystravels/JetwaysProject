@@ -101,9 +101,31 @@
 
         function downloadPDF() {
 
+            // var elementHTML = document.querySelector("#pdfdwonloadAirasia");
+            // //var images = elementHTML.querySelectorAll('img');
+            // //images.forEach(img => img.style.display = 'none');
+            // var imageToHide = document.querySelector("#downicnIdAirasia");
+            // if (imageToHide) {
+            //     imageToHide.style.visibility = 'hidden';
+            // }
+            // docPDF.html(elementHTML, {
+            //     callback: function (docPDF) {
+            //         docPDF.save("Jetways_FlightTicket" + '.pdf');
 
-            var element = document.querySelector("#pdfdwonloadAkasa");
-            var imageToHide = document.querySelector("#downicnIdAkasa");
+            //         if (imageToHide) {
+            //             imageToHide.style.visibility = '';  // Restore the specific image
+            //         }
+            //     },
+            //     x: 12,
+            //     y: 15,
+            //     width: 160,
+            //     windowWidth: 820
+            // });
+
+
+            //test
+            var element = document.querySelector("#pdfdwonloadAirasia");
+            var imageToHide = document.querySelector("#downicnIdAirasia");
             if (imageToHide) {
                 imageToHide.style.visibility = 'hidden';
             }
@@ -136,7 +158,7 @@
                     imageToHide.style.visibility = '';
                 }
             });
-          
+
         }
 
 
@@ -156,6 +178,7 @@
                 Hashtable htseat = Model.AirlinePNR[0].Seatdata;
                 Hashtable htmeal = Model.AirlinePNR[0].Mealdata;
                 Hashtable htbag = Model.AirlinePNR[0].Bagdata;
+
                 <div class="container" id="pdfdwonloadAkasa">
 
                     <div class="flight-tckt-main">
@@ -182,74 +205,78 @@
                                 {
                                     @for (int s = 0; s < @Model.AirlinePNR[0].journeys[j].segments.Count; s++)
                                     {
-                                        <div class="row x-gap-20 bdr">
-                                            <div class="col-auto">
-                                                <div class="logo"><img class="size-35" src="~/img/flight-logo-icon/akasa.png" alt="logo"></div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="airline-N">AkasaAir <br> @Model.AirlinePNR[0].journeys[j].segments[s].identifier.carrierCode-@Model.AirlinePNR[0].journeys[j].segments[s].identifier.identifier</div>
-                                            </div>
-                                            <div class="col-auto">
-                                                @{
-                                                    string origin = "";
-                                                    string originairport = "";
-                                                    string queryorigin = Model.AirlinePNR[0].journeys[j].segments[s].designator.origin;
-                                                    if (Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault() != null)
-                                                    {
-                                                        origin = Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault().cityname;
-                                                        originairport = Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault().airportname;
+                                        for (int l = 0; l < @Model.AirlinePNR[0].journeys[j].segments[s].legs.Count; l++)
+                                        {
+                                            <div class="row x-gap-20 bdr">
+                                                <div class="col-auto">
+                                                    <div class="logo"><img class="size-35" src="~/img/flight-logo-icon/akasa.png" alt="logo"></div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="airline-N">AkasaAir <br> @Model.AirlinePNR[0].journeys[j].segments[s].identifier.carrierCode-@Model.AirlinePNR[0].journeys[j].segments[s].identifier.identifier</div>
+
+                                                </div>
+                                                <div class="col-auto">
+                                                    @{
+                                                        string origin = "";
+                                                        string originairport = "";
+                                                        string queryorigin = Model.AirlinePNR[0].journeys[j].segments[s].legs[l].designator.origin;
+                                                        if (Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault() != null)
+                                                        {
+                                                            origin = Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault().cityname;
+                                                            originairport = Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault().airportname;
+                                                        }
+
+
+                                                        string departuretime = @Model.AirlinePNR[0].journeys[j].segments[s].legs[l].designator.departure.ToString().Substring(11, 5);
+                                                        string departuredate = @Model.AirlinePNR[0].journeys[j].segments[s].legs[l].designator.departure.ToString().Substring(0, 10);
+
+                                                        //Arrival  code
+                                                        string arrival = "";
+                                                        string arrivalairport = "";
+                                                        string queryarrival = Model.AirlinePNR[0].journeys[j].segments[s].legs[l].designator.destination;
+                                                        if (Citynamelist.GetAllCityData().Where(x => x.citycode == queryarrival).SingleOrDefault() != null)
+                                                        {
+                                                            arrival = Citynamelist.GetAllCityData().Where(x => x.citycode == queryarrival).SingleOrDefault().cityname;
+                                                            arrivalairport = Citynamelist.GetAllCityData().Where(x => x.citycode == queryarrival).SingleOrDefault().airportname;
+                                                        }
+
+                                                        string arrivaltime = @Model.AirlinePNR[0].journeys[j].segments[s].legs[l].designator.arrival.ToString().Substring(11, 5);
+                                                        string arrivaldate = @Model.AirlinePNR[0].journeys[j].segments[s].legs[l].designator.arrival.ToString().Substring(0, 10);
+                                                    }
+                                                    <div class="Dst-name">
+                                                        <span class="red">@origin</span> @departuretime <span>
+                                                            <strong>@departuredate</strong>
+                                                        </span> <span>Terminal - @Model.AirlinePNR[0].journeys[j].segments[s].legs[l].legInfo.departureTerminal</span>
+                                                        <span>@originairport</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-auto text-center">
+                                                    @{
+
+                                                        string formattedTime = string.Empty;
+                                                        var arrivalDate = Model.AirlinePNR[0].journeys[j].segments[s].legs[l].designator.arrival;
+                                                        var departureDate = Model.AirlinePNR[0].journeys[j].segments[s].legs[l].designator.departure;
+                                                        var diff = (arrivalDate - departureDate);
+                                                        TimeSpan timeSpan = TimeSpan.Parse(diff.ToString());
+                                                        if ((int)timeSpan.Minutes == 0)
+                                                            formattedTime = $"{(int)timeSpan.TotalHours} h";
+                                                        else
+                                                            formattedTime = $"{(int)timeSpan.TotalHours} h {(int)timeSpan.Minutes} m";
                                                     }
 
+                                                    <div class="time">@formattedTime</div>
+                                                    <img src="~/img/arrow-line-fr.png" alt="icon">
+                                                </div>
 
-                                                    string departuretime = @Model.AirlinePNR[0].journeys[j].segments[s].designator.departure.ToString().Substring(11, 5);
-                                                    string departuredate = @Model.AirlinePNR[0].journeys[j].segments[s].designator.departure.ToString().Substring(0, 10);
-
-                                                    //Arrival  code
-                                                    string arrival = "";
-                                                    string arrivalairport = "";
-                                                    string queryarrival = Model.AirlinePNR[0].journeys[j].segments[s].designator.destination;
-                                                    if (Citynamelist.GetAllCityData().Where(x => x.citycode == queryarrival).SingleOrDefault() != null)
-                                                    {
-                                                        arrival = Citynamelist.GetAllCityData().Where(x => x.citycode == queryarrival).SingleOrDefault().cityname;
-                                                        arrivalairport = Citynamelist.GetAllCityData().Where(x => x.citycode == queryarrival).SingleOrDefault().airportname;
-                                                    }
-
-                                                    string arrivaltime = @Model.AirlinePNR[0].journeys[j].segments[s].designator.arrival.ToString().Substring(11, 5);
-                                                    string arrivaldate = @Model.AirlinePNR[0].journeys[j].segments[s].designator.arrival.ToString().Substring(0, 10);
-                                                }
-                                                <div class="Dst-name">
-                                                    <span class="red">@origin</span> @departuretime <span>
-                                                        <strong>@departuredate</strong>
-                                                    </span> <span>Terminal - @Model.AirlinePNR[0].journeys[j].segments[s].legs[0].legInfo.departureTerminal</span>
-                                                    <span>@originairport</span>
+                                                <div class="col">
+                                                    <div class="Dst-name">
+                                                        <span class="red">@arrival</span> @arrivaltime <span><strong>@arrivaldate</strong></span> <span>Terminal - @Model.AirlinePNR[0].journeys[j].segments[s].legs[l].legInfo.arrivalTerminal</span>
+                                                        <span>@arrivalairport</span>
+                                                    </div>
                                                 </div>
                                             </div>
-
-                                            <div class="col-auto text-center">
-                                                @{
-
-                                                    string formattedTime = string.Empty;
-                                                    var arrivalDate = Model.AirlinePNR[0].journeys[j].segments[s].designator.arrival;
-                                                    var departureDate = Model.AirlinePNR[0].journeys[j].segments[s].designator.departure;
-                                                    var diff = (arrivalDate - departureDate);
-                                                    TimeSpan timeSpan = TimeSpan.Parse(diff.ToString());
-                                                    if ((int)timeSpan.Minutes == 0)
-                                                        formattedTime = $"{(int)timeSpan.TotalHours} h";
-                                                    else
-                                                        formattedTime = $"{(int)timeSpan.TotalHours} h {(int)timeSpan.Minutes} m";
-                                                }
-                                                <div class="time">@formattedTime</div>
-                                                <img src="~/img/arrow-line-fr.png" alt="icon">
-
-                                            </div>
-
-                                            <div class="col">
-                                                <div class="Dst-name">
-                                                    <span class="red">@arrival</span> @arrivaltime <span><strong>@arrivaldate</strong></span> <span>Terminal - @Model.AirlinePNR[0].journeys[j].segments[s].legs[0].legInfo.arrivalTerminal</span>
-                                                    <span>@arrivalairport</span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        }
                                     }
 
                                 }
@@ -264,10 +291,12 @@
                                 <thead>
                                     <tr>
 
+                                    <tr>
+
                                         <th rowspan="2" class="align-middle">Passenger</th>
                                         <th colspan="2" class="text-center">Fllight Detail</th>
                                         <th rowspan="2" class="align-middle">Seat No</th>
-                                        <th rowspan="2" class="align-middle">Mobile Number</th>
+                                        <th rowspan="2" class="align-middle">Mobile</th>
                                         <th rowspan="2" class="align-middle">Ticket Number</th>
                                         <th rowspan="2" class="align-middle">Status</th>
                                         <th rowspan="2" class="align-middle barcode">Bar code</th>
@@ -308,16 +337,14 @@
                                                         }
 
                                                     }
-
                                                     if (ps == 0)
                                                     {
-                                                        int segmentscount = @Model.AirlinePNR[0].journeys[0].segments.Count;
-                                                        if (segmentscount == 1)
+                                                        int segmentcount = @Model.AirlinePNR[0].journeys[0].segments.Count;
+                                                        if (segmentcount == 1)
                                                         {
                                                             <td rowspan="1" style="vertical-align:middle;">@Model.AirlinePNR[0].passengers[p].name.first (@Model.AirlinePNR[0].passengers[p].passengerTypeCode)</td>
                                                         }
-
-                                                        if (segmentscount == 2)
+                                                        if (segmentcount == 2)
                                                         {
                                                             <td rowspan="2" style="vertical-align:middle;">@Model.AirlinePNR[0].passengers[p].name.first (@Model.AirlinePNR[0].passengers[p].passengerTypeCode)</td>
                                                         }
@@ -422,10 +449,14 @@
                                                         }
                                                     }
                                                 }
+                                                @*else
+                                {
+                                <td></td>
+                                }*@
                                             </tr>
+
                                         }
                                     }
-
                                 </tbody>
 
                             </table>
@@ -437,7 +468,7 @@
                                     <tr>
                                         <th rowspan="2" class="align-middle">Passenger</th>
                                         <th colspan="2" class="text-center">Fllight Detail</th>
-                                        <th rowspan="2" class="align-middle">Meal Type</th>
+                                        <th rowspan="2" class="align-middle">Meal</th>
                                         <th rowspan="2" class="align-middle">Extra Bag(Kg)</th>
                                         <th rowspan="2" class="align-middle">Insurance Status</th>
                                     </tr>
@@ -446,6 +477,7 @@
                                         <th class="col-one">Airline</th>
 
                                     </tr>
+
                                 </thead>
 
                                 <tbody>
@@ -467,17 +499,24 @@
                                                             <td rowspan="2" style="vertical-align:middle;">@Model.AirlinePNR[0].passengers[i2].name.first (@Model.AirlinePNR[0].passengers[i2].passengerTypeCode)</td>
                                                         }
                                                     }
-
+                                                    // else
+                                                    // {
+                                                    //     <td></td>
+                                                    // }
                                                 }
                                                 <td>@Model.AirlinePNR[0].journeys[0].segments[i3].designator.origin - @Model.AirlinePNR[0].journeys[0].segments[i3].designator.destination </td>
-                                                <td>@Model.AirlinePNR[0].journeys[0].segments[i3].identifier.carrierCode - @Model.AirlinePNR[0].journeys[0].segments[i3].identifier.identifier</td>
+                                                <td colspan="1">@Model.AirlinePNR[0].journeys[0].segments[i3].identifier.carrierCode - @Model.AirlinePNR[0].journeys[0].segments[i3].identifier.identifier</td>
+
 
                                                 @{
                                                     string hashdata = @Model.AirlinePNR[0].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[0].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[0].journeys[0].segments[i3].designator.destination;
 
                                                     if (htmeal != null && htmeal.ContainsKey(hashdata))
                                                     {
+
                                                         var Mealcode = htmeal[hashdata].ToString();
+
+
                                                         var meal = MealImageList.GetAllmeal().Where(x => Mealcode.Contains(x.MealCode)).ToList();
                                                         // var meal = MealImageList.GetAllmeal().Where(x => mealcode.Contains(x.MealCode)).ToList();
                                                         if (meal != null)
@@ -485,21 +524,22 @@
                                                             foreach (var item in meal)
                                                             {
                                                                 <td>@item.MealCode</td>
-                                                                //THIS IS FOR MEAL
-                                                                // <td>@item.MealImage</td>
+
                                                             }
+
+
                                                         }
-                                                        //<td>@htmeal[hashdata]</td>
+
                                                     }
                                                     else
                                                     {
                                                         <td>NA</td>
                                                     }
-                                                    //string hashBagdata = @Model.AirlinePNR[0].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[0].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[0].journeys[0].segments[i3].designator.destination;
-                                                    //if (htbag != null)
-                                                    //{
-                                                       // <td>@htbag[hashBagdata]</td>
-                                                    //}
+                                                    // string hashBagdata = @Model.AirlinePNR[0].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[0].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[0].journeys[0].segments[i3].designator.destination;
+                                                    // if (htbag != null)
+                                                    // {
+                                                    //     <td>@htbag[hashBagdata]</td>
+                                                    // }
                                                     string hashBagdata = @Model.AirlinePNR[0].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[0].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[0].journeys[0].segments[i3].designator.destination;
                                                     if (htbag != null && htbag.ContainsKey(hashBagdata))
                                                     {
@@ -516,8 +556,7 @@
 
                                                                     <td>@item.MealImage</td>
                                                                 }
-                                                               
-                                                                //THIS IS FOR BAGGAGE.
+
                                                             }
                                                         }
                                                     }
@@ -525,15 +564,16 @@
                                                     {
                                                         <td>NA</td>
                                                     }
+
                                                 }
-                                                <td>Confirm</td>
+
+                                                <td>NA</td>
                                             </tr>
                                         }
                                     }
                                 </tbody>
 
                             </table>
-
                             @if (@Model.AirlinePNR[0].customerNumber != null)
                             {
                                 <table class="table table-bordered">
@@ -546,11 +586,19 @@
                                     </thead>
                                     <tbody>
                                         <tr>
+
                                             @{
+
+
                                                 <td>@Model.AirlinePNR[0].companyName</td>
+
                                                 <td>@Model.AirlinePNR[0].customerNumber</td>
+
                                                 <td>@Model.AirlinePNR[0].emailAddressgst</td>
+
+
                                             }
+
                                         </tr>
                                     </tbody>
                                 </table>
@@ -752,8 +800,58 @@
 
 </body>
 </html>
+<script type="text/javascript">
+
+    //JsBarcode("#barcode", "1234", {
+    //format: "pharmacode",
+    //lineColor: "#0aa",
+    //width: 4,
+    //height: 40,
+    //displayValue: false
+    //});
+
+    JsBarcode("#barcode", "Vinay", {
+        width: 1,
+        height: 30,
+        displayValue: false
+
+    });
+
+    //-----PDF-Filegenrate-Code-----------
+    //var testDivElement = document.getElementById('someHtml');
+
+    //function savePDF() {
+    // var imgData;
+    //html2canvas($("#someHtml"), {
+    //useCORS: true,
+    //onrendered: function (canvas) {
+    // imgData = canvas.toDataURL('image/png');
+    // var doc = new jsPDF('p', 'pt', 'a4');
+    // doc.addImage(imgData, 'PNG', 10, 10);
+    //doc.save('sample-file.pdf');
+    //window.open(imgData);
+    //}
+
+    //});
+    //};
 
 
+
+    function printDiv(divName) {
+
+        var printContents = document.getElementById(divName).innerHTML;
+
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+
+    }
+
+</script>
 
 
 

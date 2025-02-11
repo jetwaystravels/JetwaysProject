@@ -85,7 +85,14 @@
            new { MealCode = "PBAF", MealImage = "+ 25 Kg Xcess Baggage" },
            
           
-          
+          //baggage AKASA
+
+           new { MealCode = "XC30", MealImage = "+30 kgs Xcess Baggage" },
+           new { MealCode = "XC25", MealImage = "+25 kg Xcess Baggage" },
+           new { MealCode = "XC20", MealImage = "+20 kg Xcess Baggage" },
+           new { MealCode = "XC15", MealImage = "+15 kg Xcess Baggage" },
+           new { MealCode = "XC10", MealImage = "+10 Kg Xcess Baggage" },
+           new { MealCode = "XC05", MealImage = "+5 Kg Xcess Baggage" },
            
            //Indigo Bag Code
            new { MealCode = "XBPD", MealImage = "+30 kgs Xcess Baggage" },

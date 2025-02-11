@@ -3078,19 +3078,19 @@ namespace OnionArchitectureAPI.Services.Travelport
                 {
                     if (passengerdetails[i].passengertypecode == "ADT")
                     {
-                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + count + "\"  TravelerType=\"ADT\">");
+                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + passengerdetails[i].passengerkey + "\"  TravelerType=\"ADT\">");
                     }
                     else if (passengerdetails[i].passengertypecode == "CHD" || passengerdetails[i].passengertypecode == "CNN")
                     {
-                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + count + "\"  TravelerType=\"CNN\">");
+                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + passengerdetails[i].passengerkey + "\"  TravelerType=\"CNN\">");
                     }
                     else if (passengerdetails[i].passengertypecode == "INF" || passengerdetails[i].passengertypecode == "INFT")
                     {
-                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + count + "\" TravelerType=\"INF\">");
+                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + passengerdetails[i].passengerkey + "\" TravelerType=\"INF\">");
                     }
                     else
                     {
-                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + count + "\"  TravelerType=\"ADT\">");
+                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + passengerdetails[i].passengerkey + "\"  TravelerType=\"ADT\">");
                     }
 
 
@@ -3149,7 +3149,9 @@ namespace OnionArchitectureAPI.Services.Travelport
                                 }
                                 for (int k = 0; k < _obj.SSRcodeOneWayI.Count; k++)
                                 {
-                                    if (_obj.SSRcodeOneWayI[k].key.Contains("_OneWay0") && seg == 0 && _obj.SSRcodeOneWayI[k].key.Split('/').Last() == passengerdetails[i].passengertypecode && _obj.SSRcodeOneWayI[k].key.Contains(passengerdetails[i].first + "/" + passengerdetails[i].last))// || _SSRkey[_id].Contains("_OneWay1")))
+                                    string[] parts = _obj.SSRcodeOneWayI[k].key.Split('/');
+                                    string result = parts[parts.Length - 2] + "/" + parts[0].Substring(parts[0].LastIndexOf('_')+1);
+                                    if (_obj.SSRcodeOneWayI[k].key.Contains("_OneWay0") && seg == 0 && _obj.SSRcodeOneWayI[k].key.Split('/').Last() == passengerdetails[i].passengertypecode && result == passengerdetails[i].last + "/" + passengerdetails[i].first)// || _SSRkey[_id].Contains("_OneWay1")))
                                     {
                                         //}
                                         string[] unitsubKey2 = _obj.SSRcodeOneWayI[k].key.Split('_');
@@ -3160,7 +3162,9 @@ namespace OnionArchitectureAPI.Services.Travelport
                                 }
                                 for (int k = 0; k < _obj.SSRcodeOneWayII.Count; k++)
                                 {
-                                    if (_obj.SSRcodeOneWayII[k].key.Contains("_OneWay1") && seg == 1 && _obj.SSRcodeOneWayII[k].key.Split('/').Last() == passengerdetails[i].passengertypecode && _obj.SSRcodeOneWayII[k].key.Contains(passengerdetails[i].first + "/" + passengerdetails[i].last))
+                                    string[] parts = _obj.SSRcodeOneWayI[k].key.Split('/');
+                                    string result = parts[parts.Length - 2] + "/" + parts[0].Substring(parts[0].LastIndexOf('_') + 1);
+                                    if (_obj.SSRcodeOneWayII[k].key.Contains("_OneWay1") && seg == 1 && _obj.SSRcodeOneWayII[k].key.Split('/').Last() == passengerdetails[i].passengertypecode && result == passengerdetails[i].last + "/" + passengerdetails[i].first)
                                     {
                                         string[] unitsubKey2 = _obj.SSRcodeOneWayII[k].key.Split('_');
                                         string pas_unitKey = unitsubKey2[0];

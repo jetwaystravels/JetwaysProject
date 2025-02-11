@@ -487,6 +487,10 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                                     barcodeImage = new List<string>();
                                     passkeytypeobj = new ReturnPassengers();
                                     passkeytypeobj.name = new Name();
+
+
+                                    
+
                                     //        foreach (var item1 in item.PassengerFees)
                                     //        {
                                     //            if (item1.FeeCode.Equals("SEAT"))
@@ -667,7 +671,13 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                                     //}
                                     returnTicketBooking.passengers = passkeylist;
                                 }
-
+                                //foreach (Match traveller in Regex.Matches(strResponse, @"BookingTraveler\s*Key=""[\s\S]*?TravelerType=""(?<paxid>[\s\S]*?)""[\s\S]*?</common_v52_0:BookingTraveler>", RegexOptions.IgnoreCase | RegexOptions.Multiline))
+                                //{
+                                //    foreach (Match _datal in Regex.Matches(traveller.Value, @"AirSeatAssignment[\s\S]*?Seat=""(?<unitdesignator>[\s\S]*?)""\s*SegmentRef=""(?<Segmentid>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline))
+                                //    {
+                                //        htseatdata.Add(traveller.Groups["paxid"].Value.Trim() + "_" + _datal.Groups["Segmentid"].Value.Trim(), _datal.Groups["unitdesignator"].Value.Trim());
+                                //    }
+                                //}
                                 double BasefareAmt = 0.0;
                                 double BasefareTax = 0.0;
                                 for (int i2 = 0; i2 < breakdown.journeyfareTotals.Count; i2++)
