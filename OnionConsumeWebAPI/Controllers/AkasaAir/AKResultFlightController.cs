@@ -141,7 +141,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                         AkasaJourneyobj.designator = AkasaDesignatorobj;
 
 
-                        int segmentscount = Akasajsondata.data.journeys[i].segments.Count;
+                       int segmentscount = Akasajsondata.data.journeys[i].segments.Count;
                         List<AASegment> AkasaSegmentlist = new List<AASegment>();
                         for (int j = 0; j < segmentscount; j++)
                         {
@@ -583,29 +583,50 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                 #region Meals& Baggage
                 string Akpassengerdata = HttpContext.Session.GetString("ResultFlightPassenger");
                 AirAsiaTripResponceModel AKpasseengerKeyList = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(Akpassengerdata, typeof(AirAsiaTripResponceModel));
+
+
                 int passengerscount = AKpasseengerKeyList.passengerscount;
-                string departuredate = string.Empty;
                 SSRAvailabiltyModel _AkasaSSRAvailabilty = new SSRAvailabiltyModel();
                 _AkasaSSRAvailabilty.passengerKeys = new string[passengerscount];
+
                 for (int i = 0; i < passengerscount; i++)
                 {
                     _AkasaSSRAvailabilty.passengerKeys[i] = AKpasseengerKeyList.passengers[i].passengerKey;
                 }
-                _AkasaSSRAvailabilty.currencyCode = _AkasaSSRAvailabilty.currencyCode;
+
+                _AkasaSSRAvailabilty.currencyCode = "INR"; // Ensure currency code is assigned properly
 
                 List<Trip> AkasaTripslist = new List<Trip>();
-                Trip AkasaTripobj = new Trip();
-                AkasaTripobj.destination = AKpasseengerKeyList.journeys[0].designator.destination;
-                AkasaTripobj.origin = AKpasseengerKeyList.journeys[0].designator.origin;
-                List<TripIdentifier> AkasaTripIdentifierlist = new List<TripIdentifier>();
-                TripIdentifier AkasaTripIdentifierobj = new TripIdentifier();
-                AkasaTripIdentifierobj.carrierCode = AKpasseengerKeyList.journeys[0].segments[0].identifier.carrierCode;
-                AkasaTripIdentifierobj.identifier = AKpasseengerKeyList.journeys[0].segments[0].identifier.identifier;
-                AkasaTripIdentifierlist.Add(AkasaTripIdentifierobj);
-                AkasaTripobj.identifier = AkasaTripIdentifierlist;
-                AkasaTripslist.Add(AkasaTripobj);
+
+                int segsmealBagcount = AKpasseengerKeyList.journeys[0].segments.Count;
+
+                for (int i = 0; i < segsmealBagcount; i++)
+                {
+                    Trip AkasaTripobj = new Trip();
+                    List<TripIdentifier> AkasaTripIdentifierlist = new List<TripIdentifier>();
+
+                    TripIdentifier AkasaTripIdentifierobj = new TripIdentifier
+                    {
+                        carrierCode = AKpasseengerKeyList.journeys[0].segments[i].identifier.carrierCode,
+                        identifier = AKpasseengerKeyList.journeys[0].segments[i].identifier.identifier
+                    };
+
+                    AkasaTripIdentifierlist.Add(AkasaTripIdentifierobj);
+
+                    AkasaTripobj.origin = AKpasseengerKeyList.journeys[0].segments[i].designator.origin;
+                    AkasaTripobj.destination = AKpasseengerKeyList.journeys[0].segments[i].designator.destination;
+                    AkasaTripobj.departureDate = AKpasseengerKeyList.journeys[0].designator.departure.ToString("yyyy-MM-dd");
+                    AkasaTripobj.identifier = AkasaTripIdentifierlist;
+
+                    AkasaTripslist.Add(AkasaTripobj);
+                }
+
                 _AkasaSSRAvailabilty.trips = AkasaTripslist;
+
                 var jsonAkasaSSRAvailabiltyRequest = JsonConvert.SerializeObject(_AkasaSSRAvailabilty, Formatting.Indented);
+
+
+
                 SSRAvailabiltyResponceModel AkasaSSRAvailabiltyResponceobj = new SSRAvailabiltyResponceModel();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);

@@ -2401,7 +2401,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             {
                                 if (getAirPriceRes[0].Fare.PaxFares[i].PaxType == PAXTYPE.ADT)
                                 {
-                                    a = Convert.ToInt32(getAirPriceRes[0].Fare.PaxFares[i].PaxType);
+                                    //a = Convert.ToInt32(getAirPriceRes[0].Fare.PaxFares[i].PaxType);
                                     paxType = "ADT";
                                     if (availibiltyRQGDS.passengercount != null)
                                     {
@@ -2415,7 +2415,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                 }
                                 else if (getAirPriceRes[0].Fare.PaxFares[i].PaxType == PAXTYPE.CHD)
                                 {
-                                    a = Convert.ToInt32(getAirPriceRes[0].Fare.PaxFares[i].PaxType);
+                                    //a = Convert.ToInt32(getAirPriceRes[0].Fare.PaxFares[i].PaxType);
                                     paxType = "CHD";
                                     if (availibiltyRQGDS.passengercount != null)
                                     {
@@ -2429,7 +2429,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                 }
                                 else if (getAirPriceRes[0].Fare.PaxFares[i].PaxType == PAXTYPE.INF)
                                 {
-                                    a = Convert.ToInt32(getAirPriceRes[0].Fare.PaxFares[i].PaxType);
+                                    //a = Convert.ToInt32(getAirPriceRes[0].Fare.PaxFares[i].PaxType);
                                     paxType = "INF";
                                     if (availibiltyRQGDS.passengercount != null)
                                     {
@@ -2448,8 +2448,9 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     passkeytypeobj.passengerTypeCode = paxType;
                                     passkeytypeobj._Airlinename = _JourneykeyRTData;
                                     passkeylist.Add(passkeytypeobj);
-                                    //a++;
+                                    a++;
                                 }
+
                             }
                             var sortedList = passkeylist.OrderBy(p => p.passengerTypeCode == "INF" ? 1 : 0).ToList();
                             //}
