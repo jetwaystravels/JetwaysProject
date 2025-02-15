@@ -585,8 +585,51 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                 AirAsiaTripResponceModel AKpasseengerKeyList = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(Akpassengerdata, typeof(AirAsiaTripResponceModel));
 
 
+                //int passengerscount = AKpasseengerKeyList.passengerscount;
+                //SSRAvailabiltyModel _AkasaSSRAvailabilty = new SSRAvailabiltyModel();
+                //_AkasaSSRAvailabilty.passengerKeys = new string[passengerscount];
+
+                //for (int i = 0; i < passengerscount; i++)
+                //{
+                //    _AkasaSSRAvailabilty.passengerKeys[i] = AKpasseengerKeyList.passengers[i].passengerKey;
+                //}
+
+                //_AkasaSSRAvailabilty.currencyCode = "INR"; // Ensure currency code is assigned properly
+
+                //List<Trip> AkasaTripslist = new List<Trip>();
+
+                //int segsmealBagcount = AKpasseengerKeyList.journeys[0].segments.Count;
+
+                //for (int i = 0; i < segsmealBagcount; i++)
+                //{
+                //    Trip AkasaTripobj = new Trip();
+                //    List<TripIdentifier> AkasaTripIdentifierlist = new List<TripIdentifier>();
+
+                //    TripIdentifier AkasaTripIdentifierobj = new TripIdentifier
+                //    {
+                //        carrierCode = AKpasseengerKeyList.journeys[0].segments[i].identifier.carrierCode,
+                //        identifier = AKpasseengerKeyList.journeys[0].segments[i].identifier.identifier
+                //    };
+
+                //    AkasaTripIdentifierlist.Add(AkasaTripIdentifierobj);
+
+                //    AkasaTripobj.origin = AKpasseengerKeyList.journeys[0].segments[i].designator.origin;
+                //    AkasaTripobj.destination = AKpasseengerKeyList.journeys[0].segments[i].designator.destination;
+                //    AkasaTripobj.departureDate = AKpasseengerKeyList.journeys[0].designator.departure.ToString("yyyy-MM-dd");
+                //    AkasaTripobj.identifier = AkasaTripIdentifierlist;
+
+                //    AkasaTripslist.Add(AkasaTripobj);
+                //}
+
+                //_AkasaSSRAvailabilty.trips = AkasaTripslist;
+
+                //var jsonAkasaSSRAvailabiltyRequest = JsonConvert.SerializeObject(_AkasaSSRAvailabilty, Formatting.Indented);
+
+                ///test
+
+
                 int passengerscount = AKpasseengerKeyList.passengerscount;
-                SSRAvailabiltyModel _AkasaSSRAvailabilty = new SSRAvailabiltyModel();
+                AkasaSSRavailRequest _AkasaSSRAvailabilty = new AkasaSSRavailRequest();
                 _AkasaSSRAvailabilty.passengerKeys = new string[passengerscount];
 
                 for (int i = 0; i < passengerscount; i++)
@@ -596,14 +639,13 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
 
                 _AkasaSSRAvailabilty.currencyCode = "INR"; // Ensure currency code is assigned properly
 
-                List<Trip> AkasaTripslist = new List<Trip>();
+                List<TripAA> AkasaTripslist = new List<TripAA>();
 
                 int segsmealBagcount = AKpasseengerKeyList.journeys[0].segments.Count;
 
                 for (int i = 0; i < segsmealBagcount; i++)
                 {
-                    Trip AkasaTripobj = new Trip();
-                    List<TripIdentifier> AkasaTripIdentifierlist = new List<TripIdentifier>();
+                    TripAA AkasaTripobj = new TripAA();
 
                     TripIdentifier AkasaTripIdentifierobj = new TripIdentifier
                     {
@@ -611,12 +653,10 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                         identifier = AKpasseengerKeyList.journeys[0].segments[i].identifier.identifier
                     };
 
-                    AkasaTripIdentifierlist.Add(AkasaTripIdentifierobj);
-
                     AkasaTripobj.origin = AKpasseengerKeyList.journeys[0].segments[i].designator.origin;
                     AkasaTripobj.destination = AKpasseengerKeyList.journeys[0].segments[i].designator.destination;
                     AkasaTripobj.departureDate = AKpasseengerKeyList.journeys[0].designator.departure.ToString("yyyy-MM-dd");
-                    AkasaTripobj.identifier = AkasaTripIdentifierlist;
+                    AkasaTripobj.identifier = AkasaTripIdentifierobj; // ✅ Assign as an object, NOT a list
 
                     AkasaTripslist.Add(AkasaTripobj);
                 }
@@ -624,6 +664,11 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                 _AkasaSSRAvailabilty.trips = AkasaTripslist;
 
                 var jsonAkasaSSRAvailabiltyRequest = JsonConvert.SerializeObject(_AkasaSSRAvailabilty, Formatting.Indented);
+
+
+
+                ///end
+
 
 
 
