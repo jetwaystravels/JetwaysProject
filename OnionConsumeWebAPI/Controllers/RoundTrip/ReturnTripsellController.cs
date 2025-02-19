@@ -4079,40 +4079,49 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         token = token.Replace(@"""", string.Empty);
                         string passengerdata = HttpContext.Session.GetString("keypassenger");
 
-                        AirAsiaTripResponceModel passeengerKeyList = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passengerdata, typeof(AirAsiaTripResponceModel));
-                        int passengerscount = passeengerKeyList.passengerscount;
+                        AirAsiaTripResponceModel AKpasseengerKeyList = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passengerdata, typeof(AirAsiaTripResponceModel));
+                        
+                        int passengerscount = AKpasseengerKeyList.passengerscount;
+                        AkasaSSRavailRequest _AkasaSSRAvailabilty = new AkasaSSRavailRequest();
+                        _AkasaSSRAvailabilty.passengerKeys = new string[passengerscount];
 
-                        string departuredate = string.Empty;
-                        SSRAvailabiltyModel _SSRAvailabilty = new SSRAvailabiltyModel();
-                        _SSRAvailabilty.passengerKeys = new string[passengerscount];
                         for (int i = 0; i < passengerscount; i++)
                         {
-                            _SSRAvailabilty.passengerKeys[i] = passeengerKeyList.passengers[i].passengerKey;
+                            _AkasaSSRAvailabilty.passengerKeys[i] = AKpasseengerKeyList.passengers[i].passengerKey;
                         }
-                        _SSRAvailabilty.currencyCode = _SSRAvailabilty.currencyCode;
 
-                        List<Trip> Tripslist = new List<Trip>();
-                        Trip Tripobj = new Trip();
-                        Tripobj.destination = passeengerKeyList.journeys[0].designator.destination;
-                        Tripobj.origin = passeengerKeyList.journeys[0].designator.origin;
-                        Tripobj.departureDate = passeengerKeyList.journeys[0].designator.departure.ToString();
+                        _AkasaSSRAvailabilty.currencyCode = "INR"; // Ensure currency code is assigned properly
 
-                        List<TripIdentifier> TripIdentifierlist = new List<TripIdentifier>();
-                        TripIdentifier TripIdentifierobj = new TripIdentifier();
-                        TripIdentifierobj.carrierCode = passeengerKeyList.journeys[0].segments[0].identifier.carrierCode;
+                        List<TripAA> AkasaTripslist = new List<TripAA>();
 
-                        TripIdentifierobj.identifier = passeengerKeyList.journeys[0].segments[0].identifier.identifier;
-                        TripIdentifierlist.Add(TripIdentifierobj);
-                        Tripobj.identifier = TripIdentifierlist;
-                        Tripslist.Add(Tripobj);
-                        _SSRAvailabilty.trips = Tripslist;
+                        int segsmealBagcount = AKpasseengerKeyList.journeys[0].segments.Count;
 
+                        for (int i = 0; i < segsmealBagcount; i++)
+                        {
+                            TripAA AkasaTripobj = new TripAA();
 
-                        var jsonSSRAvailabiltyRequest = JsonConvert.SerializeObject(_SSRAvailabilty, Formatting.Indented);
+                            TripIdentifier AkasaTripIdentifierobj = new TripIdentifier
+                            {
+                                carrierCode = AKpasseengerKeyList.journeys[0].segments[i].identifier.carrierCode,
+                                identifier = AKpasseengerKeyList.journeys[0].segments[i].identifier.identifier
+                            };
+
+                            AkasaTripobj.origin = AKpasseengerKeyList.journeys[0].segments[i].designator.origin;
+                            AkasaTripobj.destination = AKpasseengerKeyList.journeys[0].segments[i].designator.destination;
+                            AkasaTripobj.departureDate = AKpasseengerKeyList.journeys[0].designator.departure.ToString("yyyy-MM-dd");
+                            AkasaTripobj.identifier = AkasaTripIdentifierobj; // ✅ Assign as an object, NOT a list
+
+                            AkasaTripslist.Add(AkasaTripobj);
+                        }
+
+                        _AkasaSSRAvailabilty.trips = AkasaTripslist;
+
+                        var jsonAkasaSSRAvailabiltyRequest = JsonConvert.SerializeObject(_AkasaSSRAvailabilty, Formatting.Indented);
+
                         SSRAvailabiltyResponceModel SSRAvailabiltyResponceobj = new SSRAvailabiltyResponceModel();
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                        HttpResponseMessage responseSSRAvailabilty = await client.PostAsJsonAsync(AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/ssrs/availability", _SSRAvailabilty);
+                        HttpResponseMessage responseSSRAvailabilty = await client.PostAsJsonAsync(AppUrlConstant.URLAkasaAir + "/api/nsk/v2/booking/ssrs/availability", _AkasaSSRAvailabilty);
                         if (responseSSRAvailabilty.IsSuccessStatusCode)
                         {
                             var _responseSSRAvailabilty = responseSSRAvailabilty.Content.ReadAsStringAsync().Result;
@@ -4125,13 +4134,13 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             if (p == 0)
                             {
                                 //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject("getRequest") + "Url: " + BaseURL + "/api/nsk/v3/booking/seatmaps/journey/" + _JourneykeyDataAA + "?IncludePropertyLookup=true" + "\n Response: " + JsonConvert.SerializeObject(_responseSeatmap), "GetSeatmap_Left", "AirAsiaRT");
-                                logs.WriteLogsR(jsonSSRAvailabiltyRequest, "6-GetMealmapReq_Left", "AkasaRT");
+                                logs.WriteLogsR(jsonAkasaSSRAvailabiltyRequest, "6-GetMealmapReq_Left", "AkasaRT");
                                 logs.WriteLogsR(_responseSSRAvailabilty, "6-GetMealmapRes_Left", "AkasaRT");
                             }
                             else
                             {
                                 //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject("getRequest") + "Url: " + BaseURL + "/api/nsk/v3/booking/seatmaps/journey/" + _JourneykeyDataAA + "?IncludePropertyLookup=true" + "\n Response: " + JsonConvert.SerializeObject(_responseSeatmap), "GetSeatmap_Right", "AirAsiaRT");
-                                logs.WriteLogsR(jsonSSRAvailabiltyRequest, "6-GetMealmapReq_Right", "AkasaRT");
+                                logs.WriteLogsR(jsonAkasaSSRAvailabiltyRequest, "6-GetMealmapReq_Right", "AkasaRT");
                                 logs.WriteLogsR(_responseSSRAvailabilty, "6-GetMealmapRes_Right", "AkasaRT");
                             }
 
