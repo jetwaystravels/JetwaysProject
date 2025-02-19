@@ -1239,7 +1239,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                         {
                                             SsrReturn ssrReturn = new SsrReturn();
                                             ssrReturn.ssrCode = item.Value.ssrs[t].ssrCode;
-                                            if (ssrReturn.ssrCode.StartsWith("P"))
+                                            if (!ssrReturn.ssrCode.StartsWith("P"))
                                             {
                                                 continue;
                                             }
@@ -1261,14 +1261,26 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                         {
                                             SsrReturn ssrReturn = new SsrReturn();
                                             ssrReturn.ssrCode = item.Value.ssrs[t].ssrCode;
-                                            if (ssrReturn.ssrCode.StartsWith("V"))
+                                            if (!ssrReturn.ssrCode.StartsWith("X"))
                                             {
                                                 continue;
                                             }
                                             else
                                             {
-                                                htBagdata.Add(passengerSegmentobj.passengerKey.ToString() + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.origin + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.destination, ssrReturn.ssrCode);
+
+                                                if (!htBagdata.Contains(passengerSegmentobj.passengerKey.ToString() + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.origin + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.destination))
+                                                {
+                                                    htBagdata.Add(passengerSegmentobj.passengerKey.ToString() + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.origin + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.destination, ssrReturn.ssrCode);
+
+                                                }
                                                 returnSeats.SSRCode += ssrReturn.ssrCode + ",";
+
+
+
+
+
+                                                //htBagdata.Add(passengerSegmentobj.passengerKey.ToString() + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.origin + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.destination, ssrReturn.ssrCode);
+                                                //returnSeats.SSRCode += ssrReturn.ssrCode + ",";
                                             }
 
 
