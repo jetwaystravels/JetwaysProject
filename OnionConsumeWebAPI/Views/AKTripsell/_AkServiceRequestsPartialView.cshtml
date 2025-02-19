@@ -576,7 +576,7 @@
                                                             {
                                                                 string ssrprice = Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[0].price;
                                                                 string Mealcode = Model.AkMealslist.legSsrs[0].legssrs[s].ssrCode;
-                                                                 Mealname = Mealcode + "-" + Model.AkMealslist.legSsrs[0].legssrs[s].name + " ₹" + @Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[0].price + "_" + Model.AkMealslist.legSsrs[0].legssrs[s].ssrCode;
+                                                                Mealname = Mealcode + "-" + Model.AkMealslist.legSsrs[0].legssrs[s].name + " ₹" + @Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[0].price + "_" + Model.AkMealslist.legSsrs[0].legssrs[s].ssrCode;
                                                                 ssrkey = Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[pa].ssrKey + "_" + @Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[0].price;
                                                                 string passengerKey = Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[pa].passengerKey;
 
@@ -648,17 +648,17 @@
                                                         if (bagcode != "False")
                                                         {
                                                             baggageOptions.Add(new SelectListItem { Text = bagname, Value = bagkey });
-                                                           
+
                                                         }
-                                                       
+
                                                     }
                                                     <div class="d-flex">
                                                         <select id="ddlbagOptions" class="servc-bordrbaggage">
                                                             <option value=""><b>Please select Baggage</b></option>
-                                                           @{ var sortedBaggageOptions = baggageOptions
-                                                            .OrderBy(o => int.Parse(new string(o.Text.Where(char.IsDigit).ToArray())))
-                                                            .ToList();
-                                                           }
+                                                            @{ var sortedBaggageOptions = baggageOptions
+                                                                                                                           .OrderBy(o => int.Parse(new string(o.Text.Where(char.IsDigit).ToArray())))
+                                                                                                                           .ToList();
+                                                            }
 
                                                             @foreach (var option in sortedBaggageOptions)
                                                             {
@@ -753,13 +753,15 @@
                                                         if (Model.AkMealslist.legSsrs.Count == 2)
                                                         {
                                                             List<SelectListItem> mealOptions = new List<SelectListItem>();
+                                                            string Mealname = string.Empty;
+
                                                             for (int s = 0; s < Model.AkMealslist.legSsrs[1].legssrs.Count; s++)
                                                             {
                                                                 try
                                                                 {
                                                                     string ssrprice = Model.AkMealslist.legSsrs[1].legssrs[s].legpassengers[0].price;
                                                                     string Mealcode = Model.AkMealslist.legSsrs[1].legssrs[s].ssrCode;
-                                                                    string Mealname = Mealcode + "-" + Model.AkMealslist.legSsrs[1].legssrs[s].name + " @" + @Model.AkMealslist.legSsrs[1].legssrs[s].legpassengers[0].price;
+                                                                    Mealname = Mealcode + "-" + Model.AkMealslist.legSsrs[1].legssrs[s].name + " @" + @Model.AkMealslist.legSsrs[1].legssrs[s].legpassengers[0].price;
                                                                     ssrkey = Model.AkMealslist.legSsrs[1].legssrs[s].legpassengers[pas].ssrKey + "_" + @Model.AkMealslist.legSsrs[1].legssrs[s].legpassengers[0].price;
                                                                     string passengerKey = Model.AkMealslist.legSsrs[1].legssrs[s].legpassengers[pas].passengerKey;
                                                                     ssrAvailable = Model.AkMealslist.legSsrs[1].legssrs[s].available.ToString();
@@ -777,7 +779,7 @@
 
                                                                             }
                                                             <div class="d-flex">
-                                                                @if (string.IsNullOrEmpty(ssrAvailable))
+                                                                @if (string.IsNullOrEmpty(Mealname))
                                                                 {
                                                                     <select style="background:#f0f0f0" id="ddlMealOptions" class="servc-bordr servc-bordrm1" disabled>
                                                                         <option selected="selected" value="">Meal Unavailable</option>

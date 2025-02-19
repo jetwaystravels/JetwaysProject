@@ -645,7 +645,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                                 var jsonSellSSR = JsonConvert.SerializeObject(_sellSSRModel, Formatting.Indented);
                                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                                HttpResponseMessage responseSellSSR = await client.PostAsJsonAsync(AppUrlConstant.AkasaAirMealBaggage + pas_BaggageSsrKey, _sellSSRModel);
+                                HttpResponseMessage responseSellSSR = await client.PostAsJsonAsync(AppUrlConstant.AkasaAirMealBaggagePost + pas_BaggageSsrKey, _sellSSRModel);
                                 if (responseSellSSR.IsSuccessStatusCode)
                                 {
                                     var _responseresponseSellSSR = responseSellSSR.Content.ReadAsStringAsync().Result;
