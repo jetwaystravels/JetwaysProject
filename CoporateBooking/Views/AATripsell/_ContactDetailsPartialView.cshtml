@@ -3,7 +3,12 @@
 
         <div class="col-md-3">
             <div class="form-input ">
-                <input type="text" name="first" maxlength="32" oninput="validateInput(event)" id="first" class="firstNClass" style='text-transform:uppercase' placeholder="First Name">
+                <select id="title" name="title" class="titleClass" style="border: 1px solid var(--color-border);">
+                    <option value="MR">Mr.</option>
+                    <option value="MRS">Mrs.</option>
+                    <option value="MS">Ms.</option>
+                </select>
+                <input type="text" name="first" maxlength="16" oninput="validateInput(event)" id="first" class="firstNClass" style='text-transform:uppercase' placeholder="First Name">
             </div>
             <p id="error-message1" class="error-message" style="display:none">Enter first name</p>
             <p id="errorMessage" style="color: red;font-size:13px;"></p>
@@ -11,7 +16,7 @@
 
         <div class="col-md-3">
             <div class="form-input ">
-                <input type="text" name="last" maxlength="32" id="last" oninput="validateInput2(event)" style='text-transform:uppercase' class="lastNClass" placeholder="Last Name">
+                <input type="text" name="last" maxlength="16" id="last" oninput="validateInput2(event)" style='text-transform:uppercase' class="lastNClass" placeholder="Last Name">
             </div>
             <p id="error-message2" class="error-message" style="display:none">Enter last name</p>
             <p id="errorMessage2" style="color: red;font-size:13px;"></p>
@@ -19,20 +24,25 @@
 
         <div class="col-md-3">
             <div class="form-input">
-                <input type="text" name="emailAddress" maxlength="40" oninput="validateEmail(event)" class="emailNClass" id="emailAddress" placeholder="Email ID">
+                <input type="text" name="emailAddress" maxlength="30" oninput="validateEmail(event)" class="emailNClass" id="emailAddress" placeholder="Email ID">
             </div>
             <p id="emailErrorMessage" style="color: red; font-size:13px;"></p>
             <p id="error-message7" class="error-message" style="display:none">Enter a valid email address.</p>
         </div>
 
         <div class="col-md-1 phone-code">
-            <select class="form-control form-control-lg">
-                <option>+91</option>
+            <select name="countrycode" class="form-control form-control-lg">
+                <option value="+91">+91 (India)</option>
+                <option value="+1">+1 (USA)</option>
+                <option value="+44">+44 (UK)</option>
+                <option value="+61">+61 (Australia)</option>
+                <option value="+81">+81 (Japan)</option>
             </select>
         </div>
 
         <div class="col-md-2 phone-number">
             <div class="form-input">
+              
                 <input type="text" name="number" id="number" maxlength="10" class="phoneNClass" placeholder="Phone Number" oninput="validatePhoneNumber(event)">
 
             </div>
@@ -49,7 +59,7 @@
 
                 </div>
             </div>
-            <div><input type="submit" class="btn btn-primary pagelaodSg" value="Save" /></div>
+            <div><input type="submit" class="btn btn-primary pagelaodSg" value="Save"  /></div>
 
         </div>
         <div class="col-md-12 hid-block hidden">
@@ -80,7 +90,7 @@
             </div>
             <p id="emailErrorMessageGST" style="color: red; font-size:13px;"></p>
             <p id="error-message11" class="error-message" style="display:none">Enter GST email</p>
-
+           
         </div>
 
     </div>
@@ -248,8 +258,8 @@
             // email
             let emailfocus = document.getElementById("emailAddress").value;
             var regex = /^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-            //var regex = /^[a-zA-Z0-9._%+-]+@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/;
-            //var regex =/^[a-zA-Z0-9._%+-]+[^\.]@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/;
+            //var regex = /^[a-zA-Z0-9._%+-]+@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/;     
+            //var regex =/^[a-zA-Z0-9._%+-]+[^\.]@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/;     
             if (!regex.test(emailfocus)) {
                 let emailToDisplay = document.getElementById("error-message7");
                 emailToDisplay.style.display = "none";
@@ -274,7 +284,8 @@
             //Phone Number
 
             let phonefocus = document.getElementById("number").value;
-            if (phonefocus == "") {
+            if (phonefocus == "")
+            {
                 let phoneEToDisplay = document.getElementById("error-message8");
                 phoneEToDisplay.style.display = "block";
                 document.getElementById('phoneNumberErrorMessage').innerText = "";
@@ -286,6 +297,18 @@
                 alert("Please enter a valid 10-digit mobile number.");
                 return false;
             }
+
+            const regexAA = /^[1-9][0-9]{9}$/;
+            if (!regexAA.test(phonefocus)) {
+                document.getElementById('phoneNumberErrorMessage').innerText = "Invalid Phone Number";
+                let phoneToDisplay = document.getElementById("error-message8");
+                phoneToDisplay.style.display = "none";
+                return false;
+
+            } else {
+                document.getElementById('phoneNumberErrorMessage').innerText = "";
+            }
+
 
             //Gst
             var buttongst = document.getElementById('GSTButton2');
@@ -308,10 +331,10 @@
                 if (!regex.test(gstnofocus)) {
                     var gstnoToDisplay = document.getElementById("error-message10");
                     gstnoToDisplay.style.display = "none";
-                    document.getElementById('gstErrorMessage').innerText = "Enter 15-digit GST number..";
+                    document.getElementById('gstErrorMessage').innerText = "Enter 15-digit GST number.";
                     return false;
-                } else {
-
+                } 
+                else {
                     document.getElementById('gstErrorMessage').innerText = "";
                 }
                 if (gstnofocus == "") {
@@ -327,21 +350,21 @@
 
                 // GST Email Validation
                 let gstemailfocus = document.getElementById("emailAddressGST").value;
-
+                
                 //var emailRegex = /^(?!.*\.\.)[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
                 //var emailRegex = /^[a-zA-Z0-9._%+-]+@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/;
                 var emailRegex = /^[a-zA-Z0-9._%+-]+[^\.]@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/;
                 if (gstemailfocus == "") {
-
+                  
                 } else if (!emailRegex.test(gstemailfocus)) {
                     //document.getElementById('gstEmailErrorMessage').innerText = "Enter a valid email address.";
                     document.getElementById('emailErrorMessageGST').innerText = "Enter a valid email address.";
                     return false;
                 } else {
-
-
-                }
-
+                  
+                   
+                } 
+            
 
             }
             var contactFormData = new FormData($("#contactForm")[0]);
@@ -476,24 +499,24 @@
     function validatePhoneNumber(event) {
 
         const phoneNumber = event.target.value;
-
+        
         // Regex to validate a phone number that starts with 1-9 and is followed by digits
         //const regex = /^[1-9][0-9]{9}$/;
 
         const regex = /^\d{10,}$/;
 
-        // const regex = /^[0-9]+$/;
+       // const regex = /^[0-9]+$/;
 
         if (!regex.test(phoneNumber)) {
             if (phoneNumber === "") {
                 return false;
             }
-            else {
-                document.getElementById('phoneNumberErrorMessage').innerText = "";//Invalid Phone Number
-                let phoneToDisplay = document.getElementById("error-message8");
-                phoneToDisplay.style.display = "block";
-                return false;
-            }
+          else {
+            document.getElementById('phoneNumberErrorMessage').innerText = "Invalid Phone Number";//Invalid Phone Number
+            let phoneToDisplay = document.getElementById("error-message8");
+            phoneToDisplay.style.display = "block";
+            
+        }
         } else {
             document.getElementById('phoneNumberErrorMessage').innerText = "";
         }
@@ -515,7 +538,8 @@
     function validateInputgst(event) {
 
         const input = event.target.value;
-        var regex = /^[a-zA-Z\s.,'-]{1,100}$/;
+        //var regex = /^[a-zA-Z\s.,'-]{1,100}$/;
+        var regex = /^(?!\.)(?!.*\.\.\.)[a-zA-Z\s.,'-]{1,100}$/;
         //var regex = /^[a-zA-Z]{1,100}$/;
         if (!regex.test(input)) {
             document.getElementById('errorMessagegst').innerText = "";
@@ -564,6 +588,14 @@
         }
 
     }
+
+    window.addEventListener('load', function () {
+        document.querySelectorAll('#contactForm input').forEach(input => {
+            if (input.type === 'text') {
+                input.value = ''; // Clear only text inputs
+            }
+        });
+    });
 </script>
 
 

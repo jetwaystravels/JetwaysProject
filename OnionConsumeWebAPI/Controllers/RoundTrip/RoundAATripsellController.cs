@@ -2420,7 +2420,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                         {
                                             tokenview = HttpContext.Session.GetString("AkasaTokanR");//spelling 
                                         }
-                                        if (tokenview == null) { tokenview = ""; }
+                                       // if (tokenview == null) { tokenview = ""; }
                                         token = tokenview.Replace(@"""", string.Empty);
                                         if (token == "" || token == null)
                                         {
@@ -2436,6 +2436,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
                                         if (mealid < ssrKey.Count)
                                         {
+                                            ssrsubKey2 = null;
+                                            pas_ssrKey = string.Empty;
                                             if (ssrKey[mealid] == null)
                                             {
                                                 continue;
@@ -2488,7 +2490,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                 }
                                             }
 
-                                            else if (ssrKey[mealid].ToLower().Contains("akasaair") && (ssrKey[mealid].ToLower().Contains("rt0") || ssrKey[mealid].ToLower().Contains("rt1")))
+                                            else if (ssrKey[mealid].ToLower().Contains("akasaair") && _a == 1 && (ssrKey[mealid].ToLower().Contains("rt0") || ssrKey[mealid].ToLower().Contains("rt1")))
                                             {
                                                 if (ssrKey[mealid].Length > 1)
                                                 {
@@ -2504,9 +2506,9 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                         SellSSRModel _sellSSRModel = new SellSSRModel();
                                                         _sellSSRModel.count = 1;
                                                         _sellSSRModel.note = "PYOG";
-                                                      //  _sellSSRModel.forceWaveOnSell = false;
+                                                        // _sellSSRModel.forceWaveOnSell = false;
                                                         _sellSSRModel.currencyCode = "INR";
-                                                       // _sellSSRModel.ssrSellMode = 2;
+                                                        // _sellSSRModel.ssrSellMode = 2;
                                                         var jsonSellSSR = JsonConvert.SerializeObject(_sellSSRModel, Formatting.Indented);
                                                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                                                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);

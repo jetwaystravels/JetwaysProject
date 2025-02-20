@@ -374,7 +374,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             breakdown.passengerTotals = passengerTotals;
                             breakdown.baseTotalAmount = baseTotalAmount + infantReturnobj.total;
                             breakdown.ToatalBasePrice = ToatalBasePrice + infantReturnobj.taxes;
-                            breakdown.BaseTotalTax = BaseTotalTax+ infantReturnobj.taxes;
+                            breakdown.BaseTotalTax = BaseTotalTax + infantReturnobj.taxes;
                             //breakdown.totalAmountSum = totalAmountSum;
                             //breakdown.totaltax = totaltax;
                             //breakdown.totalplusAmountSumtax = totalplusAmountSumtax;
@@ -980,7 +980,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             // var zxvx= JsonObjPNRBooking.data.breakdown.journeyTotals.totalAmount;
                             Breakdown breakdown = new Breakdown();
                             breakdown.balanceDue = JsonObjPNRBooking.data.breakdown.totalAmount;
-                            
+
                             JourneyTotals journeyTotalsobj = new JourneyTotals();
                             journeyTotalsobj.totalAmount = JsonObjPNRBooking.data.breakdown.journeyTotals.totalAmount;
                             journeyTotalsobj.totalTax = JsonObjPNRBooking.data.breakdown.journeyTotals.totalTax;
@@ -1023,7 +1023,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     ReturnCharge returnChargeobj = new ReturnCharge();
                                     returnChargeobj.amount = JsonObjPNRBooking.data.breakdown.passengerTotals.specialServices.charges[ch].amount;
                                     returnChargeobj.code = JsonObjPNRBooking.data.breakdown.passengerTotals.specialServices.charges[ch].code;
-                                    if (returnChargeobj.code.StartsWith("V"))
+                                   
+                                    if (returnChargeobj.code.StartsWith("P"))
                                     {
                                         totalAmount += returnChargeobj.amount;
 
@@ -1032,7 +1033,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     {
                                         totalAmounttax += returnChargeobj.amount;
                                     }
-                                    if (returnChargeobj.code.StartsWith("S"))
+                                    
+                                    if (returnChargeobj.code.StartsWith("U"))
                                     {
                                         totalAmounttaxSGST += returnChargeobj.amount;
                                     }
@@ -1040,7 +1042,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     taxMinusMeal = totalAmount - totalMealTax;
                                     TotalAmountMeal = totalMealTax + taxMinusMeal;
 
-                                    if (returnChargeobj.code.StartsWith("P"))
+                                    if (returnChargeobj.code.StartsWith("X"))
                                     {
                                         totalAmountBaggage += returnChargeobj.amount;
 
@@ -1050,7 +1052,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                         totalAmounttaxBag += returnChargeobj.amount;
                                     }
 
-                                    if (returnChargeobj.code.StartsWith("S"))
+                                    if (returnChargeobj.code.StartsWith("U"))
                                     {
                                         totalAmounttaxSGSTBag += returnChargeobj.amount;
                                     }
@@ -1239,7 +1241,14 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                         {
                                             SsrReturn ssrReturn = new SsrReturn();
                                             ssrReturn.ssrCode = item.Value.ssrs[t].ssrCode;
-                                            if (!ssrReturn.ssrCode.StartsWith("P"))
+                                            bool isSpecialCode = ssrReturn.ssrCode.Equals("PBCA", StringComparison.OrdinalIgnoreCase) ||
+                             ssrReturn.ssrCode.Equals("PBCB", StringComparison.OrdinalIgnoreCase) ||
+                             ssrReturn.ssrCode.Equals("PBA3", StringComparison.OrdinalIgnoreCase) ||
+                             ssrReturn.ssrCode.Equals("PBAB", StringComparison.OrdinalIgnoreCase) ||
+                             ssrReturn.ssrCode.Equals("PBAC", StringComparison.OrdinalIgnoreCase) ||
+                             ssrReturn.ssrCode.Equals("PBAD", StringComparison.OrdinalIgnoreCase) ||
+                             ssrReturn.ssrCode.Equals("PBAF", StringComparison.OrdinalIgnoreCase);
+                                            if (isSpecialCode)
                                             {
                                                 continue;
                                             }
@@ -3183,7 +3192,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     _SSRkey = JsonConvert.DeserializeObject<List<string>>(serializedSSRKey);
                                 }
 
-                                res = _objAvail.CreatePNRRoundTrip(_testURL, createPNRReq, newGuid.ToString(), _targetBranch, _userName, _password, AdultTraveller, _data, _Total, Logfolder,k1, _unitkey, _SSRkey, _pricesolution);
+                                res = _objAvail.CreatePNRRoundTrip(_testURL, createPNRReq, newGuid.ToString(), _targetBranch, _userName, _password, AdultTraveller, _data, _Total, Logfolder, k1, _unitkey, _SSRkey, _pricesolution);
 
                                 //string RecordLocator = Regex.Match(res, @"universal:ProviderReservationInfo[\s\S]*?LocatorCode=""(?<LocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["LocatorCode"].Value.Trim();
                                 RecordLocator = Regex.Match(res, @"universal:UniversalRecord\s*LocatorCode=""(?<LocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["LocatorCode"].Value.Trim();
