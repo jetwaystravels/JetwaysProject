@@ -117,8 +117,8 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                     var responseData = JsonConvert.DeserializeObject<dynamic>(responseContent);
 
                     //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(paymentRequest) + "\nUrl: " + url + "\nResponse: " + responseContent, "CommitPayment", "AirAsiaOneWay");
-                    logs.WriteLogs(jsonPayload, "14-AddpaymentRequest", "AkasaOneWayCorporate", "onewayCorporate");
-                    logs.WriteLogs(responseContent, "14-AddpaymentResponse", "AkasaOneWayCorporate", "onewayCorporate");
+                    logs.WriteLogs(jsonPayload, "14-AddpaymentRequest", "AkasaOneWay", "oneway");
+                    logs.WriteLogs(responseContent, "14-AddpaymentResponse", "AkasaOneWay", "oneway");
                 }
 
 
@@ -138,8 +138,8 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                 {
 
                     var _responceCommit_Booking = AkresponceCommit_Booking.Content.ReadAsStringAsync().Result;
-                    logs.WriteLogs(jsonCommitBookingRequest, "15-CommitBookingRequest", "AkasaOneWayCorporate", "onewayCorporate");
-                    logs.WriteLogs(_responceCommit_Booking, "15-CommitBookingResponse", "AkasaOneWayCorporate", "onewayCorporate");
+                    logs.WriteLogs(jsonCommitBookingRequest, "15-CommitBookingRequest", "AkasaOneWay", "oneway");
+                    logs.WriteLogs(_responceCommit_Booking, "15-CommitBookingResponse", "AkasaOneWay", "oneway");
 
                     //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_Commit_BookingModel) + "Url: " + (AppUrlConstant.AkasaAirCommitBooking) + "\n Response: " + JsonConvert.SerializeObject(_responceCommit_Booking), "Commit", "AkasaOneWay", "oneway");
                     //var JsonObjCommit_Booking = JsonConvert.DeserializeObject<dynamic>(_responceCommit_Booking);
@@ -160,8 +160,8 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                     Hashtable htBagdata = new Hashtable();
                     var _responcePNRBooking = AKresponceGetBooking.Content.ReadAsStringAsync().Result;
                     //logs.WriteLogs("Request: " + JsonConvert.SerializeObject("") + "Url: " + (AppUrlConstant.AkasaAirGetBooking) + "\n Response: " + JsonConvert.SerializeObject(_responcePNRBooking), "GetBooking", "AkasaOneWay", "oneway");
-                    logs.WriteLogs("Request: " + JsonConvert.SerializeObject(AppUrlConstant.AkasaAirGetBooking), "16-GetBookingPnrRequest", "AkasaOneWayCorporate", "onewayCorporate");
-                    logs.WriteLogs(_responcePNRBooking, "16-GetBookingPnrResponse", "AkasaOneWayCorporate", "onewayCorporate");
+                    logs.WriteLogs("Request: " + JsonConvert.SerializeObject(AppUrlConstant.AkasaAirGetBooking), "16-GetBookingPnrRequest", "AkasaOneWay", "oneway");
+                    logs.WriteLogs(_responcePNRBooking, "16-GetBookingPnrResponse", "AkasaOneWay", "oneway");
 
                     var JsonObjPNRBooking = JsonConvert.DeserializeObject<dynamic>(_responcePNRBooking);
                     ReturnTicketBooking returnTicketBooking = new ReturnTicketBooking();

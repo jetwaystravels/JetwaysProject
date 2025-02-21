@@ -1025,7 +1025,7 @@
 
 
                                                                 string hashBagdata = Model.AirlinePNR[a].passengers[i2].passengerKey + "_" + Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
-                                                                if (htbag != null && htbag.ContainsKey(hashBagdata))
+                                                                if (htbag != null && htbag.ContainsKey(hashBagdata) && i3 == 0)
                                                                 {
 
                                                                     var Baggagecode = htbag[hashBagdata].ToString();
@@ -1034,21 +1034,22 @@
                                                                     .Where(x => Baggagecode.Contains(x.MealCode))
                                                                     .Select(x => x.MealImage)
                                                                     .FirstOrDefault();
-                                                                  
-                                                                    if (Baggagecode != null)
-                                                                    {
+                                                                   
+                                                                     if (Baggagecode != null )
+                                                                     {
                                                                        
                                                                        <td>@Baggagename</td>
                                                                        
-                                                                    }
+                                                                     }
+                                                                    
+
                                                                 }
                                                                 else
                                                                 {
                                                                     <td>NA</td>
                                                                 }
 
-                                                               
-
+                                                                
 
 
                                                                 // string hashBagdata = @Model.AirlinePNR[0].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[0].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[0].journeys[0].segments[i3].designator.destination;
@@ -1059,26 +1060,7 @@
                                                                
 
                                                             }
-                                                            @{
-                                                                // string hashdata = @Model.AirlinePNR[a].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
-
-                                                                // if (htmeal != null)
-                                                                // {
-                                                                //     <td>@htmeal[hashdata]</td>
-                                                                // }
-
-                                                                // if (htbag != null)
-                                                                // {
-                                                                //     Hashtable htSSr = new Hashtable();
-                                                                //     SpicejetMealImageList.GetAllmeal(htSSr);
-                                                                //     if (!htbag.Contains(hashdata))
-                                                                //         continue;
-                                                                //     var weight = htSSr[htbag[hashdata]];
-                                                                //     <td>@htbag[hashdata] - @weight</td>
-                                                                // }
-
-
-                                                            }
+                                                            
                                                             <td>Confirm</td>
                                                         </tr>
                                                     }
