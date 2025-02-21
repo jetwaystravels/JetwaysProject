@@ -162,7 +162,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                             ReturnCharge returnChargeobj = new ReturnCharge();
                             returnChargeobj.amount = JsonObjPNRBooking.data.breakdown.passengerTotals.specialServices.charges[ch].amount;
                             returnChargeobj.code = JsonObjPNRBooking.data.breakdown.passengerTotals.specialServices.charges[ch].code;
-                            if (returnChargeobj.code.StartsWith("V"))
+                            if (returnChargeobj.code.StartsWith("P"))
                             {
                                 totalAmount += returnChargeobj.amount;
 
@@ -171,14 +171,14 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                             {
                                 totalAmounttax += returnChargeobj.amount;
                             }
-                            if (returnChargeobj.code.StartsWith("S"))
+                            if (returnChargeobj.code.StartsWith("U"))
                             {
                                 totalAmounttaxSGST += returnChargeobj.amount;
                             }
                             totalMealTax = totalAmounttax + totalAmounttaxSGST;
                             taxMinusMeal = totalAmount - totalMealTax;
                             TotalAmountMeal = totalMealTax + taxMinusMeal;
-                            if (returnChargeobj.code.StartsWith("P"))
+                            if (returnChargeobj.code.StartsWith("X"))
                             {
                                 totalAmountBaggage += returnChargeobj.amount;
 
@@ -188,7 +188,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                                 totalAmounttaxBag += returnChargeobj.amount;
                             }
 
-                            if (returnChargeobj.code.StartsWith("S"))
+                            if (returnChargeobj.code.StartsWith("U"))
                             {
                                 totalAmounttaxSGSTBag += returnChargeobj.amount;
                             }

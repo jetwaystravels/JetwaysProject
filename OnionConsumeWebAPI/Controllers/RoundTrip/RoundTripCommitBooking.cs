@@ -1241,14 +1241,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                         {
                                             SsrReturn ssrReturn = new SsrReturn();
                                             ssrReturn.ssrCode = item.Value.ssrs[t].ssrCode;
-                                            bool isSpecialCode = ssrReturn.ssrCode.Equals("PBCA", StringComparison.OrdinalIgnoreCase) ||
-                             ssrReturn.ssrCode.Equals("PBCB", StringComparison.OrdinalIgnoreCase) ||
-                             ssrReturn.ssrCode.Equals("PBA3", StringComparison.OrdinalIgnoreCase) ||
-                             ssrReturn.ssrCode.Equals("PBAB", StringComparison.OrdinalIgnoreCase) ||
-                             ssrReturn.ssrCode.Equals("PBAC", StringComparison.OrdinalIgnoreCase) ||
-                             ssrReturn.ssrCode.Equals("PBAD", StringComparison.OrdinalIgnoreCase) ||
-                             ssrReturn.ssrCode.Equals("PBAF", StringComparison.OrdinalIgnoreCase);
-                                            if (isSpecialCode)
+                                            if (!ssrReturn.ssrCode.StartsWith("P"))
                                             {
                                                 continue;
                                             }
@@ -1259,7 +1252,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
 
                                                     htmealdata.Add(passengerSegmentobj.passengerKey.ToString() + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.origin + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.destination, ssrReturn.ssrCode);
-                                                }
+                                               }
                                                 returnSeats.SSRCode += ssrReturn.ssrCode + ",";
 
                                             }
