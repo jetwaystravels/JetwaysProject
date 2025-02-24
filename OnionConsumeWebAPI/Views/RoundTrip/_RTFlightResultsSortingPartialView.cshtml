@@ -242,7 +242,7 @@
                                         <div class="d-flex justify-center align-items-center">
                                             <div>@stops Stop via &nbsp;</div>
 
-                                            @if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].legs.Count == 2)
+                                            @if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].legs.Count >= 2)
                                             {
                                                 <div class="mt-1">@Model.SimpleAvailibilityaAddResponcelist[j].segments[0].legs[0].designator.destination  ,@Model.SimpleAvailibilityaAddResponcelist[j].segments[0].legs[1].designator.destination</div>
                                             }
@@ -963,7 +963,7 @@
                                                 <div class="mt-1 r-stop">@stops Stop via  @Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].legs[0].designator.destination,@Model.SimpleAvailibilityaAddResponcelistR[j].segments[1].legs[0].designator.destination </div>
 
                                             }
-                                            else if (Model.SimpleAvailibilityaAddResponcelistR[j].segments.Count == 2)
+                                            else if (Model.SimpleAvailibilityaAddResponcelistR[j].segments.Count >= 2)
                                             {
                                                 <div class="r-stop"> @Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].legs[0].designator.destination,@Model.SimpleAvailibilityaAddResponcelist[j].segments[1].legs[0].designator.destination </div>
 

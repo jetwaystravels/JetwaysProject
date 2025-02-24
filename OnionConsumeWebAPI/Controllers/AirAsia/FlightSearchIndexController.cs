@@ -80,22 +80,22 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
         [Route("")]
         public async Task<IActionResult> Index()
         {
-            List<City> city = new List<City>();
-            HttpClient client = new HttpClient();
-            //client.BaseAddress = new Uri("http://localhost:5225/");
-            client.BaseAddress = new Uri(AppUrlConstant.BaseURL);
-            HttpResponseMessage response = await client.GetAsync("api/City/getallCity");
-            if (response.IsSuccessStatusCode)
-            {
-                var results = response.Content.ReadAsStringAsync().Result;
-                city = JsonConvert.DeserializeObject<List<City>>(results);
-                city.Insert(0, new City { CityCode = "Select", CityName = "Select" });
-            }
-            else
-            {
-                city.Insert(0, new City { CityCode = "Select", CityName = "Select" });
-            }
-            ViewBag.ListofCountry = city;
+            //List<City> city = new List<City>();
+            //HttpClient client = new HttpClient();
+            ////client.BaseAddress = new Uri("http://localhost:5225/");
+            //client.BaseAddress = new Uri(AppUrlConstant.BaseURL);
+            //HttpResponseMessage response = await client.GetAsync("api/City/getallCity");
+            //if (response.IsSuccessStatusCode)
+            //{
+            //    var results = response.Content.ReadAsStringAsync().Result;
+            //    city = JsonConvert.DeserializeObject<List<City>>(results);
+            //    city.Insert(0, new City { CityCode = "Select", CityName = "Select" });
+            //}
+            //else
+            //{
+            //    city.Insert(0, new City { CityCode = "Select", CityName = "Select" });
+            //}
+            //ViewBag.ListofCountry = city;
 
             return View();
         }
@@ -412,23 +412,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                     {
                         var results = responce1.Content.ReadAsStringAsync().Result;
                         logs.WriteLogs(results, "2-SimpleAvailability_Res", "AirAsiaOneWay", SameAirlineRT);
-                        //Mongo GetAvailibilty
-                        //var searchData_ = new SearchLog
-                        //{
-                        ////searchData = new SearchLog();
-                        //TripType = 0,
-                        //TripName = "OneWay",
-                        //ApiName = "GetAvailibilty",
-                        //SupplierName = "AirIndiaExpress",
-                        //Origin_Departure = _GetfligthModel.origin + "_" + _GetfligthModel.destination,
-                        //Key = KeyName,
-                        //Request = JsonConvert.SerializeObject(_SimpleAvailabilityobj),
-                        //Response = JsonConvert.SerializeObject(results),
-                        //InsertedOn = DateTime.Now
-                        //};
-                        // coll.InsertOne(searchData_);
-
-                        //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_SimpleAvailabilityobj) + "\n Response: " + results, "GetAvailability", "AirAsiaOneWay");
+                        
                         var JsonObj = JsonConvert.DeserializeObject<dynamic>(results);
                         dynamic jsonObj = JObject.Parse(results);
 
@@ -443,21 +427,24 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                             var bookingdate = finddate.ToString("dddd, dd MMMM yyyy");
                             int count = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes].Count;
                             TempData["count"] = count;
+
+                          
                             for (int i = 0; i < JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes].Count; i++)
                             {
-                                string journeyKey = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].journeyKey;
-                                var uniqueJourney = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i];
+                                var journeyData = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i];
+                                string journeyKey = journeyData.journeyKey;
+                                var uniqueJourney = journeyData;
                                 Designator Designatorobj = new Designator();
-                                string queryorigin = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].designator.origin;
+                                string queryorigin = journeyData.designator.origin;
                                 origin = Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault().cityname;
                                 Designatorobj.origin = origin;
-                                string querydestination = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].designator.destination;
+                                string querydestination = journeyData.designator.destination;
                                 destination1 = Citynamelist.GetAllCityData().Where(x => x.citycode == querydestination).SingleOrDefault().cityname;
                                 Designatorobj.destination = destination1;
 
-                                Designatorobj.departure = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].designator.departure;
-                                Designatorobj.arrival = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].designator.arrival;
-                                Designatorobj.Arrival = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].designator.arrival;
+                                Designatorobj.departure = journeyData.designator.departure;
+                                Designatorobj.arrival = journeyData.designator.arrival;
+                                Designatorobj.Arrival = journeyData.designator.arrival;
                                 DateTime arrivalDateTime = DateTime.ParseExact(Designatorobj.Arrival, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
 
                                 Designatorobj.ArrivalDate = arrivalDateTime.ToString("yyyy-MM-dd");
@@ -478,28 +465,29 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                 {
                                     DomainLayer.Model.Segment Segmentobj = new DomainLayer.Model.Segment();
                                     Designator SegmentDesignatorobj = new Designator();
-                                    //queryorigin = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].designator.origin;
-                                    // querydestination = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].designator.destination;                       
+                                    var journeysegments = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l];
 
-                                    SegmentDesignatorobj.origin = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].designator.origin;
-                                    SegmentDesignatorobj.destination = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].designator.destination;
-                                    SegmentDesignatorobj.departure = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].designator.departure;
-                                    SegmentDesignatorobj.arrival = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].designator.arrival;
+                                    SegmentDesignatorobj.origin = journeysegments.designator.origin;
+                                    SegmentDesignatorobj.destination = journeysegments.designator.destination;
+                                    SegmentDesignatorobj.departure = journeysegments.designator.departure;
+                                    SegmentDesignatorobj.arrival = journeysegments.designator.arrival;
                                     Segmentobj.designator = SegmentDesignatorobj;
                                     Identifier Identifier = new Identifier();
-                                    Identifier.identifier = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].identifier.identifier;
-                                    Identifier.carrierCode = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].identifier.carrierCode;
+                                    Identifier.identifier = journeysegments.identifier.identifier;
+                                    Identifier.carrierCode = journeysegments.identifier.carrierCode;
                                     Segmentobj.identifier = Identifier;
 
-                                    int legscount = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs.Count;
+                                    int legscount = journeysegments.legs.Count;
                                     List<DomainLayer.Model.Leg> Leglist = new List<DomainLayer.Model.Leg>();
 
                                     for (int m = 0; m < legscount; m++)
                                     {
                                         DomainLayer.Model.Leg Legobj = new DomainLayer.Model.Leg();
                                         Designator legdesignatorobj = new Designator();
-                                        queryorigin = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].designator.origin;
-                                        querydestination = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].designator.destination;
+                                        var jursegleg = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m];
+                                        queryorigin = jursegleg.designator.origin;
+                                        querydestination = jursegleg.designator.destination;
+                                      
                                         if (Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault() != null)
                                         {
                                             origin = Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault().citycode;
