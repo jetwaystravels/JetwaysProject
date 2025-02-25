@@ -37,6 +37,7 @@ using MongoDB.Driver;
 using OnionConsumeWebAPI.Models;
 using OnionConsumeWebAPI.Comman;
 using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
+using static DomainLayer.Model.SeatMapResponceModel;
 
 namespace OnionConsumeWebAPI.Controllers.AirAsia
 {
@@ -419,8 +420,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                         var oriDes = _GetfligthModel.origin + "|" + _GetfligthModel.destination;
                         TempData["origin"] = _SimpleAvailabilityobj.origin;
                         TempData["destination"] = _SimpleAvailabilityobj.destination;
-                        //HttpContext.Session.SetString("SectorOrigin", _SimpleAvailabilityobj.origin);
-                        //HttpContext.Session.SetString("Sectordestination", _SimpleAvailabilityobj.destination);
+                        
                         if (jsonObj.data.results != null && ((JArray)jsonObj.data.results).Count > 0)
                         {
                             var finddate = JsonObj.data.results[0].trips[0].date;
@@ -495,7 +495,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                         }
                                         else
                                         {
-                                            legdesignatorobj.origin = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].designator.origin;
+                                            legdesignatorobj.origin = journeysegments.designator.origin;
                                         }
                                         if (Citynamelist.GetAllCityData().Where(x => x.citycode == querydestination).SingleOrDefault() != null)
                                         {
@@ -504,20 +504,20 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                         }
                                         else
                                         {
-                                            legdesignatorobj.destination = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].designator.destination;
+                                            legdesignatorobj.destination = journeysegments.designator.destination;
                                         }
 
-                                        legdesignatorobj.departure = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].designator.departure;
-                                        legdesignatorobj.arrival = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].designator.arrival;
+                                        legdesignatorobj.departure = jursegleg.designator.departure;
+                                        legdesignatorobj.arrival = jursegleg.designator.arrival;
                                         Legobj.designator = legdesignatorobj;
-                                        Legobj.legKey = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].legKey;
-                                        Legobj.flightReference = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].flightReference;
+                                        Legobj.legKey = jursegleg.legKey;
+                                        Legobj.flightReference = jursegleg.flightReference;
                                         Leglist.Add(Legobj);
                                         DomainLayer.Model.LegInfo LegInfo = new DomainLayer.Model.LegInfo();
-                                        LegInfo.arrivalTerminal = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].legInfo.arrivalTerminal;
-                                        LegInfo.departureTerminal = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].legInfo.departureTerminal;
-                                        LegInfo.arrivalTime = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].legInfo.arrivalTime;
-                                        LegInfo.departureTime = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].legInfo.departureTime;
+                                        LegInfo.arrivalTerminal = jursegleg.legInfo.arrivalTerminal;
+                                        LegInfo.departureTerminal = jursegleg.legInfo.departureTerminal;
+                                        LegInfo.arrivalTime = jursegleg.legInfo.arrivalTime;
+                                        LegInfo.departureTime = jursegleg.legInfo.departureTime;
                                         Legobj.legInfo = LegInfo;
 
                                     }
@@ -525,9 +525,11 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                     Segmentobjlist.Add(Segmentobj);
 
                                 }
-                                var arrivalTerminal = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[0].legs[0].legInfo.arrivalTerminal;
-                                var departureTerminal = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[0].legs[0].legInfo.departureTerminal;
-                                int FareCount = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].fares.Count;
+                                var Terminal = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[0].legs[0];
+                                var arrivalTerminal = Terminal.legInfo.arrivalTerminal;
+                                var departureTerminal = Terminal.legInfo.departureTerminal;
+                                int FareCount = journeyData.fares.Count;
+                                
 
 
                                 if (FareCount > 0)
@@ -541,42 +543,43 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
 
                                         FareIndividual fareIndividual = new FareIndividual();
 
-
-                                        string fareAvailabilityKey = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].fares[j].fareAvailabilityKey;
+                                        var fareAvailability = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i];
+                                        string fareAvailabilityKey = fareAvailability.fares[j].fareAvailabilityKey;
                                         //fareIndividual.faretotal = JsonObj.data.faresAvailable[fareAvailabilityKey].faretotal;
                                         Total total = new Total();
-                                        var bookingamount = JsonObj.data.faresAvailable[fareAvailabilityKey].totals.fareTotal;
+                                        var booking = JsonObj.data.faresAvailable[fareAvailabilityKey];
+                                        var bookingamount = booking.totals.fareTotal;
 
-                                        string fareAvailabilityKeyhead = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].fares[0].fareAvailabilityKey;
-                                        var fareAvilableCount = JsonObj.data.faresAvailable[fareAvailabilityKey].fares.Count;
-                                        var isGoverning = JsonObj.data.faresAvailable[fareAvailabilityKey].fares[0].isGoverning;
+                                        string fareAvailabilityKeyhead = fareAvailability.fares[0].fareAvailabilityKey;
+                                        var fareAvilableCount = booking.fares.Count;
+                                        var isGoverning = booking.fares[0].isGoverning;
 
-                                        var procuctclass = JsonObj.data.faresAvailable[fareAvailabilityKey].fares[0].productClass;
+                                        var procuctclass = booking.fares[0].productClass;
 
-                                        var passengertype = JsonObj.data.faresAvailable[fareAvailabilityKey].fares[0].passengerFares[0].passengerType;
+                                        var passengertype = booking.fares[0].passengerFares[0].passengerType;
                                         //Start :comment booking amount not correct
                                         // var fareAmount = JsonObj.data.faresAvailable[fareAvailabilityKey].fares[0].passengerFares[0].fareAmount;
                                         // fareTotalsum = JsonObj.data.faresAvailable[fareAvailabilityKeyhead].fares[0].passengerFares[0].fareAmount;
                                         //End:
                                         //ADD New Start
                                         int passengercount = adultcount + chdcount;
-                                        var perpersontotal = JsonObj.data.faresAvailable[fareAvailabilityKey].totals.fareTotal;
+                                        var perpersontotal = booking.totals.fareTotal;
                                         var fareAmount = perpersontotal / passengercount;
-                                        var perpersontotalclasswise = JsonObj.data.faresAvailable[fareAvailabilityKey].totals.fareTotal;
+                                        var perpersontotalclasswise = booking.totals.fareTotal;
                                         if (j == 0)
                                         {
                                             fareTotalsum = perpersontotalclasswise / passengercount;
                                         }
 
                                         //END
-                                        decimal discountamount = JsonObj.data.faresAvailable[fareAvailabilityKey].fares[0].passengerFares[0].discountedFare;
+                                        decimal discountamount = booking.fares[0].passengerFares[0].discountedFare;
 
-                                        int servicecharge = JsonObj.data.faresAvailable[fareAvailabilityKey].fares[0].passengerFares[0].serviceCharges.Count;
+                                        int servicecharge = booking.fares[0].passengerFares[0].serviceCharges.Count;
                                         decimal finalamount = 0;
                                         for (int k = 1; k < servicecharge; k++)
                                         {
 
-                                            decimal amount = JsonObj.data.faresAvailable[fareAvailabilityKey].fares[0].passengerFares[0].serviceCharges[k].amount;
+                                            decimal amount = booking.fares[0].passengerFares[0].serviceCharges[k].amount;
                                             finalamount += amount;
 
                                         }
@@ -753,20 +756,21 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                         TempData["count"] = count;
                                         for (int i = 0; i < JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes].Count; i++)
                                         {
-                                            string journeyKey = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].journeyKey;
-                                            var uniqueJourney = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i];
+                                            var journey = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i];
+                                            string journeyKey = journey.journeyKey;
+                                            var uniqueJourney = journey;
 
                                             Designator AkasaDesignatorobj = new Designator();
-                                            string queryorigin = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].designator.origin;
+                                            string queryorigin = journey.designator.origin;
                                             origin = Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault().cityname;
                                             AkasaDesignatorobj.origin = origin;
-                                            string querydestination = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].designator.destination;
+                                            string querydestination = journey.designator.destination;
                                             destination1 = Citynamelist.GetAllCityData().Where(x => x.citycode == querydestination).SingleOrDefault().cityname;
                                             AkasaDesignatorobj.destination = destination1;
 
-                                            AkasaDesignatorobj.departure = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].designator.departure;
-                                            AkasaDesignatorobj.arrival = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].designator.arrival;
-                                            AkasaDesignatorobj.Arrival = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].designator.arrival;
+                                            AkasaDesignatorobj.departure = journey.designator.departure;
+                                            AkasaDesignatorobj.arrival = journey.designator.arrival;
+                                            AkasaDesignatorobj.Arrival = journey.designator.arrival;
                                             DateTime AarrivalDateTime = DateTime.ParseExact(AkasaDesignatorobj.Arrival, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
                                             //Arrival = Designatorobj.Arrival,
                                             AkasaDesignatorobj.ArrivalDate = AarrivalDateTime.ToString("yyyy-MM-dd");
@@ -789,26 +793,27 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                                 Designator AkasaSegmentDesignatorobj = new Designator();
                                                 //queryorigin = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].designator.origin;
                                                 // querydestination = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].designator.destination;                       
-
-                                                AkasaSegmentDesignatorobj.origin = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].designator.origin;
-                                                AkasaSegmentDesignatorobj.destination = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].designator.destination;
-                                                AkasaSegmentDesignatorobj.departure = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].designator.departure;
-                                                AkasaSegmentDesignatorobj.arrival = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].designator.arrival;
+                                                var jouseg = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l];
+                                                AkasaSegmentDesignatorobj.origin = jouseg.designator.origin;
+                                                AkasaSegmentDesignatorobj.destination = jouseg.designator.destination;
+                                                AkasaSegmentDesignatorobj.departure = jouseg.designator.departure;
+                                                AkasaSegmentDesignatorobj.arrival = jouseg.designator.arrival;
                                                 AkasaSegmentobj.designator = AkasaSegmentDesignatorobj;
                                                 Identifier AkasaIdentifier = new Identifier();
-                                                AkasaIdentifier.identifier = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].identifier.identifier;
-                                                AkasaIdentifier.carrierCode = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].identifier.carrierCode;
+                                                AkasaIdentifier.identifier = jouseg.identifier.identifier;
+                                                AkasaIdentifier.carrierCode = jouseg.identifier.carrierCode;
                                                 AkasaSegmentobj.identifier = AkasaIdentifier;
 
-                                                int Akasalegscount = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs.Count;
+                                                int Akasalegscount = jouseg.legs.Count;
                                                 List<DomainLayer.Model.Leg> AkasaLeglist = new List<DomainLayer.Model.Leg>();
 
                                                 for (int m = 0; m < Akasalegscount; m++)
                                                 {
                                                     DomainLayer.Model.Leg AkasaLegobj = new DomainLayer.Model.Leg();
                                                     Designator Akasalegdesignatorobj = new Designator();
-                                                    queryorigin = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].designator.origin;
-                                                    querydestination = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].designator.destination;
+                                                    var jousegleg = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m];
+                                                    queryorigin = jousegleg.designator.origin;
+                                                    querydestination = jousegleg.designator.destination;
                                                     if (Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault() != null)
                                                     {
                                                         origin = Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault().citycode;
@@ -816,7 +821,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                                     }
                                                     else
                                                     {
-                                                        Akasalegdesignatorobj.origin = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].designator.origin;
+                                                        Akasalegdesignatorobj.origin = jouseg.designator.origin;
                                                     }
                                                     if (Citynamelist.GetAllCityData().Where(x => x.citycode == querydestination).SingleOrDefault() != null)
                                                     {
@@ -825,20 +830,20 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                                     }
                                                     else
                                                     {
-                                                        Akasalegdesignatorobj.destination = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].designator.destination;
+                                                        Akasalegdesignatorobj.destination = jouseg.designator.destination;
                                                     }
 
-                                                    Akasalegdesignatorobj.departure = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].designator.departure;
-                                                    Akasalegdesignatorobj.arrival = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].designator.arrival;
+                                                    Akasalegdesignatorobj.departure = jousegleg.designator.departure;
+                                                    Akasalegdesignatorobj.arrival = jousegleg.designator.arrival;
                                                     AkasaLegobj.designator = Akasalegdesignatorobj;
-                                                    AkasaLegobj.legKey = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].legKey;
-                                                    AkasaLegobj.flightReference = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].flightReference;
+                                                    AkasaLegobj.legKey = jousegleg.legKey;
+                                                    AkasaLegobj.flightReference = jousegleg.flightReference;
                                                     AkasaLeglist.Add(AkasaLegobj);
                                                     DomainLayer.Model.LegInfo AkasaLegInfo = new DomainLayer.Model.LegInfo();
-                                                    AkasaLegInfo.arrivalTerminal = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].legInfo.arrivalTerminal;
-                                                    AkasaLegInfo.departureTerminal = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].legInfo.departureTerminal;
-                                                    AkasaLegInfo.arrivalTime = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].legInfo.arrivalTime;
-                                                    AkasaLegInfo.departureTime = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].legInfo.departureTime;
+                                                    AkasaLegInfo.arrivalTerminal = jousegleg.legInfo.arrivalTerminal;
+                                                    AkasaLegInfo.departureTerminal = jousegleg.legInfo.departureTerminal;
+                                                    AkasaLegInfo.arrivalTime = jousegleg.legInfo.arrivalTime;
+                                                    AkasaLegInfo.departureTime = jousegleg.legInfo.departureTime;
                                                     AkasaLegobj.legInfo = AkasaLegInfo;
 
                                                 }
@@ -846,8 +851,9 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                                 Segmentobjlist.Add(AkasaSegmentobj);
 
                                             }
-                                            var arrivalTerminal = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[0].legs[0].legInfo.arrivalTerminal;
-                                            var departureTerminal = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[0].legs[0].legInfo.departureTerminal;
+                                            var Terminal = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[0].legs[0].legInfo;
+                                            var arrivalTerminal = Terminal.arrivalTerminal;
+                                            var departureTerminal = Terminal.departureTerminal;
                                             int AkasaFareCount = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].fares.Count;
                                             _SimpleAvailibilityaAddResponceobj = new SimpleAvailibilityaAddResponce();
                                             if (AkasaFareCount > 0)
@@ -869,30 +875,31 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
 
                                                     string fareAvailabilityKeyhead = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].fares[0].fareAvailabilityKey;
                                                     var fareAvilableCount = JsonAkasaAir.data.faresAvailable[fareAvailabilityKey].fares.Count;
-                                                    var isGoverning = JsonAkasaAir.data.faresAvailable[fareAvailabilityKey].fares[0].isGoverning;
+                                                    var fare = JsonAkasaAir.data.faresAvailable[fareAvailabilityKey];
+                                                    var isGoverning = fare.fares[0].isGoverning;
 
-                                                    var procuctclass = JsonAkasaAir.data.faresAvailable[fareAvailabilityKey].fares[0].productClass;
+                                                    var procuctclass = fare.fares[0].productClass;
 
-                                                    var passengertype = JsonAkasaAir.data.faresAvailable[fareAvailabilityKey].fares[0].passengerFares[0].passengerType;
+                                                    var passengertype = fare.fares[0].passengerFares[0].passengerType;
 
                                                     int passengercount = adultcount + chdcount;
-                                                    var perpersontotal = JsonAkasaAir.data.faresAvailable[fareAvailabilityKey].totals.fareTotal;
+                                                    var perpersontotal = fare.totals.fareTotal;
                                                     var fareAmount = perpersontotal / passengercount;
-                                                    var perpersontotalclasswise = JsonAkasaAir.data.faresAvailable[fareAvailabilityKey].totals.fareTotal;
+                                                    var perpersontotalclasswise = fare.totals.fareTotal;
                                                     if (j == 0)
                                                     {
                                                         fareTotalsum = perpersontotalclasswise / passengercount;
                                                     }
 
                                                     //END
-                                                    decimal discountamount = JsonAkasaAir.data.faresAvailable[fareAvailabilityKey].fares[0].passengerFares[0].discountedFare;
+                                                    decimal discountamount = fare.fares[0].passengerFares[0].discountedFare;
 
-                                                    int servicecharge = JsonAkasaAir.data.faresAvailable[fareAvailabilityKey].fares[0].passengerFares[0].serviceCharges.Count;
+                                                    int servicecharge = fare.fares[0].passengerFares[0].serviceCharges.Count;
                                                     decimal finalamount = 0;
                                                     for (int k = 1; k < servicecharge; k++)
                                                     {
 
-                                                        decimal amount = JsonAkasaAir.data.faresAvailable[fareAvailabilityKey].fares[0].passengerFares[0].serviceCharges[k].amount;
+                                                        decimal amount = fare.fares[0].passengerFares[0].serviceCharges[k].amount;
                                                         finalamount += amount;
 
                                                     }
@@ -2022,60 +2029,62 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
 
                                 for (int i = 0; i < JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes].Count; i++)
                                 {
-
-                                    string journeyKey = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].journeyKey;
+                                    var journeyR = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i];
+                                    string journeyKey = journeyR.journeyKey;
                                     //journeyKey1 = ((Newtonsoft.Json.Linq.JValue)journeyKey).Value.ToString();
-                                    var destination = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i];
+                                    var destination = journeyR;
                                     Designator Designatorobj = new Designator();
-                                    Designatorobj.origin = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].designator.origin;
-                                    Designatorobj.destination = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].designator.destination;
-                                    Designatorobj.departure = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].designator.departure;
-                                    Designatorobj.arrival = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].designator.arrival;
+                                    Designatorobj.origin = journeyR.designator.origin;
+                                    Designatorobj.destination = journeyR.designator.destination;
+                                    Designatorobj.departure = journeyR.designator.departure;
+                                    Designatorobj.arrival = journeyR.designator.arrival;
 
 
-                                    string queryorigin = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].designator.origin;
+                                    string queryorigin = journeyR.designator.origin;
                                     origin = Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault().cityname;
                                     Designatorobj.origin = origin;
-                                    string querydestination = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].designator.destination;
+                                    string querydestination = journeyR.designator.destination;
                                     destination1 = Citynamelist.GetAllCityData().Where(x => x.citycode == querydestination).SingleOrDefault().cityname;
                                     Designatorobj.destination = destination1;
 
-                                    var segmentscount = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments.Count;
+                                    var segmentscount = journeyR.segments.Count;
                                     List<DomainLayer.Model.Segment> Segmentobjlist = new List<DomainLayer.Model.Segment>();
 
                                     for (int l = 0; l < segmentscount; l++)
                                     {
                                         DomainLayer.Model.Segment Segmentobj = new DomainLayer.Model.Segment();
                                         Designator SegmentDesignatorobj = new Designator();
-                                        SegmentDesignatorobj.origin = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].designator.origin;
-                                        SegmentDesignatorobj.destination = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].designator.destination;
-                                        SegmentDesignatorobj.departure = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].designator.departure;
-                                        SegmentDesignatorobj.arrival = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].designator.arrival;
+                                        var JousegR = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l];
+                                        SegmentDesignatorobj.origin = JousegR.designator.origin;
+                                        SegmentDesignatorobj.destination = JousegR.designator.destination;
+                                        SegmentDesignatorobj.departure = JousegR.designator.departure;
+                                        SegmentDesignatorobj.arrival = JousegR.designator.arrival;
                                         Segmentobj.designator = SegmentDesignatorobj;
                                         Identifier Identifier = new Identifier();
-                                        Identifier.identifier = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].identifier.identifier;
-                                        Identifier.carrierCode = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].identifier.carrierCode;
+                                        Identifier.identifier = JousegR.identifier.identifier;
+                                        Identifier.carrierCode = JousegR.identifier.carrierCode;
                                         Segmentobj.identifier = Identifier;
 
-                                        int legscount = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs.Count;
+                                        int legscount = JousegR.legs.Count;
                                         List<DomainLayer.Model.Leg> Leglist = new List<DomainLayer.Model.Leg>();
                                         for (int m = 0; m < legscount; m++)
                                         {
                                             DomainLayer.Model.Leg Legobj = new DomainLayer.Model.Leg();
                                             Designator legdesignatorobj = new Designator();
-                                            legdesignatorobj.origin = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].designator.origin;
-                                            legdesignatorobj.destination = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].designator.destination;
-                                            legdesignatorobj.departure = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].designator.departure;
-                                            legdesignatorobj.arrival = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].designator.arrival;
+                                            var JouseglegR = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m];
+                                            legdesignatorobj.origin = JouseglegR.designator.origin;
+                                            legdesignatorobj.destination = JouseglegR.designator.destination;
+                                            legdesignatorobj.departure = JouseglegR.designator.departure;
+                                            legdesignatorobj.arrival = JouseglegR.designator.arrival;
                                             Legobj.designator = legdesignatorobj;
-                                            Legobj.legKey = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].legKey;
-                                            Legobj.flightReference = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].flightReference;
+                                            Legobj.legKey = JouseglegR.legKey;
+                                            Legobj.flightReference = JouseglegR.flightReference;
                                             Leglist.Add(Legobj);
                                             DomainLayer.Model.LegInfo LegInfo = new DomainLayer.Model.LegInfo();
-                                            LegInfo.arrivalTerminal = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].legInfo.arrivalTerminal;
-                                            LegInfo.departureTerminal = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].legInfo.departureTerminal;
-                                            LegInfo.arrivalTime = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].legInfo.arrivalTime;
-                                            LegInfo.departureTime = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].legInfo.departureTime;
+                                            LegInfo.arrivalTerminal = JouseglegR.legInfo.arrivalTerminal;
+                                            LegInfo.departureTerminal = JouseglegR.legInfo.departureTerminal;
+                                            LegInfo.arrivalTime = JouseglegR.legInfo.arrivalTime;
+                                            LegInfo.departureTime = JouseglegR.legInfo.departureTime;
                                             Legobj.legInfo = LegInfo;
 
                                         }
@@ -2086,9 +2095,9 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                     }
 
 
-                                    var arrivalTerminal = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[0].legs[0].legInfo.arrivalTerminal;
-                                    var departureTerminal = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[0].legs[0].legInfo.departureTerminal;
-                                    int FareCount = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].fares.Count;
+                                    var arrivalTerminal = journeyR.segments[0].legs[0].legInfo.arrivalTerminal;
+                                    var departureTerminal = journeyR.segments[0].legs[0].legInfo.departureTerminal;
+                                    int FareCount = journeyR.fares.Count;
 
 
                                     if (FareCount > 0)
@@ -2103,10 +2112,11 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
 
                                             string fareAvailabilityKey = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].fares[j].fareAvailabilityKey;
                                             string fareAvailabilityKeyhead = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].fares[0].fareAvailabilityKey;
-                                            var fareAvilableCount = JsonObjR.data.faresAvailable[fareAvailabilityKey].fares.Count;
-                                            var isGoverning = JsonObjR.data.faresAvailable[fareAvailabilityKey].fares[0].isGoverning;
-                                            var procuctclass = JsonObjR.data.faresAvailable[fareAvailabilityKey].fares[0].productClass;
-                                            var passengertype = JsonObjR.data.faresAvailable[fareAvailabilityKey].fares[0].passengerFares[0].passengerType;
+                                            var fareAvilable = JsonObjR.data.faresAvailable[fareAvailabilityKey];
+                                            var fareAvilableCount = fareAvilable.fares.Count;
+                                            var isGoverning = fareAvilable.fares[0].isGoverning;
+                                            var procuctclass = fareAvilable.fares[0].productClass;
+                                            var passengertype = fareAvilable.fares[0].passengerFares[0].passengerType;
                                             fareTotalsum = 0;
                                             var fareAmount = 0;
                                             for (int fc = 0; fc < fareAvilableCount; fc++)
@@ -2121,14 +2131,14 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
 
 
 
-                                            decimal discountamount = JsonObjR.data.faresAvailable[fareAvailabilityKey].fares[0].passengerFares[0].discountedFare;
+                                            decimal discountamount = fareAvilable.fares[0].passengerFares[0].discountedFare;
 
-                                            int servicecharge = JsonObjR.data.faresAvailable[fareAvailabilityKey].fares[0].passengerFares[0].serviceCharges.Count;
+                                            int servicecharge = fareAvilable.fares[0].passengerFares[0].serviceCharges.Count;
                                             decimal finalamount = 0;
                                             for (int k = 1; k < servicecharge; k++)
                                             {
 
-                                                decimal amount = JsonObjR.data.faresAvailable[fareAvailabilityKey].fares[0].passengerFares[0].serviceCharges[k].amount;
+                                                decimal amount = fareAvilable.fares[0].passengerFares[0].serviceCharges[k].amount;
                                                 finalamount += amount;
 
                                             }
@@ -2328,60 +2338,62 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                         TempData["countr"] = count;
                                         for (int i = 0; i < JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes].Count; i++)
                                         {
+                                            var journeyR = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i];
 
-                                            string journeyKey = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].journeyKey;
+                                            string journeyKey = journeyR.journeyKey;
                                             //journeyKey1 = ((Newtonsoft.Json.Linq.JValue)journeyKey).Value.ToString();
-                                            var destination = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i];
+                                            var destination = journeyR;
                                             Designator Designatorobj = new Designator();
-                                            Designatorobj.origin = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].designator.origin;
-                                            Designatorobj.destination = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].designator.destination;
-                                            Designatorobj.departure = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].designator.departure;
-                                            Designatorobj.arrival = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].designator.arrival;
+                                            Designatorobj.origin = journeyR.designator.destination;
+                                            Designatorobj.departure = journeyR.designator.departure;
+                                            Designatorobj.arrival = journeyR.designator.arrival;
 
 
-                                            string queryorigin = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].designator.origin;
+                                            string queryorigin = journeyR.designator.origin;
                                             origin = Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault().cityname;
                                             Designatorobj.origin = origin;
-                                            string querydestination = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].designator.destination;
+                                            string querydestination = journeyR.designator.destination;
                                             destination1 = Citynamelist.GetAllCityData().Where(x => x.citycode == querydestination).SingleOrDefault().cityname;
                                             Designatorobj.destination = destination1;
 
-                                            var segmentscount = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments.Count;
+                                            var segmentscount = journeyR.segments.Count;
                                             List<DomainLayer.Model.Segment> Segmentobjlist = new List<DomainLayer.Model.Segment>();
 
                                             for (int l = 0; l < segmentscount; l++)
                                             {
                                                 DomainLayer.Model.Segment Segmentobj = new DomainLayer.Model.Segment();
                                                 Designator SegmentDesignatorobj = new Designator();
-                                                SegmentDesignatorobj.origin = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].designator.origin;
-                                                SegmentDesignatorobj.destination = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].designator.destination;
-                                                SegmentDesignatorobj.departure = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].designator.departure;
-                                                SegmentDesignatorobj.arrival = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].designator.arrival;
+                                                var jousegR = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l];
+                                                SegmentDesignatorobj.origin = jousegR.designator.origin;
+                                                SegmentDesignatorobj.destination = jousegR.designator.destination;
+                                                SegmentDesignatorobj.departure = jousegR.designator.departure;
+                                                SegmentDesignatorobj.arrival = jousegR.designator.arrival;
                                                 Segmentobj.designator = SegmentDesignatorobj;
                                                 Identifier Identifier = new Identifier();
-                                                Identifier.identifier = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].identifier.identifier;
-                                                Identifier.carrierCode = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].identifier.carrierCode;
+                                                Identifier.identifier = jousegR.identifier.identifier;
+                                                Identifier.carrierCode = jousegR.identifier.carrierCode;
                                                 Segmentobj.identifier = Identifier;
 
-                                                int legscount = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs.Count;
+                                                int legscount = jousegR.legs.Count;
                                                 List<DomainLayer.Model.Leg> Leglist = new List<DomainLayer.Model.Leg>();
                                                 for (int m = 0; m < legscount; m++)
                                                 {
                                                     DomainLayer.Model.Leg Legobj = new DomainLayer.Model.Leg();
                                                     Designator legdesignatorobj = new Designator();
-                                                    legdesignatorobj.origin = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].designator.origin;
-                                                    legdesignatorobj.destination = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].designator.destination;
-                                                    legdesignatorobj.departure = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].designator.departure;
-                                                    legdesignatorobj.arrival = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].designator.arrival;
+                                                    var Jousegleg = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m];
+                                                    legdesignatorobj.origin = Jousegleg.designator.origin;
+                                                    legdesignatorobj.destination = Jousegleg.designator.destination;
+                                                    legdesignatorobj.departure = Jousegleg.designator.departure;
+                                                    legdesignatorobj.arrival = Jousegleg.designator.arrival;
                                                     Legobj.designator = legdesignatorobj;
-                                                    Legobj.legKey = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].legKey;
-                                                    Legobj.flightReference = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].flightReference;
+                                                    Legobj.legKey = Jousegleg.legKey;
+                                                    Legobj.flightReference = Jousegleg.flightReference;
                                                     Leglist.Add(Legobj);
                                                     DomainLayer.Model.LegInfo LegInfo = new DomainLayer.Model.LegInfo();
-                                                    LegInfo.arrivalTerminal = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].legInfo.arrivalTerminal;
-                                                    LegInfo.departureTerminal = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].legInfo.departureTerminal;
-                                                    LegInfo.arrivalTime = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].legInfo.arrivalTime;
-                                                    LegInfo.departureTime = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[l].legs[m].legInfo.departureTime;
+                                                    LegInfo.arrivalTerminal = Jousegleg.legInfo.arrivalTerminal;
+                                                    LegInfo.departureTerminal = Jousegleg.legInfo.departureTerminal;
+                                                    LegInfo.arrivalTime = Jousegleg.legInfo.arrivalTime;
+                                                    LegInfo.departureTime = Jousegleg.legInfo.departureTime;
                                                     Legobj.legInfo = LegInfo;
 
                                                 }
@@ -2391,10 +2403,10 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
 
                                             }
 
-
-                                            var arrivalTerminal = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[0].legs[0].legInfo.arrivalTerminal;
-                                            var departureTerminal = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[0].legs[0].legInfo.departureTerminal;
-                                            int AkasaFareCount = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].fares.Count;
+                                            var terminal = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].segments[0].legs[0];
+                                            var arrivalTerminal = terminal.legInfo.arrivalTerminal;
+                                            var departureTerminal = terminal.legInfo.departureTerminal;
+                                            int AkasaFareCount = journeyR.fares.Count;
                                             _SimpleAvailibilityaAddResponceobjR = new SimpleAvailibilityaAddResponce();
                                             if (AkasaFareCount > 0)
                                             {
@@ -2414,31 +2426,32 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                                     var bookingamount = JsonObjR.data.faresAvailable[fareAvailabilityKey].totals.fareTotal;
 
                                                     string fareAvailabilityKeyhead = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].fares[0].fareAvailabilityKey;
-                                                    var fareAvilableCount = JsonObjR.data.faresAvailable[fareAvailabilityKey].fares.Count;
-                                                    var isGoverning = JsonObjR.data.faresAvailable[fareAvailabilityKey].fares[0].isGoverning;
+                                                    var fare = JsonObjR.data.faresAvailable[fareAvailabilityKey];
+                                                    var fareAvilableCount = fare.fares.Count;
+                                                    var isGoverning = fare.fares[0].isGoverning;
 
-                                                    var procuctclass = JsonObjR.data.faresAvailable[fareAvailabilityKey].fares[0].productClass;
+                                                    var procuctclass = fare.fares[0].productClass;
 
-                                                    var passengertype = JsonObjR.data.faresAvailable[fareAvailabilityKey].fares[0].passengerFares[0].passengerType;
+                                                    var passengertype = fare.fares[0].passengerFares[0].passengerType;
 
                                                     int passengercount = adultcount + chdcount;
-                                                    var perpersontotal = JsonObjR.data.faresAvailable[fareAvailabilityKey].totals.fareTotal;
+                                                    var perpersontotal = fare.totals.fareTotal;
                                                     var fareAmount = perpersontotal / passengercount;
-                                                    var perpersontotalclasswise = JsonObjR.data.faresAvailable[fareAvailabilityKey].totals.fareTotal;
+                                                    var perpersontotalclasswise = fare.totals.fareTotal;
                                                     if (j == 0)
                                                     {
                                                         fareTotalsum = perpersontotalclasswise / passengercount;
                                                     }
 
                                                     //END
-                                                    decimal discountamount = JsonObjR.data.faresAvailable[fareAvailabilityKey].fares[0].passengerFares[0].discountedFare;
+                                                    decimal discountamount = fare.fares[0].passengerFares[0].discountedFare;
 
-                                                    int servicecharge = JsonObjR.data.faresAvailable[fareAvailabilityKey].fares[0].passengerFares[0].serviceCharges.Count;
+                                                    int servicecharge = fare.fares[0].passengerFares[0].serviceCharges.Count;
                                                     decimal finalamount = 0;
                                                     for (int k = 1; k < servicecharge; k++)
                                                     {
 
-                                                        decimal amount = JsonObjR.data.faresAvailable[fareAvailabilityKey].fares[0].passengerFares[0].serviceCharges[k].amount;
+                                                        decimal amount = fare.fares[0].passengerFares[0].serviceCharges[k].amount;
                                                         finalamount += amount;
 
                                                     }
@@ -3578,7 +3591,6 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
             }
             return SourcePOS;
         }
-
 
 
         [HttpGet]
