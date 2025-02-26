@@ -168,6 +168,7 @@
                     Hashtable htseat = Model.AirlinePNR[a].Seatdata;
                     Hashtable htmeal = Model.AirlinePNR[a].Mealdata;
                     Hashtable htbag = Model.AirlinePNR[a].Bagdata;
+                    Hashtable htTkt = Model.AirlinePNR[a].htTicketnumber;
 
                     Hashtable htpax = Model.AirlinePNR[a].htpax;
                     Hashtable htnameempty = Model.AirlinePNR[a].htnameempty;
@@ -401,7 +402,10 @@
                                                     {
                                                         <td>@Model.AirlinePNR[a].passengers[i2].MobNumber</td>
                                                     }
-                                                    <td>AD1WSM/1/1</td>
+                                                    @{
+                                                        hashdata = @Model.AirlinePNR[a].passengers[i2].name.first.ToString().Replace(" ", "_") + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
+                                                        <td>@htTkt[hashdata]</td>
+                                                    }
                                                     <td>Confirm</td>
                                                     @if (i3 == 1)
                                                     {

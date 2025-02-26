@@ -160,6 +160,7 @@
                         Hashtable htpax = Model.AirlinePNR[a].htpax;
                         Hashtable htnameempty = Model.AirlinePNR[a].htnameempty;
                         Hashtable htname = Model.AirlinePNR[a].htname;
+                        Hashtable htTkt = Model.AirlinePNR[a].htTicketnumber;
                         <div class="container">
                             <div class="flight-tckt-main">
                                 <div class="d-flex justify-content-end ticketdwn" type="button" onclick="downloadPDF()">
@@ -1366,7 +1367,18 @@
                                                             {
                                                                 <td>@Model.AirlinePNR[a].passengers[i2].MobNumber</td>
                                                             }
-                                                            <td>@Model.AirlinePNR[a].recordLocator</td>
+                                                            @{
+                                                                if (Model.AirlinePNR[a].airLines.ToString().ToLower().Equals("airindia"))
+                                                                {
+                                                                    hashdata = @Model.AirlinePNR[a].passengers[i2].name.first.ToString().Replace(" ", "_") + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
+                                                                    <td>@htTkt[hashdata]</td>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <td>@Model.AirlinePNR[a].recordLocator</td>
+                                                                }
+                                                            }
+
                                                             <td>Confirm</td>
                                                             @if (i3 == 1)
                                                             {

@@ -54,10 +54,7 @@ namespace DomainLayer.Model
         public Hashtable htpax { get; set; }
         public Hashtable htname { get; set; }
         public Hashtable htnameempty { get; set; }
-
-
-
-
+        public Hashtable htTicketnumber { get; set; }
         public Hashtable TicketSeat { get; set; }
         public Hashtable TicketCarryBag { get; set; }
         public Hashtable TicketMeal { get; set; }

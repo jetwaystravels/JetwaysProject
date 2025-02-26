@@ -3198,7 +3198,22 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
                                 strAirTicket = _objAvail.GetTicketdata(_TicketRecordLocator, _testURL, newGuid.ToString(), _targetBranch, _userName, _password, Logfolder);
                                 string strTicketno = string.Empty;
+                                Hashtable htTicketdata = new Hashtable();
+                                foreach (Match mitem in Regex.Matches(strAirTicket, @"BookingTraveler Key=""[\s\S]*?First=""(?<First>[\s\S]*?)""[\s\S]*?Last=""(?<Last>[\s\S]*?)""[\s\S]*?TicketNumber=""(?<TicketNum>[\s\S]*?)""[\s\S]*?Origin=""(?<Origin>[\s\S]*?)""[\s\S]*?Destination=""(?<destination>[\s\S]*?)""[\s\S]*?</air:Ticket>", RegexOptions.IgnoreCase | RegexOptions.Multiline))
+                                {
+                                    try
+                                    {
+                                        if (!htTicketdata.Contains(mitem.Groups["First"].Value.Trim() + "_" + mitem.Groups["Last"].Value.Trim() + "_" + mitem.Groups["Origin"].Value.Trim() + "_" + mitem.Groups["destination"].Value.Trim()))
+                                        {
+                                            htTicketdata.Add(mitem.Groups["First"].Value.Trim() + "_" + mitem.Groups["Last"].Value.Trim() + "_" + mitem.Groups["Origin"].Value.Trim() + "_" + mitem.Groups["destination"].Value.Trim(), mitem.Groups["TicketNum"].Value.Trim());
+                                        }
+                                    }
+                                    catch (Exception ex)
+                                    {
 
+                                    }
+
+                                }
 
                                 //if (strAirTicket.Contains("Unable to ticket without pricing"))
                                 //continue;
@@ -3871,7 +3886,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                             returnTicketBooking.Seatdata = htseatdata;
                                             returnTicketBooking.Mealdata = htmealdata;
                                             returnTicketBooking.Bagdata = htbagdata;
-
+                                            returnTicketBooking.htTicketnumber = htTicketdata;
                                             returnTicketBooking.htname = htname;
                                             returnTicketBooking.htnameempty = htnameempty;
                                             returnTicketBooking.htpax = htpax;
