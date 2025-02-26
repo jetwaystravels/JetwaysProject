@@ -228,7 +228,7 @@
                                                         <div class="airline-N">
                                                             @{
                                                                 string AirlineName = "";
-                                                                if(@Model.AirlinePNR[a].airLines.ToString()=="AirAsia")
+                                                                if (@Model.AirlinePNR[a].airLines.ToString() == "AirAsia")
                                                                 {
                                                                     AirlineName = "Air India Exp..";
                                                                 }
@@ -1278,25 +1278,51 @@
                                                             @{
                                                                 string barcodeimageUrl = string.Empty;
                                                                 BarcodeUtility BarcodeUtility = new BarcodeUtility();
-                                                                if (htpax!=null && htpax.Contains(@Model.AirlinePNR[a].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[a].passengers[i2].name.last + "/" + @Model.AirlinePNR[a].passengers[i2].name.first + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination))
+                                                                if (Model.AirlinePNR[a].airLines.ToString().ToLower().Equals("airindia"))
                                                                 {
-                                                                    string _data = @Model.AirlinePNR[a].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[a].passengers[i2].name.last + "/" + @Model.AirlinePNR[a].passengers[i2].name.first + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
-                                                                    if (htpax.Contains(_data))
+                                                                    if (htpax.Contains(@Model.AirlinePNR[a].passengers[i2].name.first.Replace(" ", "_") + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination))
                                                                     {
-                                                                        barcodeimageUrl = htpax[_data].ToString();
-                                                                        barcodeimageUrl = BarcodeUtility.BarcodereadUtility(barcodeimageUrl).Trim();
-                                                                    }
+                                                                        string _data = @Model.AirlinePNR[a].passengers[i2].name.first.Replace(" ", "_") + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
+                                                                        if (htpax.Contains(_data))
+                                                                        {
+                                                                            barcodeimageUrl = htpax[_data].ToString();
+                                                                            barcodeimageUrl = BarcodeUtility.BarcodereadUtility(barcodeimageUrl).Trim();
+                                                                        }
 
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        string _data = @Model.AirlinePNR[a].passengers[i2].name.first.Replace(" ", "_") + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
+                                                                        if (htnameempty.Contains(_data))
+                                                                        {
+                                                                            barcodeimageUrl = htnameempty[_data].ToString();
+                                                                            barcodeimageUrl = BarcodeUtility.BarcodereadUtility(barcodeimageUrl).Trim();
+                                                                        }
+
+                                                                    }
                                                                 }
                                                                 else
                                                                 {
-                                                                    string _data = @Model.AirlinePNR[a].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[a].passengers[i2].name.last + "/" + @Model.AirlinePNR[a].passengers[i2].name.first + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
-                                                                    if (htnameempty != null && htnameempty.Contains(_data))
+                                                                    if (htpax != null && htpax.Contains(@Model.AirlinePNR[a].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[a].passengers[i2].name.last + "/" + @Model.AirlinePNR[a].passengers[i2].name.first + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination))
                                                                     {
-                                                                        barcodeimageUrl = htnameempty[_data].ToString();
-                                                                        barcodeimageUrl = BarcodeUtility.BarcodereadUtility(barcodeimageUrl).Trim();
-                                                                    }
+                                                                        string _data = @Model.AirlinePNR[a].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[a].passengers[i2].name.last + "/" + @Model.AirlinePNR[a].passengers[i2].name.first + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
+                                                                        if (htpax.Contains(_data))
+                                                                        {
+                                                                            barcodeimageUrl = htpax[_data].ToString();
+                                                                            barcodeimageUrl = BarcodeUtility.BarcodereadUtility(barcodeimageUrl).Trim();
+                                                                        }
 
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        string _data = @Model.AirlinePNR[a].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[a].passengers[i2].name.last + "/" + @Model.AirlinePNR[a].passengers[i2].name.first + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
+                                                                        if (htnameempty != null && htnameempty.Contains(_data))
+                                                                        {
+                                                                            barcodeimageUrl = htnameempty[_data].ToString();
+                                                                            barcodeimageUrl = BarcodeUtility.BarcodereadUtility(barcodeimageUrl).Trim();
+                                                                        }
+
+                                                                    }
                                                                 }
                                                                 if (i3 == 0)
                                                                 {
@@ -1311,17 +1337,26 @@
                                                                         <td rowspan="2" style="vertical-align:middle;">@Model.AirlinePNR[a].passengers[i2].name.first (@Model.AirlinePNR[a].passengers[i2].passengerTypeCode)</td>
                                                                     }
                                                                 }
+
                                                             }
                                                             <td>@Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin - @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination </td>
                                                             <td>@Model.AirlinePNR[a].journeys[0].segments[i3].identifier.carrierCode - @Model.AirlinePNR[a].journeys[0].segments[i3].identifier.identifier</td>
                                                             @{
-
-                                                                string hashdata = @Model.AirlinePNR[a].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
-
+                                                                string hashdata = string.Empty;
+                                                                if (Model.AirlinePNR[a].airLines.ToString().ToLower().Equals("airindia"))
+                                                                {
+                                                                    hashdata = @Model.AirlinePNR[a].passengers[i2].name.first.ToString().Replace(" ", "_") + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
+                                                                }
+                                                                else
+                                                                {
+                                                                    hashdata = @Model.AirlinePNR[a].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
+                                                                }
                                                                 if (htseat != null)
                                                                 {
                                                                     <td>@htseat[hashdata]</td>
                                                                 }
+
+
                                                             }
                                                             @if (i3 == 1)
                                                             {
@@ -1435,8 +1470,15 @@
                                                             <td>@Model.AirlinePNR[a].journeys[0].segments[i3].identifier.carrierCode - @Model.AirlinePNR[a].journeys[0].segments[i3].identifier.identifier</td>
 
                                                             @{
-                                                                string hashdata = @Model.AirlinePNR[a].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
-
+                                                                string hashdata = string.Empty;
+                                                                if (Model.AirlinePNR[a].airLines.ToString().ToLower().Equals("airindia"))
+                                                                {
+                                                                    hashdata = @Model.AirlinePNR[a].passengers[i2].name.first.ToString().Replace(" ", "_") + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
+                                                                }
+                                                                else
+                                                                {
+                                                                    hashdata = @Model.AirlinePNR[a].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
+                                                                }
                                                                 if (htmeal != null)
                                                                 {
                                                                     <td>@htmeal[hashdata]</td>

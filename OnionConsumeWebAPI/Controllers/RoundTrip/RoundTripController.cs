@@ -24,57 +24,36 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
         int stopFilter = 0;
         public IActionResult RTFlightView()
         {
-
-
-            var sameAirlineRT = TempData["RoundTripSameAirline"];
-            ViewData["SameAirlineRT"] = sameAirlineRT;
-            
-            var searchcount = TempData["count"];
-            ViewData["count"] = searchcount;
-
-            var origindata = TempData["origin"];
-            ViewData["origin"] = origindata;
-
-            var destinationdata = TempData["destination"];
-            ViewData["destination"] = destinationdata;
-
-            var searchcountR = TempData["countR"];
-            ViewData["countR"] = searchcountR;
-
-            var origindataR = TempData["originR"];
-            ViewData["originR"] = origindataR;
-
-            var destinationdataR = TempData["destinationR"];
-            ViewData["destinationR"] = destinationdataR;
-
             ViewModel vmobj = new ViewModel();
-            string Leftshowpopupdata = HttpContext.Session.GetString("LeftReturnViewFlightView");
-            string Rightshowpopupdata = HttpContext.Session.GetString("RightReturnFlightView");
 
-            List<SimpleAvailibilityaAddResponce> LeftdeserializedObjects = null;
-            List<SimpleAvailibilityaAddResponce> RightdeserializedObjects = null;
-            if (!string.IsNullOrEmpty(Leftshowpopupdata))
+            // Retrieve TempData values and store them in ViewData
+            string[] tempKeys = { "RoundTripSameAirline", "count", "origin", "destination", "countR", "originR", "destinationR" };
+            foreach (var key in tempKeys)
             {
-                LeftdeserializedObjects = JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(Leftshowpopupdata);
+                ViewData[key] = TempData[key];
             }
 
-            if (!string.IsNullOrEmpty(Rightshowpopupdata))
-            {
-                RightdeserializedObjects = JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(Rightshowpopupdata);
-            }
+            // Retrieve session data for left and right return flight views
+            string leftPopupData = HttpContext.Session.GetString("LeftReturnViewFlightView");
+            string rightPopupData = HttpContext.Session.GetString("RightReturnFlightView");
 
-            vmobj.SimpleAvailibilityaAddResponcelist = LeftdeserializedObjects;
-            vmobj.SimpleAvailibilityaAddResponcelistR = RightdeserializedObjects;
+            // Deserialize JSON data if available
+            vmobj.SimpleAvailibilityaAddResponcelist = !string.IsNullOrEmpty(leftPopupData)
+                ? JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(leftPopupData)
+                : new List<SimpleAvailibilityaAddResponce>();
 
-            string RTFlightEditData = HttpContext.Session.GetString("PassengerModelR");
-            SimpleAvailabilityRequestModel simpleAvailabilityRequestModel = null;
-            if (!string.IsNullOrEmpty(RTFlightEditData))
-            {
-                simpleAvailabilityRequestModel = JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(RTFlightEditData);
-            }
-            vmobj.simpleAvailabilityRequestModelEdit = simpleAvailabilityRequestModel;
-            // HttpContext.Session.SetString("FlightDetail", JsonConvert.SerializeObject(vmobj));
+            vmobj.SimpleAvailibilityaAddResponcelistR = !string.IsNullOrEmpty(rightPopupData)
+                ? JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(rightPopupData)
+                : new List<SimpleAvailibilityaAddResponce>();
+
+            // Retrieve and deserialize passenger model data
+            string rtFlightEditData = HttpContext.Session.GetString("PassengerModelR");
+            vmobj.simpleAvailabilityRequestModelEdit = !string.IsNullOrEmpty(rtFlightEditData)
+                ? JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(rtFlightEditData)
+                : null;
+
             return View(vmobj);
+
         }
         public IActionResult PostReturnAATripsellView(int uniqueId, int uniqueIdR)
         {

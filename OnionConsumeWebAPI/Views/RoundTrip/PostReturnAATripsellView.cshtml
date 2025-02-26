@@ -134,7 +134,7 @@
             alert("Please Select Return Fare.");
             return false;
         }
-        debugger;
+       
         for (let i = 0; i < fareKey.length; i++) {
             form.append('fareKey', fareKey[i]);
             form.append('journeyKey', journeyKey[i]);
@@ -167,34 +167,77 @@
 
 
 
-        // Flight Icon Animation
-        var flhticonDisplay = document.getElementById("flightImage");
-        flhticonDisplay.style.display = "block";
-        $('#animationOverlay').fadeIn(20000);
+        // // Flight Icon Animation
+        // var flhticonDisplay = document.getElementById("flightImage");
+        // flhticonDisplay.style.display = "block";
+        // $('#animationOverlay').fadeIn(20000);
 
-        // Your existing AJAX code
-        var formData = $('#reconnectingFlightOneway').serialize();
+        // // Your existing AJAX code
+        // var formData = $('#reconnectingFlightOneway').serialize();
 
+        // $.ajax({
+        //     url: '/RoundAATripsell/RoundAATripsellView',
+        //     type: 'POST',
+        //     data: formData,
+        //     success: function (response) {
+        //         $('#animationOverlay').fadeOut(20000);
+        //     },
+        //     error: function (xhr, status, error) {
+        //         // Handle error
+        //         console.error(xhr.responseText); // Log the error response
+        //         // Hide the animation overlay on error
+        //         $('#animationOverlay').fadeOut();
+        //     }
+        // });
+        // //For total Ammount Shoud not be hold
+        // localStorage.clear();
+
+
+      
+        let flightIconDisplay = document.getElementById("flightImage");
+        let animationOverlay = $('#animationOverlay');
+
+        // Display flight image and show loading animation
+        if (flightIconDisplay) {
+           // flightIconDisplay.style.display = "block";
+           flightIconDisplay.readOnly = true;
+          
+        }
+        animationOverlay.fadeIn(2000); // 2 seconds instead of 20
+
+        // Clear localStorage before making the AJAX call
+        localStorage.clear();
+        sessionStorage.setItem('hideOverlayOnLoad', 'true');
+        // Serialize form data
+        let formData = $('#reconnectingFlightOneway').serialize();
+
+        // Perform AJAX request
         $.ajax({
             url: '/RoundAATripsell/RoundAATripsellView',
             type: 'POST',
             data: formData,
             success: function (response) {
-                $('#animationOverlay').fadeOut(20000);
+              
+                console.log("Success:", response);
+               // animationOverlay.fadeOut(2000);
             },
             error: function (xhr, status, error) {
-                // Handle error
-                console.error(xhr.responseText); // Log the error response
-                // Hide the animation overlay on error
-                $('#animationOverlay').fadeOut();
+               
+                console.error("AJAX Error:", xhr.responseText);
+               // alert("An error occurred. Please try again.");
+                 //animationOverlay.hide();
+            },
+            complete: function () {
+                // Always hide animation overlay after AJAX completes
+              
+                animationOverlay.fadeOut(80000);
             }
         });
-        //For total Ammount Shoud not be hold
-        localStorage.clear();
 
+   
+    };
 
-    }
-
+       
 
 
     $(document).ready(function () {

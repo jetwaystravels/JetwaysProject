@@ -140,7 +140,7 @@
                                                         <select id="autodropdownRTId" name="autodropdownRTId" onchange="RTSelection()">
                                                             <option value="" style="display:none;">Please select</option>
 
-                                                            @foreach (var item in Citynamelist.GetAllCityData())
+                                                            @foreach (var item in Citynamelist.GetCityData())
                                                             {
                                                                 <option value="@item.citycode">@item.cityname - @item.citycode -<br>@item.airportname </option>
 
@@ -168,7 +168,7 @@
                                                         <select id="arrivalItemRTId" name="arrivalItemRTId" onchange="arrivalRT()">
                                                             @* <option value="">Please select</option> *@
                                                             <option value="" style="display:none;">Please select</option>
-                                                            @foreach (var item in Citynamelist.GetAllCityData())
+                                                            @foreach (var item in Citynamelist.GetCityData())
                                                             {
                                                                 <option value="@item.citycode">@item.cityname - @item.citycode -<br>@item.airportname </option>
 
