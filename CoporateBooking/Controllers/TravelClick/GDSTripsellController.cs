@@ -51,8 +51,8 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
             {
                 AirAsiaTripResponceModel passeengerlistItanary = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passengerInfant, typeof(AirAsiaTripResponceModel));
                 passeengerlist = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
-                SeatMapResponceModel Seatmaplist = null;// (SeatMapResponceModel)JsonConvert.DeserializeObject(Seatmap, typeof(SeatMapResponceModel));
-                SSRAvailabiltyResponceModel Mealslist = null;// (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
+                SeatMapResponceModel Seatmaplist = (SeatMapResponceModel)JsonConvert.DeserializeObject(Seatmap, typeof(SeatMapResponceModel));
+                SSRAvailabiltyResponceModel Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
                 vm.passeengerlist = passeengerlist;
                 vm.passeengerlistItanary = passeengerlistItanary;
                 vm.Seatmaplist = Seatmaplist;
@@ -61,11 +61,11 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
             else
             {
                 passeengerlist = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
-               // SeatMapResponceModel Seatmaplist = (SeatMapResponceModel)JsonConvert.DeserializeObject(Seatmap, typeof(SeatMapResponceModel));
-                //SSRAvailabiltyResponceModel Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
+                SeatMapResponceModel Seatmaplist = (SeatMapResponceModel)JsonConvert.DeserializeObject(Seatmap, typeof(SeatMapResponceModel));
+                SSRAvailabiltyResponceModel Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
                 vm.passeengerlist = passeengerlist;
-                vm.Seatmaplist = null;// Seatmaplist;
-                vm.Meals = null;// Mealslist;
+                vm.Seatmaplist = Seatmaplist;
+                vm.Meals = Mealslist;
             }
             if (!string.IsNullOrEmpty(passengerNamedetails))
             {
@@ -170,12 +170,12 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
             string passenger = HttpContext.Session.GetString("SGkeypassenger"); //From Itenary Response
             string passengerInfant = HttpContext.Session.GetString("SGkeypassenger");
             //string Seatmap = HttpContext.Session.GetString("Seatmap");
-            //string Meals = HttpContext.Session.GetString("Meals");
+            string Meals = HttpContext.Session.GetString("Meals");
             string passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
             ViewModel vm = new ViewModel();
             passeengerlist = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
             SeatMapResponceModel Seatmaplist = new SeatMapResponceModel(); //(SeatMapResponceModel)JsonConvert.DeserializeObject(Seatmap, typeof(SeatMapResponceModel));
-            SSRAvailabiltyResponceModel Mealslist = new SSRAvailabiltyResponceModel();// (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
+            SSRAvailabiltyResponceModel Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
             if (!string.IsNullOrEmpty(passengerNamedetails))
             {
                 List<passkeytype> passengerNamedetailsdata = (List<passkeytype>)JsonConvert.DeserializeObject(passengerNamedetails, typeof(List<passkeytype>));
@@ -190,8 +190,9 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
 
             //return RedirectToAction("IndigoSaverTripsell", "IndigoTripsell", passengerdetails);
         }
-        public async Task<IActionResult> PostUnitkey(List<string> unitKey, List<string> ssrKey, List<string> BaggageSSrkey, List<string> FastfarwardAddon, List<string> PPBGAddon)
+        public async Task<IActionResult> PostUnitkey(List<string> unitKey, List<string> ssrKey, List<string> BaggageSSrkey)
         {
+
             List<string> _unitkey = new List<string>();
             for (int i = 0; i < unitKey.Count; i++)
             {
@@ -201,6 +202,28 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
             }
             unitKey = new List<string>();
             unitKey = _unitkey;
+
+            string serializedUnitKey = JsonConvert.SerializeObject(unitKey);
+            // Store the serialized string in session
+            HttpContext.Session.SetString("UnitKey", serializedUnitKey);
+
+            List<string> _ssrKey = new List<string>();
+            for (int i = 0; i < ssrKey.Count; i++)
+            {
+                if (ssrKey[i] == null)
+                    continue;
+                _ssrKey.Add(ssrKey[i].Trim());
+            }
+            ssrKey = new List<string>();
+            ssrKey = _ssrKey;
+
+            string serializedSSRKey = JsonConvert.SerializeObject(ssrKey);
+            // Store the serialized string in session
+            HttpContext.Session.SetString("ssrKey", serializedSSRKey);
+
+            //string serializedssrKey = JsonConvert.SerializeObject(ssrKey);
+            //// Store the serialized string in session
+            //HttpContext.Session.SetString("SSRKey", serializedssrKey);
             if (BaggageSSrkey.Count > 0 && BaggageSSrkey[0] == null)
             {
                 BaggageSSrkey = new List<string>();
@@ -212,14 +235,6 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
             if (unitKey.Count > 0 && unitKey[0] == null)
             {
                 unitKey = new List<string>();
-            }
-            if (FastfarwardAddon.Count > 0 && FastfarwardAddon[0] == null)
-            {
-                FastfarwardAddon = new List<string>();
-            }
-            if (PPBGAddon.Count > 0 && PPBGAddon[0] == null)
-            {
-                PPBGAddon = new List<string>();
             }
 
             string tokenview = HttpContext.Session.GetString("IndigoSignature");

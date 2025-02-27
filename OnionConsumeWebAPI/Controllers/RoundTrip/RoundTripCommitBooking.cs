@@ -1828,7 +1828,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                 }
                                                 foreach (var item in _getBookingResponse.Booking.Passengers)
                                                 {
-                                                    if (!htnameempty.Contains(item.PassengerNumber.ToString() + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation))
+                                                    if (!htnameempty.Contains(item.PassengerNumber.ToString() + "_" + htname[item.PassengerNumber] + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation))
                                                     {
                                                         if (carriercode.Length < 3)
                                                             carriercode = carriercode.PadRight(3);
@@ -1852,7 +1852,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                     barcodeImage = new List<string>();
                                                     try
                                                     {
-                                                        if (!htseatdata.Contains(item1.PassengerNumber.ToString() + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation))
+                                                        if (!htseatdata.Contains(item1.PassengerNumber.ToString() + "_" + htname[item1.PassengerNumber] + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation))
                                                         {
                                                             htseatdata.Add(item1.PassengerNumber.ToString() + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation, item1.UnitDesignator);
                                                             returnSeats.unitDesignator += item1.PassengerNumber + "_" + item1.UnitDesignator + ",";
