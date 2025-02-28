@@ -1,88 +1,14 @@
 ﻿<div class="row ">
-    @{
-        string queryorigin = string.Empty;
-        string querydestination = string.Empty;
+  
+
+    <div class="col-xl-6 col-lg-6">
+        @{
         string SameAirlinesRT = string.Empty;
         if (ViewData["SameAirlineRT"] != null)
         {
-            SameAirlinesRT = ViewData["SameAirlineRT"].ToString();
+        SameAirlinesRT = ViewData["SameAirlineRT"].ToString();
         }
-
-        if (ViewData["origin"] != null)
-        {
-            queryorigin = ViewData["origin"].ToString();
         }
-        else
-        {
-            if (Model.SimpleAvailibilityaAddResponcelist.Count > 0)
-            {
-                queryorigin = Model.SimpleAvailibilityaAddResponcelist[0].designator.origin;//ViewData["origin"].ToString();
-            }
-        }
-        if (ViewData["destination"] != null)
-        {
-            querydestination = ViewData["destination"].ToString();
-        }
-        else
-        {
-            if (Model.SimpleAvailibilityaAddResponcelist.Count > 0)
-            {
-                querydestination = Model.SimpleAvailibilityaAddResponcelist[0].designator.destination;//ViewData["origin"].ToString();
-            }
-        }
-        string originL, destinationL = string.Empty;
-        if (Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault() != null)
-        {
-            originL = Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault().cityname;
-            destinationL = Citynamelist.GetAllCityData().Where(x => x.citycode == querydestination).SingleOrDefault().cityname;
-
-        }
-        else
-        {
-            originL = queryorigin;
-            destinationL = querydestination;
-        }
-
-    }
-
-    <div class="col-xl-6 col-lg-6">
-        <div class="shorting-bg-white">
-            @{
-                if (Model.SimpleAvailibilityaAddResponcelist.Count > 0)
-                {
-                    <div class="fontSize16 d-flex justify-content-between"><div class="fw-600">@originL → @destinationL</div>  <div>@Model.SimpleAvailibilityaAddResponcelist[0].bookingdate</div></div>
-
-                    <input type="hidden" id="leftdate" value="@Model.SimpleAvailibilityaAddResponcelist[0].bookingdate" />
-                }
-            }
-            @*  <ul class="shorting-tab">
-            <li><a href="#">Airlines </a></li>
-            <li><a href="#">Depart</a></li>
-            <li><a href="#">Duration</a></li>
-            <li><a href="#">Arrive</a></li>
-            <li><a href="#" class="active">Price</a></li>
-            </ul> *@
-
-            <div class="d-flex justify-between shorting-tab">
-                <div>
-                    <a href="#" class="sort-link text-14" data-sort="name_desc">Airlines</a>
-                </div>
-                <div>
-                    <a href="#" class="sort-link text-14" data-sort="deprt_desc"> Depart</a>
-                </div>
-                <div>
-                    <a href="#" class="sort-link text-14" data-sort="duration_desc">Duration</a>
-                </div>
-                <div>
-                    <a href="#" class="sort-link text-14" data-sort="arrive_desc">Arrive</a>
-                </div>
-                <div>
-                    <a href="#" class="sort-link text-14" data-sort="price_desc">Price</a>
-                </div>
-            </div>
-
-
-        </div>
         <form id="reconnectingFlight">
             @for (var j = 0; j < Model.SimpleAvailibilityaAddResponcelist.Count; j++)
             {
@@ -131,10 +57,7 @@
                             <input type="hidden" value="@Model.SimpleAvailibilityaAddResponcelist[j].uniqueId" />
                             <input type="hidden" class="carrierCode" name="carrierCode" value="@Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode" />
                             <input type="hidden" class="identifier" name="identifier" value="@Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.identifier" />
-                            @*<input type="hidden" class="carrierCode" name="carrierCode" value="@Model.SimpleAvailibilityaAddResponcelist[j].segments[i].identifier.carrierCode" />
-
-                        <div class="fliCode"> @Model.SimpleAvailibilityaAddResponcelist[j].segments[i].identifier.carrierCode  - @Model.SimpleAvailibilityaAddResponcelist[j].segments[i].identifier.identifier </div>*@
-                            <div class="fliCode text-12"> @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode  - @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.identifier </div>
+                           <div class="fliCode text-12"> @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode  - @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.identifier </div>
 
                         </div>
                         <div class="fare-round">
@@ -202,17 +125,7 @@
                                         }
                                         else
                                         {
-                                            // for (int l = 0; l < @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].legs.Count; l++)
-                                            // {
-                                            //     if (l == 0)
-                                            //     {
-                                            //         <div class="mt-1 r-stop">2 Stop Via  @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].legs[l].designator.destination  <b>,</b></div>
-                                            //     }
-                                            //     else if (l == 1)
-                                            //     {
-                                            //         <span class="r-stop"> @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].legs[l].designator.destination</span>
-                                            //     }
-                                            // }
+                                           
                                             @if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].legs.Count == 2)
                                             {
                                                 <div class="mt-1 r-stop"> @stops Stop via @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].legs[0].designator.destination,@Model.SimpleAvailibilityaAddResponcelist[j].segments[0].legs[1].designator.destination </div>
@@ -668,47 +581,6 @@
                                             <td>(3 hrs before departure)</td>
                                             <td>As per Airline Fare rule</td>
 
-
-                                            // if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("J"))
-                                            // {
-                                            //     <td>999</td>
-                                            //    <td> (3 days upto 2 hrs prior from departure)</td>
-                                            //     <td>As per Airline Fare rule</td>
-                                            // }
-                                            // else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("R"))
-                                            // {
-                                            //     <td>3999</td>
-                                            //     <td>(3 hrs before departure)</td>
-                                            //     <td>As per Airline Fare rule</td>
-                                            // }
-                                            // else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("O"))
-                                            // {
-                                            //     <td>999</td>
-                                            //     <td>3 days upto 2 hrs prior from departure</td>
-                                            //     <td>As per Airline Fare rule</td>
-                                            // }
-                                            // else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("A"))
-                                            // {
-                                            //     <td>3500 </td>
-                                            //     <td>3 hrs before departure</td>
-                                            //     <td>As per Airline Fare rule</td>
-                                            // }
-                                            // else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("BR"))
-                                            // {
-                                            //     <td>3499 </td>
-                                            //     <td>Fee starts at Onward.</td>
-                                            //     <td>As per Airline Fare rule</td>
-                                            // }
-                                            // else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("BC"))
-                                            // {
-                                            //     <td>2499 </td>
-                                            //     <td>Fee starts at Onward.</td>
-                                            //     <td>As per Airline Fare rule</td>
-
-                                            // }
-
-
-
                                         }
                                         else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("QP"))
                                         {
@@ -781,84 +653,10 @@
 
     </div>
     <!------RoundTrip Right Side-------->
-    @{
-        // queryorigin = ViewData["origin"].ToString();
-        // string originR = Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault().cityname;
-        // querydestination = ViewData["destination"].ToString();
-        // string destinationR = Citynamelist.GetAllCityData().Where(x => x.citycode == querydestination).SingleOrDefault().cityname;
-
-        queryorigin = string.Empty;
-        querydestination = string.Empty;
-        if (ViewData["origin"] != null)
-        {
-            queryorigin = ViewData["origin"].ToString();
-        }
-        else
-        {
-            if (Model.SimpleAvailibilityaAddResponcelistR.Count > 0)
-            {
-                queryorigin = Model.SimpleAvailibilityaAddResponcelistR[0].designator.origin;//ViewData["origin"].ToString();
-            }
-        }
-
-        if (ViewData["destination"] != null)
-        {
-            querydestination = ViewData["destination"].ToString();
-        }
-        else
-        {
-            if (Model.SimpleAvailibilityaAddResponcelistR.Count > 0)
-            {
-                querydestination = Model.SimpleAvailibilityaAddResponcelistR[0].designator.destination;//ViewData["origin"].ToString();
-            }
-        }
-
-        string originR = string.Empty;
-        string destinationR = string.Empty;
-
-        if (Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault() != null)
-        {
-            originR = Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault().cityname;
-            destinationR = Citynamelist.GetAllCityData().Where(x => x.citycode == querydestination).SingleOrDefault().cityname;
-        }
-        else
-        {
-            originR = querydestination;
-            destinationR = queryorigin;
-        }
-        //string originR = Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault().cityname;
-        //string destinationR = Citynamelist.GetAllCityData().Where(x => x.citycode == querydestination).SingleOrDefault().cityname;
-
-    }
+  
     @*  RightSid *@
     <div class="col-xl-6 col-lg-6">
-        <div class="shorting-bg-white">
-            @{
-                if (Model.SimpleAvailibilityaAddResponcelistR.Count > 0)
-                {
-                    <div class="fontSize1 d-flex justify-content-between"><div class="fw-600">@destinationR → @originR</div>  <div>@Model.SimpleAvailibilityaAddResponcelistR[0].bookingdate</div></div>
-
-                    <input type="hidden" id="rightdate" value="@Model.SimpleAvailibilityaAddResponcelistR[0].bookingdate" />
-                }
-            }
-            <div class="d-flex justify-between shorting-tab">
-                <div>
-                    <a href="#" class="sort-linkR text-14" data-sort="name_desc">Airlines</a>
-                </div>
-                <div>
-                    <a href="#" class="sort-linkR text-14" data-sort="deprt_desc"> Depart</a>
-                </div>
-                <div>
-                    <a href="#" class="sort-linkR text-14" data-sort="duration_desc">Duration</a>
-                </div>
-                <div>
-                    <a href="#" class="sort-linkR text-14" data-sort="arrive_desc">Arrive</a>
-                </div>
-                <div>
-                    <a href="#" class="sort-linkR text-14" data-sort="price_desc">Price</a>
-                </div>
-            </div>
-        </div>
+       
 
         <!--Vinay Round Right detail--->
         <form asp-controller="FlightSearchIndex" method="post">
@@ -976,17 +774,7 @@
                                         }
                                         else
                                         {
-                                            // for (int l = 0; l < @Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].legs.Count; l++)
-                                            // {
-                                            //     if (l == 0)
-                                            //     {
-                                            //         <div class="mt-1 r-stop">2 Stop Via  @Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].legs[l].designator.destination  <b>,</b></div>
-                                            //     }
-                                            //     else if (l == 1)
-                                            //     {
-                                            //         <span class="r-stop"> @Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].legs[l].designator.destination</span>
-                                            //     }
-                                            // }
+                                           
                                             @if (Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].legs.Count == 2)
                                             {
                                                 <div class="mt-1 r-stop"> @stops Stop via @Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].legs[0].designator.destination,@Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].legs[1].designator.destination </div>
@@ -997,18 +785,6 @@
                                                 <div class="r-stop"> @stops Stop via @Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].legs[0].designator.destination,@Model.SimpleAvailibilityaAddResponcelistR[j].segments[1].legs[0].designator.destination</div>
 
                                             }
-
-
-                                            //COMMENT DATE '07-02-2025' FOR 2 STOP DATA ADD EXTRA
-                                            // @if (Model.SimpleAvailibilityaAddResponcelistR[j].segments.Count >= 2 && Model.SimpleAvailibilityaAddResponcelistR[j].segments[1].legs.Count >= 1)
-                                            // {
-                                            //     <div class="r-stop"> @Model.SimpleAvailibilityaAddResponcelistR[j].segments[1].legs[0].designator.destination</div>
-                                            // }
-                                            // else
-                                            // {
-                                               
-
-                                            // }
                                         }
                                     }
                                     if (stops == 3)
@@ -1435,44 +1211,6 @@
                                             <td>(3 hrs before departure)</td>
                                             <td>As per Airline Fare rule</td>
 
-
-                                            // if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[0].procuctclass.Equals("J"))
-                                            // {
-                                            //     <td>999</td>
-                                            //     <td> (3 days upto 2 hrs prior from departure)</td>
-                                            //     <td>As per Airline Fare rule</td>
-                                            // }
-                                            // else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[0].procuctclass.Equals("R"))
-                                            // {
-                                            //     <td>3999</td>
-                                            //     <td>(3 hrs before departure)</td>
-                                            //     <td>As per Airline Fare rule</td>
-                                            // }
-                                            // else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[0].procuctclass.Equals("O"))
-                                            // {
-                                            //     <td>999</td>
-                                            //     <td>3 days upto 2 hrs prior from departure</td>
-                                            //     <td>As per Airline Fare rule</td>
-                                            // }
-                                            // else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[0].procuctclass.Equals("A"))
-                                            // {
-                                            //     <td>3500 </td>
-                                            //     <td>3 hrs before departure</td>
-                                            //     <td>As per Airline Fare rule</td>
-                                            // }
-                                            // else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[0].procuctclass.Equals("BR"))
-                                            // {
-                                            //     <td>3499 </td>
-                                            //     <td>Fee starts at Onward.</td>
-                                            //     <td>As per Airline Fare rule</td>
-                                            // }
-                                            // else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[0].procuctclass.Equals("BC"))
-                                            // {
-                                            //     <td>2499 </td>
-                                            //     <td>Fee starts at Onward.</td>
-                                            //     <td>As per Airline Fare rule</td>
-
-                                            // }
 
                                         }
                                         else if (Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("QP"))

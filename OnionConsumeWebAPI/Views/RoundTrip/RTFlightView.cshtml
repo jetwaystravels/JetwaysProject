@@ -542,6 +542,152 @@
                         </aside>
                     </div>
                     <div class="col-xl-9 col-lg-8 ps-0">
+                        <div class="row">
+
+                            <div class="col-xl-6 col-lg-6">
+                                @{
+                                    string queryorigin = string.Empty;
+                                    string querydestination = string.Empty;
+
+
+                                    if (ViewData["origin"] != null)
+                                    {
+                                        queryorigin = ViewData["origin"].ToString();
+                                    }
+                                    else
+                                    {
+                                        if (Model.SimpleAvailibilityaAddResponcelist.Count > 0)
+                                        {
+                                            queryorigin = Model.SimpleAvailibilityaAddResponcelist[0].designator.origin;//ViewData["origin"].ToString();
+                                        }
+                                    }
+                                    if (ViewData["destination"] != null)
+                                    {
+                                        querydestination = ViewData["destination"].ToString();
+                                    }
+                                    else
+                                    {
+                                        if (Model.SimpleAvailibilityaAddResponcelist.Count > 0)
+                                        {
+                                            querydestination = Model.SimpleAvailibilityaAddResponcelist[0].designator.destination;//ViewData["origin"].ToString();
+                                        }
+                                    }
+                                    string originL, destinationL = string.Empty;
+                                    if (Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault() != null)
+                                    {
+                                        originL = Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault().cityname;
+                                        destinationL = Citynamelist.GetAllCityData().Where(x => x.citycode == querydestination).SingleOrDefault().cityname;
+
+                                    }
+                                    else
+                                    {
+                                        originL = queryorigin;
+                                        destinationL = querydestination;
+                                    }
+
+                                }
+                                <div class="shorting-bg-white">
+                                    @{
+                                        if (Model.SimpleAvailibilityaAddResponcelist.Count > 0)
+                                        {
+                                            <div class="fontSize16 d-flex justify-content-between"><div class="fw-600">@originL → @destinationL</div>  <div>@Model.SimpleAvailibilityaAddResponcelist[0].bookingdate</div></div>
+
+                                            <input type="hidden" id="leftdate" value="@Model.SimpleAvailibilityaAddResponcelist[0].bookingdate" />
+                                        }
+                                    }
+                                    <div class="d-flex justify-between shorting-tab">
+                                        <div>
+                                            <a href="#" class="sort-link text-14" data-sort="name_desc">Airlines</a>
+                                        </div>
+                                        <div>
+                                            <a href="#" class="sort-link text-14" data-sort="deprt_desc"> Depart</a>
+                                        </div>
+                                        <div>
+                                            <a href="#" class="sort-link text-14" data-sort="duration_desc">Duration</a>
+                                        </div>
+                                        <div>
+                                            <a href="#" class="sort-link text-14" data-sort="arrive_desc">Arrive</a>
+                                        </div>
+                                        <div>
+                                            <a href="#" class="sort-link text-14" data-sort="price_desc">Price</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-6 col-lg-6">
+                                @{
+                                    queryorigin = string.Empty;
+                                    querydestination = string.Empty;
+                                    if (ViewData["origin"] != null)
+                                    {
+                                        queryorigin = ViewData["origin"].ToString();
+                                    }
+                                    else
+                                    {
+                                        if (Model.SimpleAvailibilityaAddResponcelistR.Count > 0)
+                                        {
+                                            queryorigin = Model.SimpleAvailibilityaAddResponcelistR[0].designator.origin;//ViewData["origin"].ToString();
+                                        }
+                                    }
+
+                                    if (ViewData["destination"] != null)
+                                    {
+                                        querydestination = ViewData["destination"].ToString();
+                                    }
+                                    else
+                                    {
+                                        if (Model.SimpleAvailibilityaAddResponcelistR.Count > 0)
+                                        {
+                                            querydestination = Model.SimpleAvailibilityaAddResponcelistR[0].designator.destination;//ViewData["origin"].ToString();
+                                        }
+                                    }
+
+                                    string originR = string.Empty;
+                                    string destinationR = string.Empty;
+
+                                    if (Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault() != null)
+                                    {
+                                        originR = Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault().cityname;
+                                        destinationR = Citynamelist.GetAllCityData().Where(x => x.citycode == querydestination).SingleOrDefault().cityname;
+                                    }
+                                    else
+                                    {
+                                        originR = querydestination;
+                                        destinationR = queryorigin;
+                                    }
+                                }
+
+                                <div class="shorting-bg-white">
+                                    @{
+                                        if (Model.SimpleAvailibilityaAddResponcelistR.Count > 0)
+                                        {
+                                            <div class="fontSize1 d-flex justify-content-between"><div class="fw-600">@destinationR → @originR</div>  <div>@Model.SimpleAvailibilityaAddResponcelistR[0].bookingdate</div></div>
+
+                                            <input type="hidden" id="rightdate" value="@Model.SimpleAvailibilityaAddResponcelistR[0].bookingdate" />
+                                        }
+                                    }
+                                    <div class="d-flex justify-between shorting-tab">
+                                        <div>
+                                            <a href="#" class="sort-linkR text-14" data-sort="name_desc">Airlines</a>
+                                        </div>
+                                        <div>
+                                            <a href="#" class="sort-linkR text-14" data-sort="deprt_desc"> Depart</a>
+                                        </div>
+                                        <div>
+                                            <a href="#" class="sort-linkR text-14" data-sort="duration_desc">Duration</a>
+                                        </div>
+                                        <div>
+                                            <a href="#" class="sort-linkR text-14" data-sort="arrive_desc">Arrive</a>
+                                        </div>
+                                        <div>
+                                            <a href="#" class="sort-linkR text-14" data-sort="price_desc">Price</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                         <div id="RTflight-results">
                             @Html.Partial("_RTFlightResultsSortingPartialView", Model)
                         </div>
@@ -2826,14 +2972,6 @@
             });
         }
 
-        ///////*******************************///////////
-
-
-
-
-
-
-        ///////////*******************************/////////
         document.querySelector('[data-x-dd-click="searchMenu-guests"]').addEventListener('click', function () {
             const target = document.querySelector('[data-x-dd="searchMenu-guests"]');
             target.classList.toggle('-is-active');

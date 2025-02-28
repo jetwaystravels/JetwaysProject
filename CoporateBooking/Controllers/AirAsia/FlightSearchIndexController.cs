@@ -81,22 +81,22 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
         [Route("")]
         public async Task<IActionResult> Index()
         {
-            List<City> city = new List<City>();
-            HttpClient client = new HttpClient();
-            //client.BaseAddress = new Uri("http://localhost:5225/");
-            client.BaseAddress = new Uri(AppUrlConstant.BaseURL);
-            HttpResponseMessage response = await client.GetAsync("api/City/getallCity");
-            if (response.IsSuccessStatusCode)
-            {
-                var results = response.Content.ReadAsStringAsync().Result;
-                city = JsonConvert.DeserializeObject<List<City>>(results);
-                city.Insert(0, new City { CityCode = "Select", CityName = "Select" });
-            }
-            else
-            {
-                city.Insert(0, new City { CityCode = "Select", CityName = "Select" });
-            }
-            ViewBag.ListofCountry = city;
+            //List<City> city = new List<City>();
+            //HttpClient client = new HttpClient();
+            ////client.BaseAddress = new Uri("http://localhost:5225/");
+            //client.BaseAddress = new Uri(AppUrlConstant.BaseURL);
+            //HttpResponseMessage response = await client.GetAsync("api/City/getallCity");
+            //if (response.IsSuccessStatusCode)
+            //{
+            //    var results = response.Content.ReadAsStringAsync().Result;
+            //    city = JsonConvert.DeserializeObject<List<City>>(results);
+            //    city.Insert(0, new City { CityCode = "Select", CityName = "Select" });
+            //}
+            //else
+            //{
+            //    city.Insert(0, new City { CityCode = "Select", CityName = "Select" });
+            //}
+            //ViewBag.ListofCountry = city;
 
             return View();
         }
