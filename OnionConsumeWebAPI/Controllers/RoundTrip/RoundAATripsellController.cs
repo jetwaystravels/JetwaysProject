@@ -461,7 +461,6 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                 if (i == 0)
                 {
                     Signature = HttpContext.Session.GetString("IndigoSignature");
-
                 }
                 else
                 {
